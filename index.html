@@ -40,6 +40,9 @@
         // Create the scene space
         var scene = new BABYLON.Scene(engine);
 
+        // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
+        BABYLON.Animation.AllowMatricesInterpolation = true;
+
         // // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
         // var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
 
@@ -173,9 +176,16 @@
         function finishedVideo(video) {
           console.log("video Finished & show Assets");
           //show Assets
-          mainChar.loadedMeshes[0].setEnabled(true);
-          pot.loadedMeshes[0].setEnabled(true);
-          console.log(mainChar);
+          showHideAsset(mainChar, true);
+          showHideAsset(pot, true);
+
+          loadAssetAnimation(mainChar);
+          //start idle Animation of First Char
+          controlAnimations(mainChar, 1);
+        }
+
+        function showHideAsset(asset, showHide) {
+          asset.loadedMeshes[0].setEnabled(showHide);
         }
 
         function loadAsset(assetName, assetDir, gltfFile) {
@@ -213,30 +223,42 @@
           mesh.rotate(axis, rotation);
         }
 
-        function loadAssetAnimation(loadedAsset) {
-          tmpArray = loadedAsset.loadedAnimationGroups;
-          tmpArray.forEach(function(element) {
-            console.log("Foreach element:", element["name"]);
-            createButton(element["name"]);
+        function loadAssetAnimation(asset) {
+          for (let i = 0; i < asset.loadedAnimationGroups.length; i++) {
+            var tmpAsset = asset.loadedAnimationGroups[i];
+            var tmpName = tmpAsset["name"];
+            createButton(tmpName, asset, i);
+          }
+        }
+
+        function createButton(btn, asset, assetIndex) {
+          var guiBtn = BABYLON.GUI.Button.CreateSimpleButton(btn, btn);
+          var returnedAnimation = null;
+          guiBtn.paddingTop = "10px";
+          guiBtn.width = "100px";
+          guiBtn.height = "50px";
+          guiBtn.color = "white";
+          guiBtn.background = "green";
+          animationGui.addControl(guiBtn);
+          guiBtn.onPointerUpObservable.add(function() {
+            controlAnimations(asset, assetIndex);
           });
         }
 
-        //create btn
-        function createButton(btn) {
-          var btn = BABYLON.GUI.Button.CreateSimpleButton(btn, btn);
-          btn.paddingTop = "10px";
-          btn.width = "100px";
-          btn.height = "50px";
-          btn.color = "white";
-          btn.background = "green";
-          animationGui.addControl(btn);
-          btn.onPointerUpObservable.add(function() {
-            playAnimation(btn);
+        function controlAnimations(asset, assetIndex) {
+          animationGroups = asset.loadedAnimationGroups;
+          //stop all animations
+          animationGroups.forEach(function(item) {
+            item.stop(true);
           });
+          //start pressed animation
+          animationGroups[assetIndex].play(true);
         }
 
-        function playAnimation(animation) {
-          console.log("pressed " + animation["name"]);
+        function stopAnimation(asset) {
+          asset.loadedAnimationGroups.forEach(function(item) {
+            item.stop(true);
+          });
         }
 
         //load Assets
@@ -245,6 +267,7 @@
           "Stromboli",
           "Stromboli_AnimLayer.gltf"
         );
+
         const pot = loadAsset("pot", "pot", "fbxFull.gltf");
 
         //load Videos
@@ -252,14 +275,16 @@
           "assets/videos/Cam_Portal_Main.mp4",
           "assets/poster/Cam_Portal_Main_Poster.png"
         );
-        //load
+        //load assets
         assetsManager.load();
 
         //after Assets are loaded load Video
         assetsManager.onFinish = function() {
           console.log("assets Manager finished");
-          gui.addControl(playBtn, 0, 0);
+          //Stop all animations -> will become a function
+          stopAnimation(mainChar);
 
+          gui.addControl(playBtn, 0, 0);
           //position and rotate char
           positionAsset(mainChar, 1, -1, -2.5);
           rotateAsset(mainChar, BABYLON.Axis.Y, Math.PI);
@@ -267,8 +292,6 @@
           positionAsset(pot, 1.3, -1, -3.4);
           scaleAsset(pot, 40, 40, 40);
           rotateAsset(pot, BABYLON.Axis.Y, Math.PI);
-
-          loadAssetAnimation(mainChar);
         };
 
         return scene;
