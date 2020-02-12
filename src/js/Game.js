@@ -1,5 +1,19 @@
-class Game {
+// Import Babylon.js
+import * as BABYLON from "babylonjs";
+//Import Babylon Loaders
+import "babylonjs-loaders";
+//Import Video Class
+import Video from "./Video";
+//Import Asset Class
+import Asset from "./Asset";
+//Import HUD Gui
+import GUI from "./GUI";
+//import Animations
+import Animations from "./Animations";
+
+export default class {
   constructor() {
+    // Get Canvas
     //select canvas
     this.canvas = document.getElementById("renderCanvas");
     // Generate the BABYLON 3D engine
@@ -17,6 +31,13 @@ class Game {
     );
     // // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
     // this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
+    // This attaches the camera to the canvas
+    this.camera.attachControl(this.canvas, true);
+    this.camera.minZ = 0.001;
+    this.camera.wheelPrecision = 150;
+    // Target the camera to scene origin.
+    this.camera.setTarget(BABYLON.Vector3.Zero());
+
     // Add lights to the scene
     this.light1 = new BABYLON.HemisphericLight(
       "light1",
@@ -32,11 +53,76 @@ class Game {
     //Create Materials
     this.mat = new BABYLON.StandardMaterial("mat", this.scene);
 
-    //load Asset manager
-    this.assetsManager = new BABYLON.AssetsManager(this.scene);
-    //Variables for Assets
+    // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
+    BABYLON.Animation.AllowMatricesInterpolation = true;
+
+    // Create Scene
+    this.createScene();
+
+    // Init Variables
+    this.assetPath = "/assets/chars/";
     this.introVideo = null;
+    this.playBtn = null;
+    this.videoAsset = null;
+  }
+
+  createScene() {
+    //Load Classes
+    this.assetsManager = new BABYLON.AssetsManager(this.scene);
+    this.Animations = new Animations(this);
+    this.Asset = new Asset(this);
+    this.GUI = new GUI(this);
+    this.Video = new Video(this);
+
+    // When all assets are loaded =>
+    this.assetsManager.onFinish = tasks => {
+      this.setup();
+    };
+
+    // On Window Resize => Resize Game
+    window.addEventListener("resize", () => {
+      this.engine.resize();
+    });
+    // Start Loading
+    this.assetsManager.load();
+  }
+
+  setup() {
+    //load Start Button
+    this.playBtn = this.GUI.createImgBtnNoText(
+      "playBtn",
+      "../../assets/images/gui/play-button.png",
+      "200px",
+      "200px"
+    );
+    //load bg Video
+    let bgVideo = this.Video.load(
+      "assets/videos/Cam_Portal_Main.mp4",
+      "assets/poster/Cam_Portal_Main_Poster.png"
+    );
+
+    //initial Play button was pressed
+    this.GUI.btnEvent(
+      this.playBtn,
+      () => {
+        this.Video.start(bgVideo);
+      },
+      true
+    );
+
+    //start Render Loop
+    this.engine.runRenderLoop(() => {
+      this.scene.render();
+    });
+  }
+
+  firstChar() {
+    console.log("first Char");
+    let char = this.Asset.load(
+      "mainChar",
+      "Stromboli",
+      "Stromboli_AnimLayer.gltf"
+    );
+    this.Asset.show(char);
   }
 }
-
-export default Game;

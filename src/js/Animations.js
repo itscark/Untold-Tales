@@ -1,7 +1,10 @@
-import Game from "./Game";
-
-class Animation extends Game {
-  constructor() {}
+class Animations {
+  constructor(game) {
+    this.game = game;
+    this.assetsManager = game.assetsManager;
+    this.engine = game.engine;
+    this.canvas = game.canvas;
+  }
 
   load(asset) {
     for (let i = 0; i < asset.loadedAnimationGroups.length; i++) {
@@ -29,4 +32,4 @@ class Animation extends Game {
   }
 }
 
-export default Animation;
+export default Animations;

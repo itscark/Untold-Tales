@@ -1,10 +1,19 @@
-import Game from "./Game";
+import * as BABYLON from "babylonjs";
+import * as GUI from "babylonjs-gui";
 
-class Gui extends Game {
-  constructor() {}
+export default class {
+  constructor(game) {
+    this.game = game;
+    this.assetsManager = game.assetsManager;
+    this.engine = game.engine;
+    this.canvas = game.canvas;
+    this.playBtn = game.playBtn;
+    //load GUI
+    this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("gui");
+  }
 
   createButton() {
-    var guiBtn = GUI.Button.CreateSimpleButton(btn, btn);
+    var guiBtn = Button.CreateSimpleButton(btn, btn);
     var returnedAnimation = null;
     guiBtn.paddingTop = "10px";
     guiBtn.width = "100px";
@@ -30,17 +39,22 @@ class Gui extends Game {
     gui.addControl(animationGui);
   }
 
-  init() {
-    //layout for Playbutton
-    var playBtn = BABYLON.GUI.Button.CreateImageOnlyButton(
-      "playBtn",
-      "assets/images/gui/play-button.png"
-    );
-    playBtn.width = "200px";
-    playBtn.height = "200px";
-    playBtn.color = "transparent";
+  createImgBtnNoText(name, location, width, height) {
+    let tmpBtn = GUI.Button.CreateImageOnlyButton(name, location);
+    tmpBtn.width = width;
+    tmpBtn.height = height;
+    tmpBtn.color = "transparent";
+    this.advancedTexture.addControl(tmpBtn);
+    return tmpBtn;
+  }
 
-    return playBtn;
+  btnEvent(btn, callBack, remove = false) {
+    btn.onPointerUpObservable.add(() => {
+      callBack();
+      if (remove === true) {
+        this.advancedTexture.removeControl(btn);
+      }
+    });
   }
 
   video(
@@ -94,5 +108,3 @@ class Gui extends Game {
     advancedTexture.addControl(rightBtn);
   }
 }
-
-export default Gui;

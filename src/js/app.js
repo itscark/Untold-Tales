@@ -1,80 +1,56 @@
-// import * as BABYLON from "babylonjs";
-// import "babylonjs-loaders";
-// import * as GUI from "babylonjs-gui";
-
 import Game from "./Game";
-import Video from "./Video";
-import Asset from "./Asset";
+window.game = new Game();
 
-const game = new Game();
-const video = new Video();
-const asset = new Asset();
+// document.addEventListener("DOMContentLoaded", function() {
+//   /******* Add the create scene function ******/
+//   let createScene = function() {
 
-const assetPath = "/assets/chars/";
+//     //play Intro Video (autoplay is disabled by default, so users have to interact with the website once to enable it)
 
-asset.test();
+//     // playBtn.onPointerUpObservable.add(function() {
+//     //   gui.removeControl(playBtn);
+//     //   //Play Intro Video
+//     //   playVideo(introVideo);
+//     // });
 
-document.addEventListener("DOMContentLoaded", function() {
-  /******* Add the create scene function ******/
-  let createScene = function() {
-    // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
-    BABYLON.Animation.AllowMatricesInterpolation = true;
+//     // //load Assets
+//     // const mainChar = loadAsset(
+//     //   "mainChar",
+//     //   "Stromboli",
+//     //   "Stromboli_AnimLayer.gltf"
+//     // );
 
-    //play Intro Video (autoplay is disabled by default, so users have to interact with the website once to enable it)
+//     // const pot = loadAsset("pot", "pot", "fbxFull.gltf");
 
-    playBtn.onPointerUpObservable.add(function() {
-      gui.removeControl(playBtn);
-      //Play Intro Video
-      playVideo(introVideo);
-    });
+//     // //load Videos
+//     // var introVideo = loadVideo(
+//     //   "assets/videos/Cam_Portal_Main.mp4",
+//     //   "assets/poster/Cam_Portal_Main_Poster.png"
+//     // );
+//     //load assets
 
-    //load Assets
-    const mainChar = loadAsset(
-      "mainChar",
-      "Stromboli",
-      "Stromboli_AnimLayer.gltf"
-    );
+//     console.log(this.assetsManager);
 
-    const pot = loadAsset("pot", "pot", "fbxFull.gltf");
+//     assetsManager.load();
 
-    //load Videos
-    var introVideo = loadVideo(
-      "assets/videos/Cam_Portal_Main.mp4",
-      "assets/poster/Cam_Portal_Main_Poster.png"
-    );
-    //load assets
-    assetsManager.load();
+//     //after Assets are loaded load Video
+//     assetsManager.onFinish = function() {
+//       console.log("assets Manager finished");
+//       //Stop all animations -> will become a function
+//       stopAnimation(mainChar);
 
-    //after Assets are loaded load Video
-    assetsManager.onFinish = function() {
-      console.log("assets Manager finished");
-      //Stop all animations -> will become a function
-      stopAnimation(mainChar);
+//       gui.addControl(playBtn, 0, 0);
+//       //position and rotate char
+//       positionAsset(mainChar, 1, -1, -2.5);
+//       rotateAsset(mainChar, BABYLON.Axis.Y, Math.PI);
+//       //position and rotate pot
+//       positionAsset(pot, 1.3, -1, -3.4);
+//       scaleAsset(pot, 40, 40, 40);
+//       rotateAsset(pot, BABYLON.Axis.Y, Math.PI);
+//     };
 
-      gui.addControl(playBtn, 0, 0);
-      //position and rotate char
-      positionAsset(mainChar, 1, -1, -2.5);
-      rotateAsset(mainChar, BABYLON.Axis.Y, Math.PI);
-      //position and rotate pot
-      positionAsset(pot, 1.3, -1, -3.4);
-      scaleAsset(pot, 40, 40, 40);
-      rotateAsset(pot, BABYLON.Axis.Y, Math.PI);
-    };
+//     return this.scene;
+//   };
 
-    return this.scene;
-  };
-
-  /******* End of the create scene function ******/
-
-  var scene = createScene(); //Call the createScene function
-
-  // Register a render loop to repeatedly render the scene
-  this.engine.runRenderLoop(function() {
-    scene.render();
-  });
-
-  // Watch for browser/canvas resize events
-  window.addEventListener("resize", function() {
-    engine.resize();
-  });
-});
+//   /******* End of the create scene function ******/
+// });

@@ -1,8 +1,14 @@
 class Video {
-  constructor() {}
-
-  test() {
-    console.log("video loaded");
+  constructor(game) {
+    this.game = game;
+    this.assetsManager = game.assetsManager;
+    this.engine = game.engine;
+    this.canvas = game.canvas;
+    this.mat = game.mat;
+    this.bgPlane = game.bgPlane;
+    this.bgVideo = game.bgVideo;
+    this.videoAsset = game.videoAsset;
+    this.Asset = game.Asset;
   }
 
   preLoead() {
@@ -27,11 +33,11 @@ class Video {
     };
   }
 
-  loadVideo(video, poster) {
+  load(video, poster) {
     var videoTexture = new BABYLON.VideoTexture(
       "video",
       video,
-      scene,
+      this.scene,
       false,
       false,
       BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
@@ -41,33 +47,38 @@ class Video {
       }
     );
     //Apply Texture
-    mat.diffuseTexture = videoTexture;
+    this.mat.diffuseTexture = videoTexture;
     //Apply Video to BG
-    bgPlane.material = mat;
-    //start video
-    //videoTexture.video.play();
+    this.bgPlane.material = this.mat;
+
     return videoTexture;
   }
 
-  play(videoAsset) {
+  start(videoAsset) {
     videoAsset.video.play();
     console.log("video started");
 
-    var htmlVideo = mat.diffuseTexture.video;
-    htmlVideo.onended = function() {
-      finishedVideo();
+    // Trigger Function when Video is finished
+    var htmlVideo = this.mat.diffuseTexture.video;
+    htmlVideo.onended = () => {
+      this.game.firstChar();
     };
   }
 
-  finished() {
-    console.log("video Finished & show Assets");
-    //show Assets
-    showHideAsset(mainChar, true);
-    showHideAsset(pot, true);
+  change(videoSrc, posterSrc) {
+    this.bgVideo.video.src = videoScr;
+    this.bgVideo.video.poster = posterSrc;
+  }
 
-    loadAssetAnimation(mainChar);
-    //start idle Animation of First Char
-    controlAnimations(mainChar, 1);
+  finished() {
+    return true;
+    // //show Assets
+    // showHideAsset(mainChar, true);
+    // showHideAsset(pot, true);
+
+    // loadAssetAnimation(mainChar);
+    // //start idle Animation of First Char
+    // controlAnimations(mainChar, 1);
   }
 }
 

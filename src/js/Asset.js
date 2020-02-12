@@ -1,20 +1,26 @@
-import Game from "./Game";
-
-class Asset extends Game {
-  constructor() {
-    super();
+class Asset {
+  constructor(game) {
+    this.game = game;
+    this.assetsManager = game.assetsManager;
+    this.engine = game.engine;
+    this.canvas = game.canvas;
+    this.assetPath = game.assetPath;
   }
 
-  showHide(asset, showHide) {
-    asset.loadedMeshes[0].setEnabled(showHide);
+  hide(asset) {
+    asset.loadedMeshes[0].setEnabled(false);
+  }
+
+  show(asset) {
+    asset.loadedMeshes[0].setEnabled(true);
   }
 
   load(assetName, assetDir, gltfFile) {
     //load Asset
-    var tmpTask = assetsManager.addMeshTask(
+    var tmpTask = this.assetsManager.addMeshTask(
       assetName,
       "",
-      assetPath + assetDir + "/",
+      this.assetPath + assetDir + "/",
       gltfFile
     );
     //on Success
