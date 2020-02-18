@@ -9,9 +9,11 @@ class Video {
     this.bgVideo = game.bgVideo;
     this.videoAsset = game.videoAsset;
     this.Asset = game.Asset;
+    this.GUI = game.GUI;
+    this.htmlVideo = null;
   }
 
-  preLoead() {
+   loadAsync(videoPath) {
     const getVideo = () => {
       try {
         return axios.get(videoPath);
@@ -22,19 +24,19 @@ class Video {
 
     const asignVideo = async () => {
       const video = getVideo()
-        .then(response => {
-          if (response.data) {
-            console.log(response.data);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .then(response => {
+            if (response.data) {
+              console.log(response.data);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
     };
   }
 
   load(video, poster) {
-    var videoTexture = new BABYLON.VideoTexture(
+    let videoTexture = new BABYLON.VideoTexture(
       "video",
       video,
       this.scene,
@@ -46,40 +48,36 @@ class Video {
         poster: poster
       }
     );
-    //Apply Texture
-    this.mat.diffuseTexture = videoTexture;
-    //Apply Video to BG
-    this.bgPlane.material = this.mat;
 
     return videoTexture;
   }
 
+  attach(texture){
+      //Apply Texture
+      this.mat.diffuseTexture = texture;
+      //Apply Video to BG
+      this.bgPlane.material = this.mat;
+      //set HTML Video
+      this.htmlVideo = this.mat.diffuseTexture.video;
+  }
+
+
   start(videoAsset) {
     videoAsset.video.play();
-    console.log("video started");
+  }
 
-    // Trigger Function when Video is finished
-    var htmlVideo = this.mat.diffuseTexture.video;
-    htmlVideo.onended = () => {
-      this.game.firstChar();
+  hasEnded(){
+    this.htmlVideo.onended = () => {
+      console.log("ended");
+      return true;
     };
   }
 
   change(videoSrc, posterSrc) {
-    this.bgVideo.video.src = videoScr;
+    this.bgVideo.video.src = videoSrc;
     this.bgVideo.video.poster = posterSrc;
   }
 
-  finished() {
-    return true;
-    // //show Assets
-    // showHideAsset(mainChar, true);
-    // showHideAsset(pot, true);
-
-    // loadAssetAnimation(mainChar);
-    // //start idle Animation of First Char
-    // controlAnimations(mainChar, 1);
-  }
 }
 
 export default Video;

@@ -64,6 +64,8 @@ export default class {
     this.introVideo = null;
     this.playBtn = null;
     this.videoAsset = null;
+    this.gameTask = null;
+
   }
 
   createScene() {
@@ -74,15 +76,15 @@ export default class {
     this.GUI = new GUI(this);
     this.Video = new Video(this);
 
-    // When all assets are loaded =>
-    this.assetsManager.onFinish = tasks => {
-      this.setup();
-    };
-
     // On Window Resize => Resize Game
     window.addEventListener("resize", () => {
       this.engine.resize();
     });
+
+    // When all assets are loaded =>
+    this.assetsManager.onFinish = tasks => {
+      this.setup();
+    };
     // Start Loading
     this.assetsManager.load();
   }
@@ -91,24 +93,23 @@ export default class {
     //load Start Button
     this.playBtn = this.GUI.createImgBtnNoText(
       "playBtn",
-      "../../assets/images/gui/play-button.png",
+      "assets/images/gui/play-button.png",
       "200px",
       "200px"
     );
+
     //load bg Video
-    let bgVideo = this.Video.load(
+    this.bgVideo = this.Video.load(
       "assets/videos/Cam_Portal_Main.mp4",
       "assets/poster/Cam_Portal_Main_Poster.png"
     );
+    //Attach Video to Background
+    this.Video.attach(this.bgVideo);
 
     //initial Play button was pressed
-    this.GUI.btnEvent(
-      this.playBtn,
-      () => {
-        this.Video.start(bgVideo);
-      },
-      true
-    );
+    this.GUI.btnEvent(this.playBtn,() => {
+        this.mainChar();
+      },true);
 
     //start Render Loop
     this.engine.runRenderLoop(() => {
@@ -116,13 +117,33 @@ export default class {
     });
   }
 
-  firstChar() {
-    console.log("first Char");
-    let char = this.Asset.load(
-      "mainChar",
-      "Stromboli",
-      "Stromboli_AnimLayer.gltf"
-    );
-    this.Asset.show(char);
+  mainChar(){
+    this.Video.start(this.bgVideo);
+
+    let leftVideo = this.Video.load(
+        "assets/videos/Cam_Main_Basilisk.mp4",
+        "assets/poster/Cam_Main_Basilisk_Poster.png");
+    let rightVideo = this.Video.load(
+        "assets/videos/Cam_Portal_Main.mp4",
+        "assets/poster/Cam_Portal_Main_Poster.png");
+    let centerVideo = this.Video.load(
+        "assets/videos/Cam_Main_Portal.mp4",
+        "assets/poster/Cam_Main_Portal_Poster.png");
+
+    this.Video.htmlVideo;
+
+    this.Video.htmlVideo.onended = () => {
+      this.uiBtn = this.GUI.ui(
+          "left",
+          "assets/videos/Cam_Portal_Main.mp4",
+          "assets/poster/Cam_Portal_Main_Poster.png",
+          "center",
+          "assets/videos/Cam_Portal_Main.mp4",
+          "assets/poster/Cam_Portal_Main_Poster.png",
+          "right",
+          "assets/videos/Cam_Portal_Main.mp4",
+          "assets/poster/Cam_Portal_Main_Poster.png"
+          )
+    };
   }
 }

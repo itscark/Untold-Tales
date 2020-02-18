@@ -8,13 +8,15 @@ export default class {
     this.engine = game.engine;
     this.canvas = game.canvas;
     this.playBtn = game.playBtn;
+    this.Asset = game.Asset;
+    this.Video = game.Video;
     //load GUI
     this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("gui");
   }
 
   createButton() {
-    var guiBtn = Button.CreateSimpleButton(btn, btn);
-    var returnedAnimation = null;
+    let guiBtn = Button.CreateSimpleButton(btn, btn);
+    let returnedAnimation = null;
     guiBtn.paddingTop = "10px";
     guiBtn.width = "100px";
     guiBtn.height = "50px";
@@ -48,16 +50,16 @@ export default class {
     return tmpBtn;
   }
 
-  btnEvent(btn, callBack, remove = false) {
+  btnEvent(btn, doSomething, remove = false) {
     btn.onPointerUpObservable.add(() => {
-      callBack();
+      doSomething();
       if (remove === true) {
         this.advancedTexture.removeControl(btn);
       }
     });
   }
 
-  video(
+  ui(
     leftBtnName,
     leftBtnVideo,
     leftBtnPoster,
@@ -68,18 +70,20 @@ export default class {
     rightBtnVideo,
     rightBtnPoster
   ) {
-    leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
+    let leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
     leftBtn.width = "150px";
     leftBtn.height = "40px";
     leftBtn.color = "white";
     leftBtn.cornerRadius = 20;
     leftBtn.background = "green";
-    leftBtn.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    leftBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    s;
-    advancedTexture.addControl(leftBtn);
+    leftBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    leftBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    leftBtn.onPointerUpObservable.add(function() {
+      this.Video.loadVideo(leftBtnVideo, leftBtnPoster);
+    });
+    this.advancedTexture.addControl(leftBtn);
 
-    exitBtn = GUI.Button.CreateSimpleButton("but2", centerBtnName);
+    let exitBtn = GUI.Button.CreateSimpleButton("but2", centerBtnName);
     exitBtn.width = "150px";
     exitBtn.height = "40px";
     exitBtn.color = "white";
@@ -88,12 +92,11 @@ export default class {
     exitBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
     exitBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     exitBtn.onPointerUpObservable.add(function() {
-      removeUI();
-      loadVideo(centerBtnVideo, centerBtnPoster);
+      this.Video.loadVideo(centerBtnVideo, centerBtnPoster);
     });
-    advancedTexture.addControl(exitBtn);
+    this.advancedTexture.addControl(exitBtn);
 
-    rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
+    let rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
     rightBtn.width = "150px";
     rightBtn.height = "40px";
     rightBtn.color = "white";
@@ -102,9 +105,8 @@ export default class {
     rightBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     rightBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     rightBtn.onPointerUpObservable.add(function() {
-      removeUI();
-      loadVideo(rightBtnVideo, rightBtnPoster);
+      this.Video.loadVideo(rightBtnVideo, rightBtnPoster);
     });
-    advancedTexture.addControl(rightBtn);
+    this.advancedTexture.addControl(rightBtn);
   }
 }
