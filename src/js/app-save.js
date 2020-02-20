@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
       leftBtn.horizontalAlignment =
         BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
       leftBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-      s;
+      ;
       advancedTexture.addControl(leftBtn);
 
       exitBtn = GUI.Button.CreateSimpleButton("but2", centerBtnName);
