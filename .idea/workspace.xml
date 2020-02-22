@@ -3,9 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="5ead12db-c22e-405d-ac7b-b39581e2c7b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bildschirmfoto 2020-02-06 um 15.30.18.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Basilisk_Loop_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Basilisk_Portal_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Main_Basilisk_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Main_Loop_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Main_Portal_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/poster/Cam_Portal_Main_Poster.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Basilisk_Loop.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Basilisk_Loop.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Basilisk_Wolpertinger.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Basilisk_Wolpertinger.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Main_Basilisk.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Main_Basilisk.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Main_Loop.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Main_Loop.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_PortalStart_Loop.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_PortalStart_Loop.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Portal_Main.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Portal_Main.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/videos/Cam_Wolpertinger_Loop.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/videos/Cam_Wolpertinger_Loop.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/app-save.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/app-save.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/Video.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Video.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

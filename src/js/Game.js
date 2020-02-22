@@ -61,8 +61,6 @@ export default class {
 
         //set global Asset paths, incase folder structure my be changed in the future
         this.assetPath = "/assets/chars/";
-        this.videoPath = "assets/videos/";
-        this.posterPath = "assets/poster/";
 
         // Init Variables
         this.introVideo = null;
@@ -108,8 +106,7 @@ export default class {
 
         //load bg Video
         this.bgVideo = this.Video.load(
-            "assets/videos/Cam_Portal_Main.mp4",
-            "assets/poster/Cam_Portal_Main_Poster.png"
+            "Cam_Portal_Main"
         );
         //Attach Video to Background
         this.Video.attach(this.bgVideo);
@@ -129,29 +126,28 @@ export default class {
     // naming convention for Charakter Functions
     // e.g. mainBasilisk()
     // this is the section from the Main Char to the Basilisk Char
+    // e.g. mainLoop()
+    // this will load the Loop function and all necessary assets
     ////////////
+
+    //Function for all Charakter Loop videos
     loadLoop(leftVideo,
-             leftVideoPoster,
              centerVideo,
-             centerVideoPoster,
              rightVideo,
-             rightVideoPoster,
              leftBtnName,
              leftFunction,
              centerBtnName,
              centerFunction,
              rightBtnName,
              rightFunction) {
+        //Functions to preload Videos for the next Chars
         this.leftVideo = this.Video.load(
-            this.videoPath + leftVideo,
-            this.posterPath + leftVideoPoster);
+            leftVideo);
         this.centerVideo = this.Video.load(
-            this.videoPath + centerVideo,
-            this.posterPath + centerVideoPoster);
+            centerVideo);
         this.rightVideo = this.Video.load(
-            this.videoPath + rightVideo,
-            this.posterPath + rightVideoPoster);
-
+            rightVideo);
+        //add UI to GUI
         this.uiBtn = this.GUI.addControlUI(
             leftBtnName,
             () => {
@@ -167,21 +163,42 @@ export default class {
             })
     }
 
+    //load and play the fromTo Vidoes
 
+    fromTo(video, loopCam, loopFunction) {
+        this.Video.attach(video);
+        this.GUI.removeControlUI();
+        this.Video.start(video);
+
+        //This sections is to preload the next Videos
+        //setTime out is used to garantie no lagging whe the video is playing
+        setTimeout(() => {
+            this.loopVideo = this.Video.load(loopCam);
+        }, 2000);
+
+        this.Video.htmlVideo.onended = () => {
+            this.Video.attach(this.loopVideo);
+            this.Video.start(this.loopVideo);
+            this.Video.loop(this.loopVideo);
+            loopFunction();
+        };
+    }
+
+    //Intro Video
     portalMain() {
         this.Video.start(this.bgVideo);
         //This sections is to preload the next Videos
         //setTime out is used to garantie no lagging whe the video is playing
         setTimeout(() => {
             this.loopVideo = this.Video.load(
-                this.videoPath + "Cam_Main_Loop.mp4",
-                this.posterPath + "Cam_Main_Loop_Poster.png");
+                "Cam_Main_Loop");
         }, 2000);
 
         //When the video has ended load the next videos
         this.Video.htmlVideo.onended = () => {
             this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
+            this.Video.loop(this.loopVideo);
             this.mainLoop();
         };
     }
@@ -192,12 +209,9 @@ export default class {
     ////////////
     mainLoop() {
         this.loadLoop(
-            "Cam_Main_Basilisk.mp4",
-            "Cam_Main_Basilisk_Poster.png",
-            "Cam_Main_Portal.mp4",
-            "Cam_Main_Portal_Poster.png",
-            "Cam_Main_Eier.mp4",
-            "Cam_Portal_Main_Poster.png",
+            "Cam_Main_Basilisk",
+            "Cam_Main_Portal",
+            "Cam_Main_Eier",
             "Basilisk",
             () => {
                 this.mainBasilisk()
@@ -214,23 +228,77 @@ export default class {
 
     basiliskLoop() {
         this.loadLoop(
-            "Cam_Basilisk_Wolpertinger.mp4",
-            "Cam_Main_Basilisk_Poster.png",
-            "Cam_Basilisk_Portal.mp4",
-            "Cam_Main_Portal_Poster.png",
-            "Cam_Basilisk_Yeti.mp4",
-            "Cam_Portal_Main_Poster.png",
+            "Cam_Basilisk_Wolpertinger",
+            "Cam_Basilisk_Portal",
+            "Cam_Basilisk_Yeti",
             "Wolpertinger",
             () => {
-                this.mainBasilisk()
+                this.basiliskWolpertinger()
             },
             "Portal",
             () => {
-                this.mainPortal()
+
             },
             "Yeti",
             () => {
-                this.mainEier()
+
+            });
+    }
+
+    wolpertingerLoop() {
+        this.loadLoop(
+            "Cam_Wolpertinger_BabaYaga",
+            "Cam_Wolpertinger_Portal",
+            "Cam_Wolpertinger_Baum",
+            "BabaYaga",
+            () => {
+
+            },
+            "Portal",
+            () => {
+                this.wolpertingerPortal()
+            },
+            "Baum",
+            () => {
+
+            });
+    }
+
+    babaYagaLoop() {
+        this.loadLoop(
+            "Cam_BabaYaga_Eier",
+            "Cam_BabaYaga_Portal",
+            "Cam_BabaYaga_Main",
+            "Eier",
+            () => {
+
+            },
+            "Portal",
+            () => {
+
+            },
+            "Main",
+            () => {
+
+            });
+    }
+
+    eierLoop() {
+        this.loadLoop(
+            "Cam_Eier_Nessie",
+            "Cam_Eier_Portal",
+            "Cam_Eier_Wolpertinger",
+            "Nessie",
+            () => {
+
+            },
+            "Portal",
+            () => {
+
+            },
+            "Woplertinger",
+            () => {
+
             });
     }
 
@@ -238,35 +306,41 @@ export default class {
     //From to Videos
     ////////////
     mainBasilisk() {
-        this.Video.attach(this.leftVideo);
-        this.GUI.removeControlUI();
-        this.Video.start(this.leftVideo);
-
-        //This sections is to preload the next Videos
-        //setTime out is used to garantie no lagging whe the video is playing
-        setTimeout(() => {
-            this.loopVideo = this.Video.load(
-                this.videoPath + "Cam_Basilisk_Loop.mp4",
-                this.posterPath + "Cam_Main_Loop_Poster.png");
-        }, 2000);
-
-        this.Video.htmlVideo.onended = () => {
-            this.Video.attach(this.loopVideo);
-            this.Video.start(this.loopVideo);
-            this.basiliskLoop();
-        };
-
+        this.fromTo(this.leftVideo, "Cam_Basilisk_Loop", () => {
+            this.basiliskLoop()
+        })
     }
 
     mainEier() {
-        this.Video.attach(this.rightVideo);
-        this.GUI.removeControlUI();
-        this.Video.start(this.rightVideo);
+        this.fromTo(this.rightVideo, "Cam_Eier_Loop", () => {
+            this.eierLoop()
+        })
     }
 
     mainPortal() {
         this.Video.attach(this.centerVideo);
         this.GUI.removeControlUI();
         this.Video.start(this.centerVideo);
+    }
+
+    basiliskWolpertinger() {
+        this.fromTo(this.leftVideo, "Cam_Wolpertinger_Loop", () => {
+            this.wolpertingerLoop()
+        })
+    }
+
+    wolpertingerPortal(){
+        this.Video.attach(this.centerVideo);
+        this.GUI.removeControlUI();
+        this.Video.start(this.centerVideo);
+    }
+
+    babaYagaEier() {
+    }
+
+    babaYagaMain() {
+    }
+
+    babaYagaPortal() {
     }
 }
