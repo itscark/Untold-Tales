@@ -60,7 +60,7 @@ export default class {
         this.createScene();
 
         //set global Asset paths, incase folder structure my be changed in the future
-        this.assetPath = "/assets/chars/";
+        this.assetPath = "assets/chars/";
 
         // Init Variables
         this.introVideo = null;
@@ -192,10 +192,16 @@ export default class {
         setTimeout(() => {
             this.loopVideo = this.Video.load(
                 "Cam_Main_Loop");
-        }, 2000);
+        }, 500);
+
+        //load the First Asset
+        setTimeout(()=>{
+
+        }, 3000);
 
         //When the video has ended load the next videos
         this.Video.htmlVideo.onended = () => {
+            this.Asset.loadAsync("Stromboli", "Stromboli_AnimLayer.gltf");
             this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
             this.Video.loop(this.loopVideo);
@@ -329,7 +335,7 @@ export default class {
         })
     }
 
-    wolpertingerPortal(){
+    wolpertingerPortal() {
         this.Video.attach(this.centerVideo);
         this.GUI.removeControlUI();
         this.Video.start(this.centerVideo);

@@ -1,11 +1,19 @@
+import * as BABYLON from "babylonjs";
+
 class Asset {
   constructor(game) {
     this.game = game;
     this.assetsManager = game.assetsManager;
     this.engine = game.engine;
     this.canvas = game.canvas;
-    this.assetPath = game.assetPath;
     this.gameTask = game.gameTask;
+
+    //Init Variables
+    this.assetPath = "assets/chars/";
+    this.loadedAnimationGroups= null;
+    this.loadedMeshes = null;
+    this.loadedSkeletons = null;
+
   }
 
   hide(asset) {
@@ -29,6 +37,20 @@ class Asset {
       task.loadedMeshes[0].setEnabled(false);
     };
     return tmpTask;
+  }
+
+  loadAsync(assetDir, assetFile) {
+    Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
+          .then((result) => {
+            this.loadedAnimationGroups = result.animationGroups;
+            this.loadedMeshes = result.meshes[0];
+            this.loadedSkeletons = result.skeletons[0];
+
+            //dont show the loaded Assets
+            //this.loadedMeshes.setEnabled(false);
+          })
+    ])
   }
 
   position(task, xPosition, yPosition, zPosition) {

@@ -1760,40 +1760,40 @@
     ],
     "images": [
         {
-            "uri": "Stromboli_Body_baseColor.png"
+            "uri": "Stromboli_Body_baseColor.jpg"
         },
         {
-            "uri": "Stromboli_Body_occlusionRoughnessMetallic.png"
+            "uri": "Stromboli_Body_occlusionRoughnessMetallic.jpg"
         },
         {
-            "uri": "Stromboli_Body_normal.png"
+            "uri": "Stromboli_Body_normal.jpg"
         },
         {
-            "uri": "Stromboli_Coat_baseColor.png"
+            "uri": "Stromboli_Coat_baseColor.jpg"
         },
         {
-            "uri": "Stromboli_Coat_occlusionRoughnessMetallic.png"
+            "uri": "Stromboli_Coat_occlusionRoughnessMetallic.jpg"
         },
         {
-            "uri": "Stromboli_Coat_normal.png"
+            "uri": "Stromboli_Coat_normal.jpg"
         },
         {
-            "uri": "Stromboli_Hands_baseColor.png"
+            "uri": "Stromboli_Hands_baseColor.jpg"
         },
         {
-            "uri": "Stromboli_Hands_occlusionRoughnessMetallic.png"
+            "uri": "Stromboli_Hands_occlusionRoughnessMetallic.jpg"
         },
         {
-            "uri": "Stromboli_Hands_normal.png"
+            "uri": "Stromboli_Hands_normal.jpg"
         },
         {
-            "uri": "Stromboli_Shoes_baseColor.png"
+            "uri": "Stromboli_Shoes_baseColor.jpg"
         },
         {
-            "uri": "Stromboli_Shoes_occlusionRoughnessMetallic.png"
+            "uri": "Stromboli_Shoes_occlusionRoughnessMetallic.jpg"
         },
         {
-            "uri": "Stromboli_Shoes_normal.png"
+            "uri": "Stromboli_Shoes_normal.jpg"
         }
     ],
     "samplers": [

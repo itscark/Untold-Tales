@@ -161,12 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function loadAsset(assetName, assetDir, gltfFile) {
       //load Asset
-      var tmpTask = assetsManager.addMeshTask(
-        assetName,
-        "",
-        assetPath + assetDir + "/",
-        gltfFile
-      );
+      var tmpTask = assetsManager.addMeshTask( assetName,"",assetPath + assetDir + "/",gltfFile);
       //on Success
       tmpTask.onSuccess = function(task) {
         task.loadedMeshes[0].setEnabled(false);
