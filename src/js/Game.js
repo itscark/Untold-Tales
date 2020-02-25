@@ -113,7 +113,14 @@ export default class {
 
         //initial Play button was pressed
         this.GUI.btnEvent(this.playBtn, () => {
-            this.portalMain();
+            // // Play intro Video to the main char
+            //this.portalMain();
+
+            //Testing Area
+           let tmp =  this.Asset.loadAsync("Stromboli", "Stromboli_AnimLayer.gltf");
+
+            console.log(tmp);
+
         }, true);
 
         //start Render Loop
@@ -194,10 +201,6 @@ export default class {
                 "Cam_Main_Loop");
         }, 500);
 
-        //load the First Asset
-        setTimeout(()=>{
-
-        }, 3000);
 
         //When the video has ended load the next videos
         this.Video.htmlVideo.onended = () => {
