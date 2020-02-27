@@ -203,7 +203,11 @@ export default class {
            axis, rotation
     ) {
         this.Video.attach(video);
-        this.GUI.removeControlUI();
+        try {
+            this.GUI.removeControlUI();
+        } catch (e) {
+            console.log("no gui displayed")
+        }
         this.Video.start(video);
 
         //This sections is to preload the next Videos
@@ -241,35 +245,6 @@ export default class {
             loopFunction(promiseAwait);
         };
     }
-
-    //Intro Video
-    portalMain() {
-        this.Video.start(this.bgVideo);
-        //This sections is to preload the next Videos
-        //setTime out is used to garantie no lagging whe the video is playing
-        setTimeout(() => {
-            this.loopVideo = this.Video.load(
-                "Cam_Main_Loop");
-        }, 500);
-
-        //When the video has ended load the next videos
-        this.Video.htmlVideo.onended = async () => {
-            //Load Asset
-            //to Access the loaded Mesh etc. a async await had to be implemented
-            let promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
-
-            this.Asset.scale(promiseAwait.meshes[0], 2, 2, 2);
-            this.Asset.position(promiseAwait.meshes[0], 1.3, -1.4, -1);
-
-            this.GUI.loadAssetAnimation(promiseAwait);
-
-            this.Video.attach(this.loopVideo);
-            this.Video.start(this.loopVideo);
-            this.Video.loop(this.loopVideo);
-            this.mainLoop(promiseAwait);
-        };
-    }
-
 
     ////////////
     //Loop Videos
@@ -417,10 +392,18 @@ export default class {
             promiseAwait);
     }
 
-
     ////////////
     //FromTo Videos
     ////////////
+    portalMain() {
+        this.fromTo(this.bgVideo, "Main", (promiseAwait) => {
+                this.mainLoop(promiseAwait)
+            },
+            "Stromboli", "Stromboli_AnimLayer.gltf",
+            true, 2, 2, 2,
+            true, 1.3, -1.4, -1);
+    }
+
     toPortal() {
         this.Video.attach(this.centerVideo);
         this.GUI.removeControlUI();
