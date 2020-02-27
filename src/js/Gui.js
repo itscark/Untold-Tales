@@ -21,10 +21,11 @@ export default class {
             GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.animationGui.verticalAlignment =
             GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        this.advancedTexture.addControl(this.animationGui);
+        this.animationBtn = null;
     }
 
     loadAssetAnimation(asset) {
+        this.advancedTexture.addControl(this.animationGui);
         for (let i = 0; i < asset.animationGroups.length; i++) {
             let tmpAsset = asset.animationGroups[i];
             let tmpName = tmpAsset["name"];
@@ -33,15 +34,14 @@ export default class {
     }
 
     createButton(btn, asset, assetIndex) {
-        let guiBtn = GUI.Button.CreateSimpleButton(btn, btn);
-        let returnedAnimation = null;
-        guiBtn.paddingTop = "10px";
-        guiBtn.width = "100px";
-        guiBtn.height = "50px";
-        guiBtn.color = "white";
-        guiBtn.background = "green";
-        this.animationGui.addControl(guiBtn);
-        guiBtn.onPointerUpObservable.add(() => {
+        this.animationBtn = GUI.Button.CreateSimpleButton(btn, btn);
+        this.animationBtn.paddingTop = "10px";
+        this.animationBtn.width = "100px";
+        this.animationBtn.height = "50px";
+        this.animationBtn.color = "white";
+        this.animationBtn.background = "green";
+        this.animationGui.addControl(this.animationBtn);
+        this.animationBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
             this.controlAnimations(asset, assetIndex);
         });
@@ -81,14 +81,13 @@ export default class {
     addControlUI(
         leftBtnName,
         leftFunction,
-        centerBtnName,
         centerFunction,
         rightBtnName,
         rightFunction,
     ) {
         //Init Buttons
         this.leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
-        this.centerBtn = GUI.Button.CreateSimpleButton("but2", centerBtnName);
+        this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
         this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
 
         ////////////
@@ -151,6 +150,11 @@ export default class {
         this.advancedTexture.removeControl(this.leftBtn);
         this.advancedTexture.removeControl(this.centerBtn);
         this.advancedTexture.removeControl(this.rightBtn);
+        this.advancedTexture.removeControl(this.animationBtn);
+        //remove all previous Animations Buttons from the GUI
+        this.animationGui._children = [];
+
+
         this.advancedTexture.removeControl(this.animationGui);
     }
 }

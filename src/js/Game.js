@@ -72,7 +72,6 @@ export default class {
         this.centerVideo = null;
         this.loopVideo = null;
         this.assetPromise = null;
-
     }
 
     createScene() {
@@ -149,44 +148,60 @@ export default class {
         rightVideo,
         leftBtnName,
         leftFunction,
-        centerBtnName,
-        centerFunction,
         rightBtnName,
         rightFunction,
         promiseAwait) {
         //Functions to preload Videos for the next Chars
         this.leftVideo = this.Video.load(
-            leftVideo);
+            "Cam_" + leftVideo);
         this.centerVideo = this.Video.load(
-            centerVideo);
+            "Cam_" + centerVideo);
         this.rightVideo = this.Video.load(
-            rightVideo);
+            "Cam_" + rightVideo);
         //add UI to GUI
         this.uiBtn = this.GUI.addControlUI(
             leftBtnName,
             () => {
                 leftFunction();
-                console.log(promiseAwait);
                 //When Button is clicked Asset Visibility has to be set to Hide
-                this.Asset.hide(promiseAwait.meshes[0])
+                try {
+                    this.Asset.hide(promiseAwait.meshes[0])
+                } catch (e) {
+                    console.log('no asset to hide')
+                }
             },
-            centerBtnName,
             () => {
-                centerFunction();
+                this.toPortal();
                 //When Button is clicked Asset Visibility has to be set to Hide
-                this.Asset.hide(promiseAwait.meshes[0])
+                try {
+                    this.Asset.hide(promiseAwait.meshes[0])
+                } catch (e) {
+                    console.log('no asset to hide')
+                }
             },
             rightBtnName,
             () => {
                 rightFunction();
                 //When Button is clicked Asset Visibility has to be set to Hide
-                this.Asset.hide(promiseAwait.meshes[0])
+                try {
+                    this.Asset.hide(promiseAwait.meshes[0])
+                } catch (e) {
+                    console.log('no asset to hide')
+                }
             })
     }
 
     //load and play the fromTo Vidoes
 
-    fromTo(video, loopCam, loopFunction) {
+    fromTo(video, loopCam, loopFunction,
+           assetDir, assetFile,
+           setScale = false,
+           xScale, yScale, zScale,
+           setPosition = false,
+           xPosition, yPosition, zPosition,
+           setRotation = false,
+           axis, rotation
+    ) {
         this.Video.attach(video);
         this.GUI.removeControlUI();
         this.Video.start(video);
@@ -194,20 +209,35 @@ export default class {
         //This sections is to preload the next Videos
         //setTime out is used to garantie no lagging whe the video is playing
         setTimeout(() => {
-            this.loopVideo = this.Video.load(loopCam);
+            this.loopVideo = this.Video.load("Cam_" + loopCam + "_Loop");
         }, 2000);
 
         this.Video.htmlVideo.onended = async () => {
-            //Load Asset
-            //to Access the loaded Mesh etc. a async await had to be implemented
-            let promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
-            this.Asset.scale(promiseAwait.meshes[0], 2, 2, 2);
-            this.Asset.position(promiseAwait.meshes[0], 1.3, -1.4, -1);
-            this.GUI.loadAssetAnimation(promiseAwait);
+            let promiseAwait = null;
+            //check if a asset is loaded
+            try {
+                //Load Asset
+                //to Access the loaded Mesh etc. a async await had to be implemented
+                promiseAwait = await this.configureAsset(assetDir, assetFile);
+                if (setScale) {
+                    this.Asset.scale(promiseAwait.meshes[0], xScale, yScale, zScale)
+                }
+                if (setPosition) {
+                    this.Asset.position(promiseAwait.meshes[0], xPosition, yPosition, zPosition);
+                }
+                if (setRotation) {
+                    this.Asset.rotate(promiseAwait.meshes[0], axis, rotation);
+                }
+                this.GUI.loadAssetAnimation(promiseAwait);
+
+            } catch (e) {
+                console.log('no asset loaded')
+            }
 
             this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
             this.Video.loop(this.loopVideo);
+
             loopFunction(promiseAwait);
         };
     }
@@ -244,18 +274,93 @@ export default class {
     ////////////
     //Loop Videos
     ////////////
+    babaYagaLoop(promiseAwait) {
+        this.loadLoop(
+            "BabaYaga_Eier",
+            "BabaYaga_Portal",
+            "BabaYaga_Main",
+            "Eier",
+            () => {
+                this.babaYagaEier()
+            },
+            "Main",
+            () => {
+                this.babaYagaMain()
+            },
+            promiseAwait);
+    }
+
+    basiliskLoop(promiseAwait) {
+        this.loadLoop(
+            "Basilisk_Wolpertinger",
+            "Basilisk_Portal",
+            "Basilisk_Yeti",
+            "Wolpertinger",
+            () => {
+                this.basiliskWolpertinger()
+            },
+            "Yeti",
+            () => {
+                this.basiliskYeti()
+            },
+            promiseAwait);
+    }
+
+    baumLoop(promiseAwait) {
+        this.loadLoop(
+            "Baum_BabaYaga",
+            "Baum_Portal",
+            "Baum_Basilisk",
+            "BabaYaga",
+            () => {
+                this.baumBabaYaga()
+            },
+            "Basilisk",
+            () => {
+                this.baumBasilisk()
+            },
+            promiseAwait);
+    }
+
+    eierLoop(promiseAwait) {
+        this.loadLoop(
+            "Eier_Nessie",
+            "Eier_Portal",
+            "Eier_Wolpertinger",
+            "Nessie",
+            () => {
+                this.eierNessie()
+            },
+            "Woplertinger",
+            () => {
+                this.eierWolpertinger()
+            }, promiseAwait);
+    }
+
+    joboldLoop(promiseAwait) {
+        this.loadLoop(
+            "Jobold_Baum",
+            "Jobold_Portal",
+            "Jobold_Yeti",
+            "Baum",
+            () => {
+                this.joboldBaum()
+            },
+            "Yeti",
+            () => {
+                this.joboldYeti()
+            },
+            promiseAwait);
+    }
+
     mainLoop(promiseAwait) {
         this.loadLoop(
-            "Cam_Main_Basilisk",
-            "Cam_Main_Portal",
-            "Cam_Main_Eier",
+            "Main_Basilisk",
+            "Main_Portal",
+            "Main_Eier",
             "Basilisk",
             () => {
                 this.mainBasilisk()
-            },
-            "Portal",
-            () => {
-                this.mainPortal()
             },
             "Eier",
             () => {
@@ -264,122 +369,174 @@ export default class {
             promiseAwait);
     }
 
-    basiliskLoop(promiseAwait) {
+    nessieLoop(promiseAwait) {
         this.loadLoop(
-            "Cam_Basilisk_Wolpertinger",
-            "Cam_Basilisk_Portal",
-            "Cam_Basilisk_Yeti",
-            "Wolpertinger",
+            "Nessie_Jobold",
+            "Nessie_Portal",
+            "Nessie_Main",
+            "Jobold",
             () => {
-                this.basiliskWolpertinger()
+                this.nessieJobold()
             },
-            "Portal",
+            "Main",
             () => {
-
-            },
-            "Yeti",
-            () => {
-
+                this.nessieMain()
             },
             promiseAwait);
     }
 
-    wolpertingerLoop() {
+    wolpertingerLoop(promiseAwait) {
         this.loadLoop(
-            "Cam_Wolpertinger_BabaYaga",
-            "Cam_Wolpertinger_Portal",
-            "Cam_Wolpertinger_Baum",
+            "Wolpertinger_BabaYaga",
+            "Wolpertinger_Portal",
+            "Wolpertinger_Baum",
             "BabaYaga",
             () => {
-
-            },
-            "Portal",
-            () => {
-                this.wolpertingerPortal()
+                this.wolpertingerBabaYaga()
             },
             "Baum",
             () => {
-
-            });
+                this.wolpertingerBaum()
+            },
+            promiseAwait);
     }
 
-    babaYagaLoop() {
+    yetiLoop(promiseAwait) {
         this.loadLoop(
-            "Cam_BabaYaga_Eier",
-            "Cam_BabaYaga_Portal",
-            "Cam_BabaYaga_Main",
-            "Eier",
+            "Yeti_Baum",
+            "Yeti_Portal",
+            "Yeti_Nessie",
+            "Baum",
             () => {
-
+                this.yetiBaum()
             },
-            "Portal",
-            () => {
-
-            },
-            "Main",
-            () => {
-
-            });
-    }
-
-    eierLoop() {
-        this.loadLoop(
-            "Cam_Eier_Nessie",
-            "Cam_Eier_Portal",
-            "Cam_Eier_Wolpertinger",
             "Nessie",
             () => {
-
+                this.yetiNessie()
             },
-            "Portal",
-            () => {
-
-            },
-            "Woplertinger",
-            () => {
-
-            });
+            promiseAwait);
     }
 
+
     ////////////
-    //From to Videos
+    //FromTo Videos
     ////////////
+    toPortal() {
+        this.Video.attach(this.centerVideo);
+        this.GUI.removeControlUI();
+        this.Video.start(this.centerVideo);
+
+        //exit to portal will reload the page after wards
+        this.Video.htmlVideo.onended = () => {
+            location.reload();
+        }
+    }
+
+    babaYagaEier() {
+        this.fromTo(this.leftVideo, "Eier", (promiseAwait) => {
+            this.eierLoop(promiseAwait)
+        })
+    }
+
+    babaYagaMain() {
+        this.fromTo(this.rightVideo, "Main", (promiseAwait) => {
+            this.mainLoop(promiseAwait)
+        })
+    }
+
+    basiliskWolpertinger() {
+        this.fromTo(this.leftVideo, "Wolpertinger", (promiseAwait) => {
+            this.wolpertingerLoop(promiseAwait)
+        })
+    }
+
+    basiliskYeti() {
+        this.fromTo(this.rightVideo, "Yeti", (promiseAwait) => {
+            this.yetiLoop(promiseAwait)
+        })
+    }
+
+    baumBabaYaga() {
+        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait) => {
+            this.babaYagaLoop(promiseAwait)
+        })
+    }
+
+    baumBasilisk() {
+        this.fromTo(this.rightVideo, "Basilisk", (promiseAwait) => {
+            this.basiliskLoop(promiseAwait)
+        })
+    }
+
+    eierNessie() {
+        this.fromTo(this.leftVideo, "Nessie", (promiseAwait) => {
+            this.nessieLoop()(promiseAwait)
+        })
+    }
+
+    eierWolpertinger() {
+        this.fromTo(this.rightVideo, "Wolpertinger", (promiseAwait) => {
+            this.wolpertingerLoop(promiseAwait)
+        })
+    }
+
+    joboldBaum() {
+        this.fromTo(this.leftVideo, "Baum", (promiseAwait) => {
+            this.baumLoop(promiseAwait)
+        })
+    }
+
+    joboldYeti() {
+        this.fromTo(this.rightVideo, "Yeti", (promiseAwait) => {
+            this.yetiLoop(promiseAwait)
+        })
+    }
+
     mainBasilisk() {
-        this.fromTo(this.leftVideo, "Cam_Basilisk_Loop", (promiseAwait) => {
+        this.fromTo(this.leftVideo, "Basilisk", (promiseAwait) => {
             this.basiliskLoop(promiseAwait)
         })
     }
 
     mainEier() {
-        this.fromTo(this.rightVideo, "Cam_Eier_Loop", () => {
-            this.eierLoop()
+        this.fromTo(this.rightVideo, "Eier", (promiseAwait) => {
+            this.eierLoop(promiseAwait)
         })
     }
 
-    mainPortal() {
-        this.Video.attach(this.centerVideo);
-        this.GUI.removeControlUI();
-        this.Video.start(this.centerVideo);
-    }
-
-    basiliskWolpertinger() {
-        this.fromTo(this.leftVideo, "Cam_Wolpertinger_Loop", () => {
-            this.wolpertingerLoop()
+    nessieJobold() {
+        this.fromTo(this.leftVideo, "Jobold", (promiseAwait) => {
+            this.joboldLoop(promiseAwait)
         })
     }
 
-    wolpertingerPortal() {
-        this.Video.attach(this.centerVideo);
-        this.GUI.removeControlUI();
-        this.Video.start(this.centerVideo);
+    nessieMain() {
+        this.fromTo(this.rightVideo, "Main", (promiseAwait) => {
+            this.mainLoop(promiseAwait)
+        })
     }
 
-    babaYagaEier() {
+    wolpertingerBabaYaga() {
+        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait) => {
+            this.joboldLoop(promiseAwait)
+        })
     }
 
-    babaYagaMain() {
+    wolpertingerBaum() {
+        this.fromTo(this.rightVideo, "Baum", (promiseAwait) => {
+            this.mainLoop(promiseAwait)
+        })
     }
 
-    babaYagaPortal() {
+    yetiBaum() {
+        this.fromTo(this.leftVideo, "Baum", (promiseAwait) => {
+            this.baumLoop(promiseAwait)
+        })
+    }
+
+    yetiNessie() {
+        this.fromTo(this.rightVideo, "Nessie", (promiseAwait) => {
+            this.nessieLoop(promiseAwait)
+        })
     }
 }
