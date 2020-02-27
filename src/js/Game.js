@@ -32,9 +32,9 @@ export default class {
         // // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
         // this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
         // This attaches the camera to the canvas
-        this.camera.attachControl(this.canvas, true);
-        this.camera.minZ = 0.001;
-        this.camera.wheelPrecision = 150;
+        // this.camera.attachControl(this.canvas, true);
+        // this.camera.minZ = 0.001;
+        // this.camera.wheelPrecision = 150;
         // Target the camera to scene origin.
         this.camera.setTarget(BABYLON.Vector3.Zero());
 
@@ -166,6 +166,7 @@ export default class {
             leftBtnName,
             () => {
                 leftFunction();
+                console.log(promiseAwait);
                 //When Button is clicked Asset Visibility has to be set to Hide
                 this.Asset.hide(promiseAwait.meshes[0])
             },
@@ -196,11 +197,18 @@ export default class {
             this.loopVideo = this.Video.load(loopCam);
         }, 2000);
 
-        this.Video.htmlVideo.onended = () => {
+        this.Video.htmlVideo.onended = async () => {
+            //Load Asset
+            //to Access the loaded Mesh etc. a async await had to be implemented
+            let promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
+            this.Asset.scale(promiseAwait.meshes[0], 2, 2, 2);
+            this.Asset.position(promiseAwait.meshes[0], 1.3, -1.4, -1);
+            this.GUI.loadAssetAnimation(promiseAwait);
+
             this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
             this.Video.loop(this.loopVideo);
-            loopFunction();
+            loopFunction(promiseAwait);
         };
     }
 
@@ -214,16 +222,14 @@ export default class {
                 "Cam_Main_Loop");
         }, 500);
 
-
         //When the video has ended load the next videos
         this.Video.htmlVideo.onended = async () => {
             //Load Asset
             //to Access the loaded Mesh etc. a async await had to be implemented
-            const promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
+            let promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
 
             this.Asset.scale(promiseAwait.meshes[0], 2, 2, 2);
             this.Asset.position(promiseAwait.meshes[0], 1.3, -1.4, -1);
-
 
             this.GUI.loadAssetAnimation(promiseAwait);
 
@@ -258,7 +264,7 @@ export default class {
             promiseAwait);
     }
 
-    basiliskLoop() {
+    basiliskLoop(promiseAwait) {
         this.loadLoop(
             "Cam_Basilisk_Wolpertinger",
             "Cam_Basilisk_Portal",
@@ -274,7 +280,8 @@ export default class {
             "Yeti",
             () => {
 
-            });
+            },
+            promiseAwait);
     }
 
     wolpertingerLoop() {
@@ -338,8 +345,8 @@ export default class {
     //From to Videos
     ////////////
     mainBasilisk() {
-        this.fromTo(this.leftVideo, "Cam_Basilisk_Loop", () => {
-            this.basiliskLoop()
+        this.fromTo(this.leftVideo, "Cam_Basilisk_Loop", (promiseAwait) => {
+            this.basiliskLoop(promiseAwait)
         })
     }
 
