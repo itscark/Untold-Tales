@@ -12,34 +12,52 @@ export default class {
         this.Video = game.Video;
         //load GUI
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("gui");
+
+        //load Animatin GUI
+        this.animationGui = new GUI.StackPanel();
+        this.animationGui.width = "220px";
+        this.animationGui.fontSize = "14px";
+        this.animationGui.horizontalAlignment =
+            GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.animationGui.verticalAlignment =
+            GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+        this.advancedTexture.addControl(this.animationGui);
     }
 
-    createButton() {
-        let guiBtn = Button.CreateSimpleButton(btn, btn);
+    loadAssetAnimation(asset) {
+        for (let i = 0; i < asset.animationGroups.length; i++) {
+            let tmpAsset = asset.animationGroups[i];
+            let tmpName = tmpAsset["name"];
+            this.createButton(tmpName, asset, i);
+        }
+    }
+
+    createButton(btn, asset, assetIndex) {
+        let guiBtn = GUI.Button.CreateSimpleButton(btn, btn);
         let returnedAnimation = null;
         guiBtn.paddingTop = "10px";
         guiBtn.width = "100px";
         guiBtn.height = "50px";
         guiBtn.color = "white";
         guiBtn.background = "green";
-        animationGui.addControl(guiBtn);
-        guiBtn.onPointerUpObservable.add(function () {
+        this.animationGui.addControl(guiBtn);
+        guiBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
-            //controlAnimations(asset, assetIndex);
+            this.controlAnimations(asset, assetIndex);
         });
     }
 
-    charControl() {
-        //load Animatin GUI
-        var animationGui = new BABYLON.GUI.StackPanel();
-        animationGui.width = "220px";
-        animationGui.fontSize = "14px";
-        animationGui.horizontalAlignment =
-            BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        animationGui.verticalAlignment =
-            BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        gui.addControl(animationGui);
+    controlAnimations(asset, assetIndex) {
+        const animationGroups = asset.animationGroups;
+        //stop all animations
+        animationGroups.forEach(function(item) {
+            item.stop(true);
+        });
+        //start pressed animation
+        animationGroups[assetIndex].play(true);
     }
+
+
 
     createImgBtnNoText(name, location, width, height) {
         let tmpBtn = GUI.Button.CreateImageOnlyButton(name, location);
@@ -133,5 +151,6 @@ export default class {
         this.advancedTexture.removeControl(this.leftBtn);
         this.advancedTexture.removeControl(this.centerBtn);
         this.advancedTexture.removeControl(this.rightBtn);
+        this.advancedTexture.removeControl(this.animationGui);
     }
 }

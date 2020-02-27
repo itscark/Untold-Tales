@@ -71,6 +71,7 @@ export default class {
         this.rightVideo = null;
         this.centerVideo = null;
         this.loopVideo = null;
+        this.assetPromise = null;
 
     }
 
@@ -114,13 +115,7 @@ export default class {
         //initial Play button was pressed
         this.GUI.btnEvent(this.playBtn, () => {
             // // Play intro Video to the main char
-            //this.portalMain();
-
-            //Testing Area
-           let tmp =  this.Asset.loadAsync("Stromboli", "Stromboli_AnimLayer.gltf");
-
-            console.log(tmp);
-
+            this.portalMain();
         }, true);
 
         //start Render Loop
@@ -128,6 +123,16 @@ export default class {
             this.scene.render();
         });
     }
+
+    //async load Asset while video is playing
+    async configureAsset(assetDir, assetFile) {
+        try {
+            return await this.Asset.loadAsync(assetDir, assetFile);
+        } catch (e) {
+            return "caught";
+        }
+    }
+
 
     ////////////
     // naming convention for Charakter Functions
@@ -138,15 +143,17 @@ export default class {
     ////////////
 
     //Function for all Charakter Loop videos
-    loadLoop(leftVideo,
-             centerVideo,
-             rightVideo,
-             leftBtnName,
-             leftFunction,
-             centerBtnName,
-             centerFunction,
-             rightBtnName,
-             rightFunction) {
+    loadLoop(
+        leftVideo,
+        centerVideo,
+        rightVideo,
+        leftBtnName,
+        leftFunction,
+        centerBtnName,
+        centerFunction,
+        rightBtnName,
+        rightFunction,
+        promiseAwait) {
         //Functions to preload Videos for the next Chars
         this.leftVideo = this.Video.load(
             leftVideo);
@@ -158,15 +165,21 @@ export default class {
         this.uiBtn = this.GUI.addControlUI(
             leftBtnName,
             () => {
-                leftFunction()
+                leftFunction();
+                //When Button is clicked Asset Visibility has to be set to Hide
+                this.Asset.hide(promiseAwait.meshes[0])
             },
             centerBtnName,
             () => {
-                centerFunction()
+                centerFunction();
+                //When Button is clicked Asset Visibility has to be set to Hide
+                this.Asset.hide(promiseAwait.meshes[0])
             },
             rightBtnName,
             () => {
-                rightFunction()
+                rightFunction();
+                //When Button is clicked Asset Visibility has to be set to Hide
+                this.Asset.hide(promiseAwait.meshes[0])
             })
     }
 
@@ -203,12 +216,21 @@ export default class {
 
 
         //When the video has ended load the next videos
-        this.Video.htmlVideo.onended = () => {
-            this.Asset.loadAsync("Stromboli", "Stromboli_AnimLayer.gltf");
+        this.Video.htmlVideo.onended = async () => {
+            //Load Asset
+            //to Access the loaded Mesh etc. a async await had to be implemented
+            const promiseAwait = await this.configureAsset("Stromboli", "Stromboli_AnimLayer.gltf");
+
+            this.Asset.scale(promiseAwait.meshes[0], 2, 2, 2);
+            this.Asset.position(promiseAwait.meshes[0], 1.3, -1.4, -1);
+
+
+            this.GUI.loadAssetAnimation(promiseAwait);
+
             this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
             this.Video.loop(this.loopVideo);
-            this.mainLoop();
+            this.mainLoop(promiseAwait);
         };
     }
 
@@ -216,7 +238,7 @@ export default class {
     ////////////
     //Loop Videos
     ////////////
-    mainLoop() {
+    mainLoop(promiseAwait) {
         this.loadLoop(
             "Cam_Main_Basilisk",
             "Cam_Main_Portal",
@@ -232,7 +254,8 @@ export default class {
             "Eier",
             () => {
                 this.mainEier()
-            });
+            },
+            promiseAwait);
     }
 
     basiliskLoop() {

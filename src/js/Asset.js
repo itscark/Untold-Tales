@@ -10,19 +10,16 @@ class Asset {
 
         //Init Variables
         this.assetPath = "assets/chars/";
-        this.loadedAnimationGroups = null;
-        this.loadedMeshes = null;
-        this.loadedSkeletons = null;
         this.result = null;
 
     }
 
     hide(asset) {
-        asset.loadedMeshes[0].setEnabled(false);
+        asset.setEnabled(false);
     }
 
     show(asset) {
-        asset.loadedMeshes[0].setEnabled(true);
+        asset.setEnabled(true);
     }
 
     load(assetName, assetDir, gltfFile) {
@@ -35,66 +32,30 @@ class Asset {
         );
         //on Success
         tmpTask.onSuccess = function (task) {
-            task.loadedMeshes[0].setEnabled(false);
+            task.setEnabled(false);
         };
         return tmpTask;
     }
 
     loadAsync(assetDir, assetFile) {
-
-        // Promise.all([
-        //     BABYLON.SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
-        //       .then((result) => {
-        //         this.loadedAnimationGroups = result.animationGroups;
-        //         this.loadedMeshes = result.meshes[0];
-        //         this.loadedSkeletons = result.skeletons[0];
-        //
-        //         //dont show the loaded Assets
-        //         //this.loadedMeshes.setEnabled(false);
-        //       })
-        // ])
-
-
-
-
-        new Promise((resolve, reject) => {
-            BABYLON.SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
-                .then((result) => {
-
-                    this.result = result;
-
-                    this.loadedAnimationGroups = result.animationGroups;
-                    this.loadedMeshes = result.meshes[0];
-                    this.loadedSkeletons = result.skeletons[0];
-
-                    //dont show the loaded Assets
-                    //this.loadedMeshes.setEnabled(false);
-                })
-                .then(() => {
-                    return this.result;
-                });
-        });
-
-
+        return BABYLON.SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
     }
 
     position(task, xPosition, yPosition, zPosition) {
-        let mesh = task.loadedMeshes[0];
+        let mesh = task;
         mesh.position.x = xPosition;
         mesh.position.y = yPosition;
         mesh.position.z = zPosition;
     }
 
     rotate(task, axis, rotation) {
-        let mesh = task.loadedMeshes[0];
         //example: mesh.rotate(BABYLON.Axis.Y, Math.PI);
-        mesh.rotate(axis, rotation);
+        task.rotate(axis, rotation);
     }
 
     scale(task, xScale, yScale, zScale) {
-        let mesh = task.loadedMeshes[0];
         //example: mesh.scaling = new BABYLON.Vector3(60, 60, 60);
-        mesh.scaling = new BABYLON.Vector3(xScale, yScale, zScale);
+        task.scaling = new BABYLON.Vector3(xScale, yScale, zScale);
     }
 
     add() {
