@@ -21,15 +21,19 @@ export default class {
         this.animationGui.verticalAlignment =
             GUI.Control.VERTICAL_ALIGNMENT_CENTER;
         this.animationBtn = null;
+
+        //Init Variables
+        this.buttonPath = "assets/buttons/";
     }
 
     createButton(btn, asset, assetIndex) {
-        this.animationBtn = GUI.Button.CreateSimpleButton(btn, btn);
+        this.animationBtn = GUI.Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "snow_button.png");
+
         this.animationBtn.paddingTop = "10px";
         this.animationBtn.width = "100px";
-        this.animationBtn.height = "50px";
+        this.animationBtn.height = "56px";
         this.animationBtn.color = "white";
-        this.animationBtn.background = "green";
+        this.animationBtn.thickness = 0;
         this.animationGui.addControl(this.animationBtn);
         this.animationBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
@@ -47,6 +51,19 @@ export default class {
         return tmpBtn;
     }
 
+    createImgBtnWithText(name, text, src, callback) {
+        let button = GUI.Button.CreateImageWithCenterTextButton(name, text, this.buttonPath + src);
+        button.width = 0.2;
+        button.height = "40px";
+        button.color = "white";
+        button.background = "green";
+        this.advancedTexture.addControl(button);
+        button.onPointerUpObservable.add(() => {
+            callback()
+        });
+        return button
+    }
+
     btnEvent(btn, doSomething, remove = false) {
         btn.onPointerUpObservable.add(() => {
             doSomething();
@@ -56,48 +73,87 @@ export default class {
         });
     }
 
-    //Function to add control buttons
-    addControlUI(
-        leftBtnName,
-        leftFunction,
-        centerFunction,
-        rightBtnName,
-        rightFunction,
-    ) {
+    createTextBox(assetName) {
+        //init Textbox
+        this.sv = new GUI.ScrollViewer("Textbox");
+        this.sv.thickness = 0;
+        this.sv.background = "gray";
+        this.sv.alpha = 0.8;
+        this.sv.width = 0.3;
+        this.sv.height = 0.6;
+        this.sv.top = "50px";
+        this.sv.left = "50px";
+        this.sv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.sv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.advancedTexture.addControl(this.sv);
+
+        let tb = new GUI.TextBlock();
+        tb.textWrapping = GUI.TextWrapping.WordWrap;
+        tb.resizeToFit = true;
+        tb.paddingTop = "5%";
+        tb.paddingLeft = "30px";
+        tb.paddingRight = "20px";
+        tb.margingBottom = "50px";
+        tb.lineSpacing = "8px";
+        tb.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        tb.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        tb.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        tb.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        tb.color = "white";
+
+        tb.text = this.game.stories_json[assetName]['story'];
+        tb.fontSize = "18px";
+
+        this.sv.addControl(tb);
+    }
+
+    createNavigationButtons(leftBtnName,
+                            leftFunction,
+                            centerFunction,
+                            rightBtnName,
+                            rightFunction,
+                            btnSrc = "snow_button.png") {
         //Init Buttons
-        this.leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
-        this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
-        this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
+        //this.leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
+        this.leftBtn = GUI.Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
+        //this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
+        this.centerBtn = GUI.Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
+        //this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
+        this.rightBtn = GUI.Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
 
         ////////////
         //set Style of Controle UI
         ////////////
         //Left Button Styles
         this.leftBtn.width = "150px";
-        this.leftBtn.height = "40px";
+        this.leftBtn.height = "85px";
         this.leftBtn.color = "white";
-        this.leftBtn.cornerRadius = 20;
-        this.leftBtn.background = "green";
+        this.leftBtn.thickness = 0;
+        this.leftBtn.left = "30px";
+        this.leftBtn.top = "-30px";
         this.leftBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.leftBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
         this.centerBtn.width = "150px";
-        this.centerBtn.height = "40px";
+        this.centerBtn.height = "85px";
         this.centerBtn.color = "white";
-        this.centerBtn.cornerRadius = 20;
-        this.centerBtn.background = "green";
+        this.centerBtn.thickness = 0;
+        this.centerBtn.left = "30px";
+        this.centerBtn.top = "-30px";
         this.centerBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         this.centerBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
         this.rightBtn.width = "150px";
-        this.rightBtn.height = "40px";
+        this.rightBtn.height = "85px";
         this.rightBtn.color = "white";
-        this.rightBtn.cornerRadius = 20;
-        this.rightBtn.background = "green";
+        this.rightBtn.thickness = 0;
+        this.rightBtn.left = "-30px";
+        this.rightBtn.top = "-30px";
         this.rightBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.rightBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
 
         ////////////
         //set pointer Events
@@ -122,6 +178,32 @@ export default class {
         });
         //Add Right Button to the GUI
         this.advancedTexture.addControl(this.rightBtn);
+
+    }
+
+    //Function to add control buttons
+    addControlUI(
+        leftBtnName,
+        leftFunction,
+        centerFunction,
+        rightBtnName,
+        rightFunction,
+        btnSrc,
+        storyName
+    ) {
+
+        //set Timeout to show text and Button Image at the same time
+
+        if (storyName != null) {
+            this.createTextBox(storyName);
+
+        }
+        this.createNavigationButtons(leftBtnName,
+            leftFunction,
+            centerFunction,
+            rightBtnName,
+            rightFunction,
+            btnSrc)
     }
 
     //Function to remove all Buttons of the Control GUI
@@ -132,8 +214,8 @@ export default class {
         this.advancedTexture.removeControl(this.animationBtn);
         //remove all previous Animations Buttons from the GUI
         this.animationGui._children = [];
-
-
         this.advancedTexture.removeControl(this.animationGui);
+        this.advancedTexture.removeControl(this.sv);
+
     }
 }

@@ -11,7 +11,10 @@ class Animations {
       let tmpAsset = asset.animationGroups[i];
       let tmpName = tmpAsset["name"];
       //this.MyGui can not be assigned in the Constructore because of redering procedre
+      //set Timeout to show text and Button Image at the same time
+      setTimeout(()=>{
       this.game.MyGui.createButton(tmpName, asset, i);
+      }, 500)
     }
   }
 

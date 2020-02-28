@@ -29,13 +29,6 @@ export default class {
             BABYLON.Vector3.Zero(),
             this.scene
         );
-        // // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
-        // this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
-        // This attaches the camera to the canvas
-        // this.camera.attachControl(this.canvas, true);
-        // this.camera.minZ = 0.001;
-        // this.camera.wheelPrecision = 150;
-        // Target the camera to scene origin.
         this.camera.setTarget(BABYLON.Vector3.Zero());
 
         // Add lights to the scene
@@ -44,15 +37,7 @@ export default class {
             new BABYLON.Vector3(1, 1, 0),
             this.scene
         );
-        //Add and manipulate meshes in the scene
-        // this.bgPlane = BABYLON.MeshBuilder.CreatePlane(
-        //     "plane",
-        //     {width: 0, height: 0},
-        //     this.scene
-        // );
 
-        ///////////////////////////////////////////////////////////////////
-        //Testing
         //Create a Background video
         this.bgPlane = new BABYLON.Layer("back", null, this.scene);
         this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
@@ -65,11 +50,6 @@ export default class {
         this.bgPlane.isBackground = true;
         this.bgPlane.texture.level = 0;
 
-        //End Testing
-        ///////////////////////////////////////////////////////////////////
-
-        //Create Materials
-        //this.mat = new BABYLON.StandardMaterial("mat", this.scene);
 
         //set loop of Background video to False;
         this.bgPlane.texture.video.loop = false;
@@ -99,6 +79,26 @@ export default class {
         this.centerVideo = null;
         this.loopVideo = null;
         this.assetPromise = null;
+        this.stories_json = null;
+
+        //load Stories for the Chars
+        this.loadJSON((response) => {
+            // Parse JSON string into object
+            this.stories_json = JSON.parse(response);
+        });
+    }
+
+    loadJSON(callback) {
+        let xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'assets/stories/stories.json', true);
+        xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+            }
+        };
+        xobj.send(null);
     }
 
     createScene() {
@@ -177,7 +177,9 @@ export default class {
         leftFunction,
         rightBtnName,
         rightFunction,
-        promiseAwait) {
+        promiseAwait,
+        storyName,
+        btnSrc) {
         //Functions to preload Videos for the next Chars
         this.leftVideo = this.Video.load(
             "Cam_" + leftVideo);
@@ -186,36 +188,42 @@ export default class {
         this.rightVideo = this.Video.load(
             "Cam_" + rightVideo);
         //add UI to GUI
-        this.uiBtn = this.MyGui.addControlUI(
-            leftBtnName,
-            () => {
-                leftFunction();
-                //When Button is clicked Asset Visibility has to be set to Hide
-                try {
-                    this.Asset.hide(promiseAwait.meshes[0])
-                } catch (e) {
-                    console.log('no asset to hide')
-                }
-            },
-            () => {
-                this.toPortal();
-                //When Button is clicked Asset Visibility has to be set to Hide
-                try {
-                    this.Asset.hide(promiseAwait.meshes[0])
-                } catch (e) {
-                    console.log('no asset to hide')
-                }
-            },
-            rightBtnName,
-            () => {
-                rightFunction();
-                //When Button is clicked Asset Visibility has to be set to Hide
-                try {
-                    this.Asset.hide(promiseAwait.meshes[0])
-                } catch (e) {
-                    console.log('no asset to hide')
-                }
-            })
+        setTimeout(() => {
+
+            this.MyGui.addControlUI(
+                leftBtnName,
+                () => {
+                    leftFunction();
+                    //When Button is clicked Asset Visibility has to be set to Hide
+                    try {
+                        this.Asset.hide(promiseAwait.meshes[0])
+                    } catch (e) {
+                        console.log('no asset to hide')
+                    }
+                },
+                () => {
+                    this.toPortal();
+                    //When Button is clicked Asset Visibility has to be set to Hide
+                    try {
+                        this.Asset.hide(promiseAwait.meshes[0])
+                    } catch (e) {
+                        console.log('no asset to hide')
+                    }
+                },
+                rightBtnName,
+                () => {
+                    rightFunction();
+                    //When Button is clicked Asset Visibility has to be set to Hide
+                    try {
+                        this.Asset.hide(promiseAwait.meshes[0])
+                    } catch (e) {
+                        console.log('no asset to hide')
+                    }
+                },
+                btnSrc,
+                storyName)
+
+        }, 500)
     }
 
     //load and play the fromTo Vidoes
@@ -247,7 +255,7 @@ export default class {
             let promiseAwait = null;
 
             //check if a asset is loaded
-           try {
+            try {
                 //Load Asset
                 //to Access the loaded Mesh etc. a async await had to be implemented
                 promiseAwait = await this.configureAsset(assetDir, assetFile);
@@ -264,7 +272,7 @@ export default class {
 
                 this.Animations.load(promiseAwait);
 
-           } catch (e) {
+            } catch (e) {
                 console.log('no asset loaded')
             }
 
@@ -308,7 +316,8 @@ export default class {
             () => {
                 this.basiliskYeti()
             },
-            promiseAwait);
+            promiseAwait,
+            "Basilisk");
     }
 
     baumLoop(promiseAwait) {
@@ -371,7 +380,8 @@ export default class {
             () => {
                 this.mainEier()
             },
-            promiseAwait);
+            promiseAwait,
+            "Stromboli");
     }
 
     nessieLoop(promiseAwait) {
@@ -507,8 +517,8 @@ export default class {
 
     mainBasilisk() {
         this.fromTo(this.leftVideo, "Basilisk", (promiseAwait) => {
-                    this.basiliskLoop(promiseAwait)
-                })
+            this.basiliskLoop(promiseAwait)
+        })
     }
 
     mainEier() {
