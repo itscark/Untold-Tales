@@ -7,6 +7,7 @@
     "babylonjs": "^4.0.3",
     "babylonjs-gui": "^4.0.3",
     "babylonjs-loaders": "^4.0.3",
+    "express": "^4.17.1",
     "pepjs": "^0.5.2",
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.25.0",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.html",
+    "start": "node server.js",
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
