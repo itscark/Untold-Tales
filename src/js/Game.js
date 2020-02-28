@@ -7,7 +7,7 @@ import Video from "./Video";
 //Import Asset Class
 import Asset from "./Asset";
 //Import HUD Gui
-import GUI from "./GUI";
+import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
 
@@ -83,6 +83,12 @@ export default class {
         //set global Asset paths, incase folder structure my be changed in the future
         this.assetPath = "assets/chars/";
 
+        // Enable animation blending for all animations
+        this.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
+        this.scene.animationPropertiesOverride.enableBlending = true;
+        this.scene.animationPropertiesOverride.blendingSpeed = 0.02;
+        this.scene.animationPropertiesOverride.loopMode = 1;
+
         // Init Variables
         this.introVideo = null;
         this.playBtn = null;
@@ -98,9 +104,9 @@ export default class {
     createScene() {
         //Load Classes
         this.assetsManager = new BABYLON.AssetsManager(this.scene);
+        this.MyGui = new MyGui(this);
         this.Animations = new Animations(this);
         this.Asset = new Asset(this);
-        this.GUI = new GUI(this);
         this.Video = new Video(this);
 
         // On Window Resize => Resize Game
@@ -118,7 +124,7 @@ export default class {
 
     setup() {
         //load Start Button
-        this.playBtn = this.GUI.createImgBtnNoText(
+        this.playBtn = this.MyGui.createImgBtnNoText(
             "playBtn",
             "assets/images/gui/play-button.png",
             "200px",
@@ -133,7 +139,7 @@ export default class {
         this.Video.attach(this.bgVideo);
 
         //initial Play button was pressed
-        this.GUI.btnEvent(this.playBtn, () => {
+        this.MyGui.btnEvent(this.playBtn, () => {
             // Play intro Video to the main char
             this.portalMain();
         }, true);
@@ -180,7 +186,7 @@ export default class {
         this.rightVideo = this.Video.load(
             "Cam_" + rightVideo);
         //add UI to GUI
-        this.uiBtn = this.GUI.addControlUI(
+        this.uiBtn = this.MyGui.addControlUI(
             leftBtnName,
             () => {
                 leftFunction();
@@ -225,7 +231,7 @@ export default class {
     ) {
         this.Video.attach(video);
         try {
-            this.GUI.removeControlUI();
+            this.MyGui.removeControlUI();
         } catch (e) {
             console.log("no gui displayed")
         }
@@ -239,11 +245,13 @@ export default class {
 
         this.Video.htmlVideo.onended = async () => {
             let promiseAwait = null;
+
             //check if a asset is loaded
-            try {
+           try {
                 //Load Asset
                 //to Access the loaded Mesh etc. a async await had to be implemented
                 promiseAwait = await this.configureAsset(assetDir, assetFile);
+
                 if (setScale) {
                     this.Asset.scale(promiseAwait.meshes[0], xScale, yScale, zScale)
                 }
@@ -253,9 +261,10 @@ export default class {
                 if (setRotation) {
                     this.Asset.rotate(promiseAwait.meshes[0], axis, rotation);
                 }
-                this.GUI.loadAssetAnimation(promiseAwait);
 
-            } catch (e) {
+                this.Animations.load(promiseAwait);
+
+           } catch (e) {
                 console.log('no asset loaded')
             }
 
@@ -427,7 +436,7 @@ export default class {
 
     toPortal() {
         this.Video.attach(this.centerVideo);
-        this.GUI.removeControlUI();
+        this.MyGui.removeControlUI();
         this.Video.start(this.centerVideo);
 
         //exit to portal will reload the page after wards

@@ -3,7 +3,6 @@ import * as BABYLON from "babylonjs";
 class Video {
     constructor(game) {
         this.game = game;
-        this.assetsManager = game.assetsManager;
         this.engine = game.engine;
         this.canvas = game.canvas;
         this.mat = game.mat;
@@ -11,7 +10,7 @@ class Video {
         this.bgVideo = game.bgVideo;
         this.videoAsset = game.videoAsset;
         this.Asset = game.Asset;
-        this.GUI = game.GUI;
+        this.MyGui = game.MyGui;
         this.htmlVideo = null;
 
         this.videoPath = "assets/videos/";

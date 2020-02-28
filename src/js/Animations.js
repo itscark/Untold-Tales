@@ -1,22 +1,22 @@
 class Animations {
   constructor(game) {
     this.game = game;
-    this.assetsManager = game.assetsManager;
     this.engine = game.engine;
     this.canvas = game.canvas;
   }
 
   load(asset) {
-    for (let i = 0; i < asset.loadedAnimationGroups.length; i++) {
-      var tmpAsset = asset.loadedAnimationGroups[i];
-      var tmpName = tmpAsset["name"];
-      // //load Create Button Function from Gui Class
-      //createButton(tmpName, asset, i);
+    this.game.MyGui.advancedTexture.addControl(this.game.MyGui.animationGui);
+    for (let i = 0; i < asset.animationGroups.length; i++) {
+      let tmpAsset = asset.animationGroups[i];
+      let tmpName = tmpAsset["name"];
+      //this.MyGui can not be assigned in the Constructore because of redering procedre
+      this.game.MyGui.createButton(tmpName, asset, i);
     }
   }
 
   control(asset, assetIndex) {
-    animationGroups = asset.loadedAnimationGroups;
+    const animationGroups = asset.animationGroups;
     //stop all animations
     animationGroups.forEach(function(item) {
       item.stop(true);

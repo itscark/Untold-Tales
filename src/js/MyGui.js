@@ -4,7 +4,6 @@ import * as GUI from "babylonjs-gui";
 export default class {
     constructor(game) {
         this.game = game;
-        this.assetsManager = game.assetsManager;
         this.engine = game.engine;
         this.canvas = game.canvas;
         this.playBtn = game.playBtn;
@@ -24,15 +23,6 @@ export default class {
         this.animationBtn = null;
     }
 
-    loadAssetAnimation(asset) {
-        this.advancedTexture.addControl(this.animationGui);
-        for (let i = 0; i < asset.animationGroups.length; i++) {
-            let tmpAsset = asset.animationGroups[i];
-            let tmpName = tmpAsset["name"];
-            this.createButton(tmpName, asset, i);
-        }
-    }
-
     createButton(btn, asset, assetIndex) {
         this.animationBtn = GUI.Button.CreateSimpleButton(btn, btn);
         this.animationBtn.paddingTop = "10px";
@@ -43,21 +33,10 @@ export default class {
         this.animationGui.addControl(this.animationBtn);
         this.animationBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
-            this.controlAnimations(asset, assetIndex);
+            //this.Animations can not be assigned in the Constructore because of redering procedre
+            this.game.Animations.control(asset, assetIndex);
         });
     }
-
-    controlAnimations(asset, assetIndex) {
-        const animationGroups = asset.animationGroups;
-        //stop all animations
-        animationGroups.forEach(function(item) {
-            item.stop(true);
-        });
-        //start pressed animation
-        animationGroups[assetIndex].play(true);
-    }
-
-
 
     createImgBtnNoText(name, location, width, height) {
         let tmpBtn = GUI.Button.CreateImageOnlyButton(name, location);
