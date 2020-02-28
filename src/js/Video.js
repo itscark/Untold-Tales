@@ -1,3 +1,5 @@
+import * as BABYLON from "babylonjs";
+
 class Video {
     constructor(game) {
         this.game = game;
@@ -18,30 +20,8 @@ class Video {
         this.videoEnding = ".mp4";
     }
 
-    loadAsync(videoPath) {
-        const getVideo = () => {
-            try {
-                return axios.get(videoPath);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        const asignVideo = async () => {
-            const video = getVideo()
-                .then(response => {
-                    if (response.data) {
-                        console.log(response.data);
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        };
-    }
-
     load(video) {
-        let videoTexture = new BABYLON.VideoTexture(
+        return new BABYLON.VideoTexture(
             "video",
             this.videoPath + video + this.videoEnding,
             this.scene,
@@ -53,17 +33,15 @@ class Video {
                 poster: this.posterPath + video + this.posterEnding
             }
         );
-
-        return videoTexture;
     }
 
     attach(texture) {
-        //Apply Texture
-        this.mat.diffuseTexture = texture;
-        //Apply Video to BG
-        this.bgPlane.material = this.mat;
-        //set HTML Video
-        this.htmlVideo = this.mat.diffuseTexture.video;
+        try{
+            this.bgPlane.texture = texture;
+            this.htmlVideo = texture.video;
+        }catch (e) {
+            console.log("attach error")
+        }
     }
 
 
@@ -73,18 +51,6 @@ class Video {
 
     loop(videoAsset) {
         videoAsset.video.loop = true;
-    }
-
-    hasEnded() {
-        this.htmlVideo.onended = () => {
-            console.log("ended");
-            return true;
-        };
-    }
-
-    change(videoSrc, posterSrc) {
-        this.bgVideo.video.src = videoSrc;
-        this.bgVideo.video.poster = posterSrc;
     }
 
 }

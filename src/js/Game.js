@@ -44,14 +44,35 @@ export default class {
             new BABYLON.Vector3(1, 1, 0),
             this.scene
         );
-        // Add and manipulate meshes in the scene
-        this.bgPlane = BABYLON.MeshBuilder.CreatePlane(
-            "plane",
-            {width: 10, height: 6},
-            this.scene
-        );
+        //Add and manipulate meshes in the scene
+        // this.bgPlane = BABYLON.MeshBuilder.CreatePlane(
+        //     "plane",
+        //     {width: 0, height: 0},
+        //     this.scene
+        // );
+
+        ///////////////////////////////////////////////////////////////////
+        //Testing
+        //Create a Background video
+        this.bgPlane = new BABYLON.Layer("back", null, this.scene);
+        this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
+            false,
+            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
+            {
+                autoUpdateTexture: true,
+                poster: "assets/poster/Cam_Portal_Main_Poster.jpg"
+            });
+        this.bgPlane.isBackground = true;
+        this.bgPlane.texture.level = 0;
+
+        //End Testing
+        ///////////////////////////////////////////////////////////////////
+
         //Create Materials
-        this.mat = new BABYLON.StandardMaterial("mat", this.scene);
+        //this.mat = new BABYLON.StandardMaterial("mat", this.scene);
+
+        //set loop of Background video to False;
+        this.bgPlane.texture.video.loop = false;
 
         // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
         BABYLON.Animation.AllowMatricesInterpolation = true;
@@ -113,7 +134,7 @@ export default class {
 
         //initial Play button was pressed
         this.GUI.btnEvent(this.playBtn, () => {
-            // // Play intro Video to the main char
+            // Play intro Video to the main char
             this.portalMain();
         }, true);
 
@@ -396,7 +417,7 @@ export default class {
     //FromTo Videos
     ////////////
     portalMain() {
-        this.fromTo(this.bgVideo, "Main", (promiseAwait) => {
+        this.fromTo(this.bgPlane.texture, "Main", (promiseAwait) => {
                 this.mainLoop(promiseAwait)
             },
             "Stromboli", "Stromboli_AnimLayer.gltf",
@@ -477,8 +498,8 @@ export default class {
 
     mainBasilisk() {
         this.fromTo(this.leftVideo, "Basilisk", (promiseAwait) => {
-            this.basiliskLoop(promiseAwait)
-        })
+                    this.basiliskLoop(promiseAwait)
+                })
     }
 
     mainEier() {
