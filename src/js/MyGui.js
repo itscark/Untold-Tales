@@ -75,36 +75,43 @@ export default class {
 
     createTextBox(assetName) {
         //init Textbox
-        this.sv = new GUI.ScrollViewer("Textbox");
+        this.sv = new GUI.ScrollViewer();
         this.sv.thickness = 0;
-        this.sv.background = "gray";
-        this.sv.alpha = 0.8;
+        this.sv.color = "white";
         this.sv.width = 0.3;
         this.sv.height = 0.6;
-        this.sv.top = "50px";
-        this.sv.left = "50px";
         this.sv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.sv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.sv.top = "50px";
+        this.sv.left = "50px";
+        this.sv.background = "gray";
+        this.sv.alpha = 0.8;
+
+        this.sv.barColor = "white";
         this.advancedTexture.addControl(this.sv);
 
-        let tb = new GUI.TextBlock();
-        tb.textWrapping = GUI.TextWrapping.WordWrap;
-        tb.resizeToFit = true;
-        tb.paddingTop = "5%";
-        tb.paddingLeft = "30px";
-        tb.paddingRight = "20px";
-        tb.margingBottom = "50px";
-        tb.lineSpacing = "8px";
-        tb.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        tb.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        tb.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        tb.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        tb.color = "white";
+        //todo
+        //text wird in scrollviewer nicht ganz angezeigt
 
-        tb.text = this.game.stories_json[assetName]['story'];
-        tb.fontSize = "18px";
+        //qr code in der Textbox anzeigen mit einem link der einen neuen tab öffnet
 
-        this.sv.addControl(tb);
+
+        this.tb = new GUI.TextBlock();
+        this.tb.textWrapping = GUI.TextWrapping.WordWrap;
+        this.tb.resizeToFit = true;
+        this.tb.lineSpacing = "8px";
+        this.tb.paddingTop = "5%";
+        this.tb.paddingLeft = "30px";
+        this.tb.paddingRight = "20px";
+        this.tb.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.tb.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.tb.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.tb.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.tb.color = "white";
+        this.tb.fontSize = "16px";
+        //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
+        this.tb.text = this.game.stories_json[assetName]['story'] + "\n";
+        this.sv.addControl(this.tb);
     }
 
     createNavigationButtons(leftBtnName,

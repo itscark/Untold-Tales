@@ -131,6 +131,8 @@ export default class {
             "200px"
         );
 
+        console.log(window.location.origin);
+
         //load bg Video
         this.bgVideo = this.Video.load(
             "Cam_Portal_Main"
