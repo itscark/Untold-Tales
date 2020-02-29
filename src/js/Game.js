@@ -131,8 +131,6 @@ export default class {
             "200px"
         );
 
-        console.log(window.location.origin);
-
         //load bg Video
         this.bgVideo = this.Video.load(
             "Cam_Portal_Main"
@@ -302,7 +300,8 @@ export default class {
             () => {
                 this.babaYagaMain()
             },
-            promiseAwait);
+            promiseAwait,
+            "Baba Yaga’s Hut");
     }
 
     basiliskLoop(promiseAwait) {
@@ -335,7 +334,8 @@ export default class {
             () => {
                 this.baumBasilisk()
             },
-            promiseAwait);
+            promiseAwait,
+            "Tree");
     }
 
     eierLoop(promiseAwait) {
@@ -350,7 +350,8 @@ export default class {
             "Woplertinger",
             () => {
                 this.eierWolpertinger()
-            }, promiseAwait);
+            }, promiseAwait,
+            "Eggs on Legs");
     }
 
     joboldLoop(promiseAwait) {
@@ -366,7 +367,8 @@ export default class {
             () => {
                 this.joboldYeti()
             },
-            promiseAwait);
+            promiseAwait,
+            "Jobolde");
     }
 
     mainLoop(promiseAwait) {
@@ -383,7 +385,7 @@ export default class {
                 this.mainEier()
             },
             promiseAwait,
-            "Stromboli");
+            "Chupacabra");
     }
 
     nessieLoop(promiseAwait) {
@@ -399,7 +401,8 @@ export default class {
             () => {
                 this.nessieMain()
             },
-            promiseAwait);
+            promiseAwait,
+            "Nessie");
     }
 
     wolpertingerLoop(promiseAwait) {
@@ -415,7 +418,8 @@ export default class {
             () => {
                 this.wolpertingerBaum()
             },
-            promiseAwait);
+            promiseAwait,
+            "Wolpertinger");
     }
 
     yetiLoop(promiseAwait) {
@@ -431,7 +435,8 @@ export default class {
             () => {
                 this.yetiNessie()
             },
-            promiseAwait);
+            promiseAwait,
+            "Yeti");
     }
 
     ////////////
@@ -495,7 +500,7 @@ export default class {
 
     eierNessie() {
         this.fromTo(this.leftVideo, "Nessie", (promiseAwait) => {
-            this.nessieLoop()(promiseAwait)
+            this.nessieLoop(promiseAwait)
         })
     }
 

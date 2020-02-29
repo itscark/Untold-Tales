@@ -74,33 +74,41 @@ export default class {
     }
 
     createTextBox(assetName) {
-        //init Textbox
+        //init ScrollViewer
         this.sv = new GUI.ScrollViewer();
         this.sv.thickness = 0;
         this.sv.color = "white";
-        this.sv.width = 0.3;
-        this.sv.height = 0.6;
+        this.sv.width = 0.25;
+        this.sv.height = 0.4;
         this.sv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.sv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         this.sv.top = "50px";
         this.sv.left = "50px";
-        this.sv.background = "gray";
-        this.sv.alpha = 0.8;
+        this.sv.zIndex = 10;
 
         this.sv.barColor = "white";
         this.advancedTexture.addControl(this.sv);
 
         //todo
-        //text wird in scrollviewer nicht ganz angezeigt
-
         //qr code in der Textbox anzeigen mit einem link der einen neuen tab öffnet
 
+        //Set Background
+        this.scrollViewerBg = new GUI.Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.png");
+        this.scrollViewerBg.width = 0.25;
+        this.scrollViewerBg.height = 0.4;
+        this.scrollViewerBg.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.scrollViewerBg.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.scrollViewerBg.top = "50px";
+        this.scrollViewerBg.left = "50px";
+        this.scrollViewerBg.alpha = 0.5;
+        this.advancedTexture.addControl(this.scrollViewerBg);
 
+        //Init Textblock where text is added
         this.tb = new GUI.TextBlock();
         this.tb.textWrapping = GUI.TextWrapping.WordWrap;
         this.tb.resizeToFit = true;
         this.tb.lineSpacing = "8px";
-        this.tb.paddingTop = "5%";
+        this.tb.paddingTop = "20px";
         this.tb.paddingLeft = "30px";
         this.tb.paddingRight = "20px";
         this.tb.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -198,19 +206,36 @@ export default class {
         btnSrc,
         storyName
     ) {
-
-        //set Timeout to show text and Button Image at the same time
-
         if (storyName != null) {
             this.createTextBox(storyName);
-
         }
+
+        this.arButton();
+
         this.createNavigationButtons(leftBtnName,
             leftFunction,
             centerFunction,
             rightBtnName,
             rightFunction,
             btnSrc)
+    }
+
+    arButton(){
+        this.arBtn = GUI.Button.CreateSimpleButton("arBtn", "See me in AR");
+        this.arBtn.width = "150px";
+        this.arBtn.height = "56px";
+        this.arBtn.color = "white";
+        this.arBtn.left = "-30px";
+        this.arBtn.top = "30px";
+        this.arBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.arBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.arBtn.onPointerUpObservable.add(() => {
+
+            let pathname = window.location.pathname.replace('index.html', '');
+            window.open(pathname + "arjs.html", '_blank')
+        });
+        this.advancedTexture.addControl(this.arBtn);
+
     }
 
     //Function to remove all Buttons of the Control GUI
@@ -223,6 +248,7 @@ export default class {
         this.animationGui._children = [];
         this.advancedTexture.removeControl(this.animationGui);
         this.advancedTexture.removeControl(this.sv);
+        this.advancedTexture.removeControl(this.scrollViewerBg);
 
     }
 }
