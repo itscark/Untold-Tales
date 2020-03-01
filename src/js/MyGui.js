@@ -116,9 +116,16 @@ export default class {
         this.tb.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.color = "white";
-        this.tb.fontSize = "16px";
-        //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
-        this.tb.text = this.game.stories_json[assetName]['story'] + "\n";
+        this.tb.fontSize = "8%";
+
+
+        let obj = this.game.stories_json['charakter'];
+        for (let i = 0; i < obj.length; i++) {
+            if (obj[i].name == assetName) {
+                //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
+                this.tb.text = obj[i].story + "\n";
+            }
+        }
         this.sv.addControl(this.tb);
     }
 
@@ -208,9 +215,10 @@ export default class {
     ) {
         if (storyName != null) {
             this.createTextBox(storyName);
+            this.arButton(storyName);
         }
 
-        this.arButton();
+
 
         this.createNavigationButtons(leftBtnName,
             leftFunction,
@@ -220,7 +228,7 @@ export default class {
             btnSrc)
     }
 
-    arButton(){
+    arButton(storyName) {
         this.arBtn = GUI.Button.CreateSimpleButton("arBtn", "See me in AR");
         this.arBtn.width = "150px";
         this.arBtn.height = "56px";
@@ -230,9 +238,8 @@ export default class {
         this.arBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.arBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         this.arBtn.onPointerUpObservable.add(() => {
-
             let pathname = window.location.pathname.replace('index.html', '');
-            window.open(pathname + "arjs.html", '_blank')
+            window.open(pathname + "sites/qrcode.html?char=" + storyName, '_blank')
         });
         this.advancedTexture.addControl(this.arBtn);
 
@@ -249,6 +256,6 @@ export default class {
         this.advancedTexture.removeControl(this.animationGui);
         this.advancedTexture.removeControl(this.sv);
         this.advancedTexture.removeControl(this.scrollViewerBg);
-
+        this.advancedTexture.removeControl(this.arBtn);
     }
 }

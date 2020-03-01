@@ -188,6 +188,7 @@ export default class {
         this.rightVideo = this.Video.load(
             "Cam_" + rightVideo);
         //add UI to GUI
+
         setTimeout(() => {
 
             this.MyGui.addControlUI(
@@ -229,7 +230,7 @@ export default class {
     //load and play the fromTo Vidoes
 
     fromTo(video, loopCam, loopFunction,
-           assetDir, assetFile,
+           assetDir,
            setScale = false,
            xScale, yScale, zScale,
            setPosition = false,
@@ -258,7 +259,7 @@ export default class {
             try {
                 //Load Asset
                 //to Access the loaded Mesh etc. a async await had to be implemented
-                promiseAwait = await this.configureAsset(assetDir, assetFile);
+                promiseAwait = await this.configureAsset(assetDir, assetDir + ".gltf");
 
                 if (setScale) {
                     this.Asset.scale(promiseAwait.meshes[0], xScale, yScale, zScale)
@@ -280,14 +281,14 @@ export default class {
             this.Video.start(this.loopVideo);
             this.Video.loop(this.loopVideo);
 
-            loopFunction(promiseAwait);
+            loopFunction(promiseAwait, assetDir);
         };
     }
 
     ////////////
     //Loop Videos
     ////////////
-    babaYagaLoop(promiseAwait) {
+    babaYagaLoop(promiseAwait, Asset) {
         this.loadLoop(
             "BabaYaga_Eier",
             "BabaYaga_Portal",
@@ -301,10 +302,10 @@ export default class {
                 this.babaYagaMain()
             },
             promiseAwait,
-            "Baba Yaga’s Hut");
+            Asset);
     }
 
-    basiliskLoop(promiseAwait) {
+    basiliskLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Basilisk_Wolpertinger",
             "Basilisk_Portal",
@@ -318,10 +319,10 @@ export default class {
                 this.basiliskYeti()
             },
             promiseAwait,
-            "Basilisk");
+            Asset);
     }
 
-    baumLoop(promiseAwait) {
+    baumLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Baum_BabaYaga",
             "Baum_Portal",
@@ -335,10 +336,10 @@ export default class {
                 this.baumBasilisk()
             },
             promiseAwait,
-            "Tree");
+            Asset);
     }
 
-    eierLoop(promiseAwait) {
+    eierLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Eier_Nessie",
             "Eier_Portal",
@@ -351,10 +352,10 @@ export default class {
             () => {
                 this.eierWolpertinger()
             }, promiseAwait,
-            "Eggs on Legs");
+            Asset);
     }
 
-    joboldLoop(promiseAwait) {
+    joboldLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Jobold_Baum",
             "Jobold_Portal",
@@ -368,10 +369,10 @@ export default class {
                 this.joboldYeti()
             },
             promiseAwait,
-            "Jobolde");
+            Asset);
     }
 
-    mainLoop(promiseAwait) {
+    mainLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Main_Basilisk",
             "Main_Portal",
@@ -385,10 +386,10 @@ export default class {
                 this.mainEier()
             },
             promiseAwait,
-            "Chupacabra");
+            Asset);
     }
 
-    nessieLoop(promiseAwait) {
+    nessieLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Nessie_Jobold",
             "Nessie_Portal",
@@ -402,10 +403,10 @@ export default class {
                 this.nessieMain()
             },
             promiseAwait,
-            "Nessie");
+            Asset);
     }
 
-    wolpertingerLoop(promiseAwait) {
+    wolpertingerLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Wolpertinger_BabaYaga",
             "Wolpertinger_Portal",
@@ -419,10 +420,10 @@ export default class {
                 this.wolpertingerBaum()
             },
             promiseAwait,
-            "Wolpertinger");
+            Asset);
     }
 
-    yetiLoop(promiseAwait) {
+    yetiLoop(promiseAwait, Asset) {
         this.loadLoop(
             "Yeti_Baum",
             "Yeti_Portal",
@@ -436,17 +437,17 @@ export default class {
                 this.yetiNessie()
             },
             promiseAwait,
-            "Yeti");
+            Asset);
     }
 
     ////////////
     //FromTo Videos
     ////////////
     portalMain() {
-        this.fromTo(this.bgPlane.texture, "Main", (promiseAwait) => {
-                this.mainLoop(promiseAwait)
+        this.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
+                this.mainLoop(promiseAwait, Asset)
             },
-            "Stromboli", "Stromboli_AnimLayer.gltf",
+            "Stromboli",
             true, 2, 2, 2,
             true, 1.3, -1.4, -1);
     }
@@ -463,110 +464,113 @@ export default class {
     }
 
     babaYagaEier() {
-        this.fromTo(this.leftVideo, "Eier", (promiseAwait) => {
-            this.eierLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Eier", (promiseAwait, Asset) => {
+            this.eierLoop(promiseAwait, Asset)
         })
     }
 
     babaYagaMain() {
-        this.fromTo(this.rightVideo, "Main", (promiseAwait) => {
-            this.mainLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
+            this.mainLoop(promiseAwait, Asset)
         })
     }
 
     basiliskWolpertinger() {
-        this.fromTo(this.leftVideo, "Wolpertinger", (promiseAwait) => {
-            this.wolpertingerLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Wolpertinger", (promiseAwait, Asset) => {
+            this.wolpertingerLoop(promiseAwait, Asset)
         })
     }
 
     basiliskYeti() {
-        this.fromTo(this.rightVideo, "Yeti", (promiseAwait) => {
-            this.yetiLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
+            this.yetiLoop(promiseAwait, Asset)
         })
     }
 
     baumBabaYaga() {
-        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait) => {
-            this.babaYagaLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait, Asset) => {
+            this.babaYagaLoop(promiseAwait, Asset)
         })
     }
 
     baumBasilisk() {
-        this.fromTo(this.rightVideo, "Basilisk", (promiseAwait) => {
-            this.basiliskLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Basilisk", (promiseAwait, Asset) => {
+            this.basiliskLoop(promiseAwait, Asset)
         })
     }
 
     eierNessie() {
-        this.fromTo(this.leftVideo, "Nessie", (promiseAwait) => {
-            this.nessieLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Nessie", (promiseAwait, Asset) => {
+            this.nessieLoop(promiseAwait, Asset)
         })
     }
 
     eierWolpertinger() {
-        this.fromTo(this.rightVideo, "Wolpertinger", (promiseAwait) => {
-            this.wolpertingerLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Wolpertinger", (promiseAwait, Asset) => {
+            this.wolpertingerLoop(promiseAwait, Asset)
         })
     }
 
     joboldBaum() {
-        this.fromTo(this.leftVideo, "Baum", (promiseAwait) => {
-            this.baumLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Baum", (promiseAwait, Asset) => {
+            this.baumLoop(promiseAwait, Asset)
         })
     }
 
     joboldYeti() {
-        this.fromTo(this.rightVideo, "Yeti", (promiseAwait) => {
-            this.yetiLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
+            this.yetiLoop(promiseAwait, Asset)
         })
     }
 
     mainBasilisk() {
-        this.fromTo(this.leftVideo, "Basilisk", (promiseAwait) => {
-            this.basiliskLoop(promiseAwait)
-        })
+        this.fromTo(this.leftVideo, "Basilisk", (promiseAwait, Asset) => {
+            this.basiliskLoop(promiseAwait, Asset)
+        },
+            "Stromboli",
+            true, 2, 2, 2,
+            true, 1.3, -1.4, -1)
     }
 
     mainEier() {
-        this.fromTo(this.rightVideo, "Eier", (promiseAwait) => {
-            this.eierLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Eier", (promiseAwait, Asset) => {
+            this.eierLoop(promiseAwait, Asset)
         })
     }
 
     nessieJobold() {
-        this.fromTo(this.leftVideo, "Jobold", (promiseAwait) => {
-            this.joboldLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Jobold", (promiseAwait, Asset) => {
+            this.joboldLoop(promiseAwait, Asset)
         })
     }
 
     nessieMain() {
-        this.fromTo(this.rightVideo, "Main", (promiseAwait) => {
-            this.mainLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
+            this.mainLoop(promiseAwait, Asset)
         })
     }
 
     wolpertingerBabaYaga() {
-        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait) => {
-            this.joboldLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "BabaYaga", (promiseAwait, Asset) => {
+            this.joboldLoop(promiseAwait, Asset)
         })
     }
 
     wolpertingerBaum() {
-        this.fromTo(this.rightVideo, "Baum", (promiseAwait) => {
-            this.mainLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Baum", (promiseAwait, Asset) => {
+            this.mainLoop(promiseAwait, Asset)
         })
     }
 
     yetiBaum() {
-        this.fromTo(this.leftVideo, "Baum", (promiseAwait) => {
-            this.baumLoop(promiseAwait)
+        this.fromTo(this.leftVideo, "Baum", (promiseAwait, Asset) => {
+            this.baumLoop(promiseAwait, Asset)
         })
     }
 
     yetiNessie() {
-        this.fromTo(this.rightVideo, "Nessie", (promiseAwait) => {
-            this.nessieLoop(promiseAwait)
+        this.fromTo(this.rightVideo, "Nessie", (promiseAwait, Asset) => {
+            this.nessieLoop(promiseAwait, Asset)
         })
     }
 }
