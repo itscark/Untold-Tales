@@ -4,8 +4,7 @@ window.onload = function () {
     let url = new URL(window.location.href);
 
     const qrcode = new QRCode(document.getElementById("qrcode"), {
-        width: 150,
-        height: 150
+        correctLevel : QRCode.CorrectLevel.L
     });
     qrcode.makeCode(pathname);
 };

@@ -12,12 +12,12 @@ let mix = require("laravel-mix");
  */
 
 mix
-  .js("src/js/app.js", "public/app.js")
-    .js("src/js/arjs/arjs.js", "public/arjs/arjs.js")
-    .js("src/js/qrcode/qr.js", 'public/qrcode/qr.js')
-    .copy('src/js/qrcode/qrcode.min.js', 'public/qrcode')
-  .sass("src/scss/app.scss", "public/app.css")
-  .sourceMaps();
+    .js("src/js/app.js", "public/js/app.js")
+    .js("src/js/arjs/arjs.js", "public/js/arjs/arjs.js")
+    .js("src/js/qrcode/qr.js", 'public/js/qrcode/qr.js')
+    .copy('src/js/qrcode/qrcode.min.js', 'public/js/qrcode')
+    .sass("src/scss/app.scss", "public/css/app.css")
+    .sourceMaps();
 
 // Full API
 // mix.js(src, output);
