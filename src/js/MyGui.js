@@ -23,7 +23,7 @@ export default class {
         this.animationBtn = null;
 
         //Init Variables
-        this.buttonPath = "assets/buttons/";
+        this.buttonPath = "assets/images/buttons/";
     }
 
     createButton(btn, asset, assetIndex) {
@@ -147,8 +147,8 @@ export default class {
         //set Style of Controle UI
         ////////////
         //Left Button Styles
-        this.leftBtn.width = "150px";
-        this.leftBtn.height = "85px";
+        this.leftBtn.width = "100px";
+        this.leftBtn.height = "46px";
         this.leftBtn.color = "white";
         this.leftBtn.thickness = 0;
         this.leftBtn.left = "30px";
@@ -157,8 +157,8 @@ export default class {
         this.leftBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
-        this.centerBtn.width = "150px";
-        this.centerBtn.height = "85px";
+        this.centerBtn.width = "100px";
+        this.centerBtn.height = "46px";
         this.centerBtn.color = "white";
         this.centerBtn.thickness = 0;
         this.centerBtn.left = "30px";
@@ -167,8 +167,8 @@ export default class {
         this.centerBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
-        this.rightBtn.width = "150px";
-        this.rightBtn.height = "85px";
+        this.rightBtn.width = "100px";
+        this.rightBtn.height = "46px";
         this.rightBtn.color = "white";
         this.rightBtn.thickness = 0;
         this.rightBtn.left = "-30px";

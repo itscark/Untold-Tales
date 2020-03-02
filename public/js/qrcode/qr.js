@@ -93,14 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-window.onload = function () {
-  var pathname = window.location.href.replace('qrcode', 'arjs');
-  var url = new URL(window.location.href);
-  var qrcode = new QRCode(document.getElementById("qrcode"), {
-    correctLevel: QRCode.CorrectLevel.L
-  });
-  qrcode.makeCode(pathname);
-};
+eval("window.onload = function () {\n  var pathname = window.location.href.replace('qrcode', 'arjs');\n  var url = new URL(window.location.href);\n  var qrcode = new QRCode(document.getElementById(\"qrcode\"), {\n    correctLevel: QRCode.CorrectLevel.L\n  });\n  qrcode.makeCode(pathname);\n};//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvanMvcXJjb2RlL3FyLmpzPzYwNzMiXSwibmFtZXMiOlsid2luZG93Iiwib25sb2FkIiwicGF0aG5hbWUiLCJsb2NhdGlvbiIsImhyZWYiLCJyZXBsYWNlIiwidXJsIiwiVVJMIiwicXJjb2RlIiwiUVJDb2RlIiwiZG9jdW1lbnQiLCJnZXRFbGVtZW50QnlJZCIsImNvcnJlY3RMZXZlbCIsIkNvcnJlY3RMZXZlbCIsIkwiLCJtYWtlQ29kZSJdLCJtYXBwaW5ncyI6IkFBQUFBLE1BQU0sQ0FBQ0MsTUFBUCxHQUFnQixZQUFZO0FBQ3hCLE1BQUlDLFFBQVEsR0FBR0YsTUFBTSxDQUFDRyxRQUFQLENBQWdCQyxJQUFoQixDQUFxQkMsT0FBckIsQ0FBNkIsUUFBN0IsRUFBdUMsTUFBdkMsQ0FBZjtBQUVBLE1BQUlDLEdBQUcsR0FBRyxJQUFJQyxHQUFKLENBQVFQLE1BQU0sQ0FBQ0csUUFBUCxDQUFnQkMsSUFBeEIsQ0FBVjtBQUVBLE1BQU1JLE1BQU0sR0FBRyxJQUFJQyxNQUFKLENBQVdDLFFBQVEsQ0FBQ0MsY0FBVCxDQUF3QixRQUF4QixDQUFYLEVBQThDO0FBQ3pEQyxnQkFBWSxFQUFHSCxNQUFNLENBQUNJLFlBQVAsQ0FBb0JDO0FBRHNCLEdBQTlDLENBQWY7QUFHQU4sUUFBTSxDQUFDTyxRQUFQLENBQWdCYixRQUFoQjtBQUNILENBVEQiLCJmaWxlIjoiLi9zcmMvanMvcXJjb2RlL3FyLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsid2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpIHtcbiAgICBsZXQgcGF0aG5hbWUgPSB3aW5kb3cubG9jYXRpb24uaHJlZi5yZXBsYWNlKCdxcmNvZGUnLCAnYXJqcycpO1xuXG4gICAgbGV0IHVybCA9IG5ldyBVUkwod2luZG93LmxvY2F0aW9uLmhyZWYpO1xuXG4gICAgY29uc3QgcXJjb2RlID0gbmV3IFFSQ29kZShkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcInFyY29kZVwiKSwge1xuICAgICAgICBjb3JyZWN0TGV2ZWwgOiBRUkNvZGUuQ29ycmVjdExldmVsLkxcbiAgICB9KTtcbiAgICBxcmNvZGUubWFrZUNvZGUocGF0aG5hbWUpO1xufTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/js/qrcode/qr.js\n");
 
 /***/ }),
 

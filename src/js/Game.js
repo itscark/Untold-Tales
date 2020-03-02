@@ -45,7 +45,7 @@ export default class {
             BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
             {
                 autoUpdateTexture: true,
-                poster: "assets/poster/Cam_Portal_Main_Poster.jpg"
+                poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
             });
         this.bgPlane.isBackground = true;
         this.bgPlane.texture.level = 0;

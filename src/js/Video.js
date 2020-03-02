@@ -14,7 +14,7 @@ class Video {
         this.htmlVideo = null;
 
         this.videoPath = "assets/videos/";
-        this.posterPath = "assets/poster/";
+        this.posterPath = "assets/images/poster/";
         this.posterEnding = "_Poster.jpg";
         this.videoEnding = ".mp4";
     }

@@ -1,8 +1,7 @@
 {
-    "/public/app.js": "/public/app.js",
-    "/public/app.css": "/public/app.css",
-    "/public/qrcode/qrcode.css": "/public/qrcode/qrcode.css",
-    "/public/arjs/arjs.js": "/public/arjs/arjs.js",
-    "/public/qrcode/qr.js": "/public/qrcode/qr.js",
-    "/public/qrcode/qrcode.min.js": "/public/qrcode/qrcode.min.js"
+    "/public/js/app.js": "/public/js/app.js",
+    "/public/css/app.css": "/public/css/app.css",
+    "/public/js/arjs/arjs.js": "/public/js/arjs/arjs.js",
+    "/public/js/qrcode/qr.js": "/public/js/qrcode/qr.js",
+    "/public/js/qrcode/qrcode.min.js": "/public/js/qrcode/qrcode.min.js"
 }

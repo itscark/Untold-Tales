@@ -57,10 +57,6 @@ class Asset {
         //example: mesh.scaling = new BABYLON.Vector3(60, 60, 60);
         task.scaling = new BABYLON.Vector3(xScale, yScale, zScale);
     }
-
-    add() {
-
-    }
 }
 
 export default Asset;
