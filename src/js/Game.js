@@ -189,8 +189,7 @@ export default class {
             "Cam_" + rightVideo);
         //add UI to GUI
 
-        setTimeout(() => {
-
+       setTimeout(() => {
             this.MyGui.addControlUI(
                 leftBtnName,
                 () => {
@@ -224,7 +223,7 @@ export default class {
                 btnSrc,
                 storyName)
 
-        }, 500)
+       }, 100)
     }
 
     //load and play the fromTo Vidoes
@@ -250,7 +249,7 @@ export default class {
         //setTime out is used to garantie no lagging whe the video is playing
         setTimeout(() => {
             this.loopVideo = this.Video.load("Cam_" + loopCam + "_Loop");
-        }, 2000);
+        }, 1000);
 
         this.Video.htmlVideo.onended = async () => {
             let promiseAwait = null;
@@ -277,8 +276,8 @@ export default class {
                 console.log('no asset loaded')
             }
 
-            this.Video.attach(this.loopVideo);
             this.Video.start(this.loopVideo);
+            this.Video.attach(this.loopVideo);
             this.Video.loop(this.loopVideo);
 
             loopFunction(promiseAwait, assetDir);

@@ -93,7 +93,7 @@ export default class {
         //qr code in der Textbox anzeigen mit einem link der einen neuen tab öffnet
 
         //Set Background
-        this.scrollViewerBg = new GUI.Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.png");
+        this.scrollViewerBg = new GUI.Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.jpg");
         this.scrollViewerBg.width = 0.25;
         this.scrollViewerBg.height = 0.4;
         this.scrollViewerBg.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
