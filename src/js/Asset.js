@@ -1,9 +1,8 @@
-import * as BABYLON from "babylonjs";
+import {SceneLoader, Vector3} from "babylonjs";
 
 class Asset {
     constructor(game) {
         this.game = game;
-        this.assetsManager = game.assetsManager;
         this.engine = game.engine;
         this.canvas = game.canvas;
         this.gameTask = game.gameTask;
@@ -22,23 +21,8 @@ class Asset {
         asset.setEnabled(true);
     }
 
-    load(assetName, assetDir, gltfFile) {
-        //load Asset
-        let tmpTask = this.assetsManager.addMeshTask(
-            assetName,
-            "",
-            this.assetPath + assetDir + "/",
-            gltfFile
-        );
-        //on Success
-        tmpTask.onSuccess = function (task) {
-            task.setEnabled(false);
-        };
-        return tmpTask;
-    }
-
     loadAsync(assetDir, assetFile) {
-        return BABYLON.SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
+        return SceneLoader.ImportMeshAsync('', this.assetPath + assetDir + "/", assetFile, this.scene)
     }
 
     position(task, xPosition, yPosition, zPosition) {
@@ -55,7 +39,7 @@ class Asset {
 
     scale(task, xScale, yScale, zScale) {
         //example: mesh.scaling = new BABYLON.Vector3(60, 60, 60);
-        task.scaling = new BABYLON.Vector3(xScale, yScale, zScale);
+        task.scaling = new Vector3(xScale, yScale, zScale);
     }
 }
 

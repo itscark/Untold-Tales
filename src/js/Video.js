@@ -1,4 +1,4 @@
-import * as BABYLON from "babylonjs";
+import {VideoTexture} from "babylonjs";
 
 class Video {
     constructor(game) {
@@ -20,13 +20,13 @@ class Video {
     }
 
     load(video) {
-        return new BABYLON.VideoTexture(
+        return new VideoTexture(
             "video",
             this.videoPath + video + this.videoEnding,
             this.scene,
             false,
             false,
-            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
+            VideoTexture.TRILINEAR_SAMPLINGMODE,
             {
                 autoUpdateTexture: true,
                 poster: this.posterPath + video + this.posterEnding

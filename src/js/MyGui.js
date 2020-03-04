@@ -1,5 +1,5 @@
 import * as BABYLON from "babylonjs";
-import * as GUI from "babylonjs-gui";
+import {AdvancedDynamicTexture, StackPanel, Control, Button, ScrollViewer, Image, TextBlock, TextWrapping} from "babylonjs-gui";
 
 export default class {
     constructor(game) {
@@ -10,16 +10,16 @@ export default class {
         this.Asset = game.Asset;
         this.Video = game.Video;
         //load GUI
-        this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("gui");
+        this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("gui");
 
         //load Animatin GUI
-        this.animationGui = new GUI.StackPanel();
+        this.animationGui = new StackPanel();
         this.animationGui.width = "220px";
         this.animationGui.fontSize = "14px";
         this.animationGui.horizontalAlignment =
-            GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.animationGui.verticalAlignment =
-            GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+            Control.VERTICAL_ALIGNMENT_CENTER;
         this.animationBtn = null;
 
         //Init Variables
@@ -27,8 +27,7 @@ export default class {
     }
 
     createButton(btn, asset, assetIndex) {
-        this.animationBtn = GUI.Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "snow_button.png");
-
+        this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "snow_button.png");
         this.animationBtn.paddingTop = "10px";
         this.animationBtn.width = "100px";
         this.animationBtn.height = "56px";
@@ -42,21 +41,26 @@ export default class {
         });
     }
 
-    createImgBtnNoText(name, location, width, height) {
-        let tmpBtn = GUI.Button.CreateImageOnlyButton(name, location);
+    createImgBtnNoText(name, location, width, height, left = 0, top = 0) {
+        let tmpBtn = Button.CreateImageOnlyButton(name, location);
         tmpBtn.width = width;
         tmpBtn.height = height;
+        tmpBtn.left = left;
+        tmpBtn.top = top;
         tmpBtn.color = "transparent";
         this.advancedTexture.addControl(tmpBtn);
         return tmpBtn;
     }
 
-    createImgBtnWithText(name, text, src, callback) {
-        let button = GUI.Button.CreateImageWithCenterTextButton(name, text, this.buttonPath + src);
+    createImgBtnWithText(name, text, src,left = 0, top = 0, callback) {
+        let button = Button.CreateImageWithCenterTextButton(name, text, this.buttonPath + src);
         button.width = 0.2;
         button.height = "40px";
         button.color = "white";
-        button.background = "green";
+        button.left = left;
+        button.top = top;
+        button.background = "transparent";
+        button.thickness = 0;
         this.advancedTexture.addControl(button);
         button.onPointerUpObservable.add(() => {
             callback()
@@ -73,15 +77,19 @@ export default class {
         });
     }
 
+    removeBtn(btn){
+        this.advancedTexture.removeControl(btn);
+    }
+
     createTextBox(assetName) {
         //init ScrollViewer
-        this.sv = new GUI.ScrollViewer();
+        this.sv = new ScrollViewer();
         this.sv.thickness = 0;
         this.sv.color = "white";
         this.sv.width = 0.25;
         this.sv.height = 0.4;
-        this.sv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.sv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.sv.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.sv.top = "50px";
         this.sv.left = "50px";
         this.sv.zIndex = 10;
@@ -93,28 +101,28 @@ export default class {
         //qr code in der Textbox anzeigen mit einem link der einen neuen tab öffnet
 
         //Set Background
-        this.scrollViewerBg = new GUI.Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.jpg");
+        this.scrollViewerBg = new Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.jpg");
         this.scrollViewerBg.width = 0.25;
         this.scrollViewerBg.height = 0.4;
-        this.scrollViewerBg.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.scrollViewerBg.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.scrollViewerBg.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.scrollViewerBg.top = "50px";
         this.scrollViewerBg.left = "50px";
         this.scrollViewerBg.alpha = 0.5;
         this.advancedTexture.addControl(this.scrollViewerBg);
 
         //Init Textblock where text is added
-        this.tb = new GUI.TextBlock();
-        this.tb.textWrapping = GUI.TextWrapping.WordWrap;
+        this.tb = new TextBlock();
+        this.tb.textWrapping = TextWrapping.WordWrap;
         this.tb.resizeToFit = true;
         this.tb.lineSpacing = "8px";
         this.tb.paddingTop = "20px";
         this.tb.paddingLeft = "30px";
         this.tb.paddingRight = "20px";
-        this.tb.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.tb.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        this.tb.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.tb.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.tb.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+        this.tb.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.tb.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.color = "white";
         this.tb.fontSize = "8%";
 
@@ -137,11 +145,11 @@ export default class {
                             btnSrc = "snow_button.png") {
         //Init Buttons
         //this.leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
-        this.leftBtn = GUI.Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
+        this.leftBtn = Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
         //this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
-        this.centerBtn = GUI.Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
+        this.centerBtn = Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
         //this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
-        this.rightBtn = GUI.Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
+        this.rightBtn = Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
 
         ////////////
         //set Style of Controle UI
@@ -153,8 +161,8 @@ export default class {
         this.leftBtn.thickness = 0;
         this.leftBtn.left = "30px";
         this.leftBtn.top = "-30px";
-        this.leftBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.leftBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        this.leftBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.leftBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
         this.centerBtn.width = "100px";
@@ -163,8 +171,8 @@ export default class {
         this.centerBtn.thickness = 0;
         this.centerBtn.left = "30px";
         this.centerBtn.top = "-30px";
-        this.centerBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-        this.centerBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        this.centerBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_CENTER;
+        this.centerBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
         this.rightBtn.width = "100px";
@@ -173,8 +181,8 @@ export default class {
         this.rightBtn.thickness = 0;
         this.rightBtn.left = "-30px";
         this.rightBtn.top = "-30px";
-        this.rightBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        this.rightBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        this.rightBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.rightBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
 
         ////////////
@@ -229,14 +237,14 @@ export default class {
     }
 
     arButton(storyName) {
-        this.arBtn = GUI.Button.CreateSimpleButton("arBtn", "See me in AR");
+        this.arBtn = Button.CreateSimpleButton("arBtn", "See me in AR");
         this.arBtn.width = "150px";
         this.arBtn.height = "56px";
         this.arBtn.color = "white";
         this.arBtn.left = "-30px";
         this.arBtn.top = "30px";
-        this.arBtn.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        this.arBtn.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.arBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.arBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.arBtn.onPointerUpObservable.add(() => {
             let pathname = window.location.pathname.replace('index.html', '');
             window.open(pathname + "sites/qrcode.html?char=" + storyName, '_blank')

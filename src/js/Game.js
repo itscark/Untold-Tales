@@ -1,5 +1,16 @@
 // Import Babylon.js
-import * as BABYLON from "babylonjs";
+//import * as BABYLON from "babylonjs";
+import {
+    Engine,
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    HemisphericLight,
+    Layer,
+    VideoTexture,
+    Animation,
+    AnimationPropertiesOverride
+} from "babylonjs";
 //Import Babylon Loaders
 import "babylonjs-loaders";
 //Import Video Class
@@ -10,6 +21,7 @@ import Asset from "./Asset";
 import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
+import UnBlock from "./UnBlock";
 
 export default class {
     constructor() {
@@ -17,32 +29,32 @@ export default class {
         //select canvas
         this.canvas = document.getElementById("renderCanvas");
         // Generate the BABYLON 3D engine
-        this.engine = new BABYLON.Engine(this.canvas, true);
+        this.engine = new Engine(this.canvas, true);
         // Create the scene space
-        this.scene = new BABYLON.Scene(this.engine);
+        this.scene = new Scene(this.engine);
         // Activate ArcCam + Camera Controlls
-        this.camera = new BABYLON.ArcRotateCamera(
+        this.camera = new ArcRotateCamera(
             "cam",
             -Math.PI / 2,
             Math.PI / 2,
             10,
-            BABYLON.Vector3.Zero(),
+            Vector3.Zero(),
             this.scene
         );
-        this.camera.setTarget(BABYLON.Vector3.Zero());
+        this.camera.setTarget(Vector3.Zero());
 
         // Add lights to the scene
-        this.light1 = new BABYLON.HemisphericLight(
+        this.light1 = new HemisphericLight(
             "light1",
-            new BABYLON.Vector3(1, 1, 0),
+            new Vector3(1, 1, 0),
             this.scene
         );
 
         //Create a Background video
-        this.bgPlane = new BABYLON.Layer("back", null, this.scene);
-        this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
+        this.bgPlane = new Layer("back", null, this.scene);
+        this.bgPlane.texture = new VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
             false,
-            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
+            VideoTexture.TRILINEAR_SAMPLINGMODE,
             {
                 autoUpdateTexture: true,
                 poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
@@ -55,7 +67,7 @@ export default class {
         this.bgPlane.texture.video.loop = false;
 
         // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
-        BABYLON.Animation.AllowMatricesInterpolation = true;
+        Animation.AllowMatricesInterpolation = true;
 
         // Create Scene
         this.createScene();
@@ -64,7 +76,7 @@ export default class {
         this.assetPath = "assets/chars/";
 
         // Enable animation blending for all animations
-        this.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
+        this.scene.animationPropertiesOverride = new AnimationPropertiesOverride();
         this.scene.animationPropertiesOverride.enableBlending = true;
         this.scene.animationPropertiesOverride.blendingSpeed = 0.02;
         this.scene.animationPropertiesOverride.loopMode = 1;
@@ -103,33 +115,22 @@ export default class {
 
     createScene() {
         //Load Classes
-        this.assetsManager = new BABYLON.AssetsManager(this.scene);
         this.MyGui = new MyGui(this);
         this.Animations = new Animations(this);
         this.Asset = new Asset(this);
         this.Video = new Video(this);
+        this.UnBlock = new UnBlock(this);
 
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
             this.engine.resize();
         });
 
-        // When all assets are loaded =>
-        this.assetsManager.onFinish = tasks => {
-            this.setup();
-        };
-        // Start Loading
-        this.assetsManager.load();
+        //Every Thing is setup, now start
+        this.setupVideo();
     }
 
-    setup() {
-        //load Start Button
-        this.playBtn = this.MyGui.createImgBtnNoText(
-            "playBtn",
-            "assets/images/gui/play-button.png",
-            "200px",
-            "200px"
-        );
+    setupVideo() {
 
         //load bg Video
         this.bgVideo = this.Video.load(
@@ -138,11 +139,37 @@ export default class {
         //Attach Video to Background
         this.Video.attach(this.bgVideo);
 
-        //initial Play button was pressed
-        this.MyGui.btnEvent(this.playBtn, () => {
-            // Play intro Video to the main char
-            this.portalMain();
-        }, true);
+        // //load Start Button
+        // this.videoPlayBtn = this.MyGui.createImgBtnNoText(
+        //     "playBtn",
+        //     "assets/images/gui/play-button.png",
+        //     "200px",
+        //     "200px",
+        //     200
+        // );
+        // //load Mini Game Button
+        // this.miniGameBtn = this.MyGui.createImgBtnWithText(
+        //     'miniGameBtn',
+        //     'Play Mini Game',
+        //     'snow_button.png',
+        //     -200,
+        //     0,
+        //     () => {
+        //         this.MyGui.removeBtn(this.miniGameBtn);
+        //         this.MyGui.removeBtn(this.videoPlayBtn);
+        //         this.UnBlock.setup();
+        //     }
+        // );
+
+        // this.MyGui.btnEvent(this.videoPlayBtn, () => {
+        //     //remove the mini game button
+        //     this.MyGui.removeBtn(this.miniGameBtn);
+        //     // Play intro Video to the main char
+        //     this.portalMain();
+        // }, true);
+
+        this.UnBlock;
+
 
         //start Render Loop
         this.engine.runRenderLoop(() => {
@@ -189,7 +216,7 @@ export default class {
             "Cam_" + rightVideo);
         //add UI to GUI
 
-       setTimeout(() => {
+        setTimeout(() => {
             this.MyGui.addControlUI(
                 leftBtnName,
                 () => {
@@ -223,7 +250,7 @@ export default class {
                 btnSrc,
                 storyName)
 
-       }, 100)
+        }, 100)
     }
 
     //load and play the fromTo Vidoes
@@ -524,8 +551,8 @@ export default class {
 
     mainBasilisk() {
         this.fromTo(this.leftVideo, "Basilisk", (promiseAwait, Asset) => {
-            this.basiliskLoop(promiseAwait, Asset)
-        },
+                this.basiliskLoop(promiseAwait, Asset)
+            },
             "Stromboli",
             true, 2, 2, 2,
             true, 1.3, -1.4, -1)
