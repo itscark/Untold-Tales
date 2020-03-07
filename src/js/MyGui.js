@@ -41,12 +41,10 @@ export default class {
         });
     }
 
-    createImgBtnNoText(name, location, width, height, left = 0, top = 0) {
+    createImgBtnNoText(name, location, width, height) {
         let tmpBtn = Button.CreateImageOnlyButton(name, location);
         tmpBtn.width = width;
         tmpBtn.height = height;
-        tmpBtn.left = left;
-        tmpBtn.top = top;
         tmpBtn.color = "transparent";
         this.advancedTexture.addControl(tmpBtn);
         return tmpBtn;

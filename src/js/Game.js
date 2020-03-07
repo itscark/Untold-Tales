@@ -21,7 +21,6 @@ import Asset from "./Asset";
 import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
-import UnBlock from "./UnBlock";
 
 export default class {
     constructor() {
@@ -119,7 +118,6 @@ export default class {
         this.Animations = new Animations(this);
         this.Asset = new Asset(this);
         this.Video = new Video(this);
-        this.UnBlock = new UnBlock(this);
 
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
@@ -139,37 +137,18 @@ export default class {
         //Attach Video to Background
         this.Video.attach(this.bgVideo);
 
-        // //load Start Button
-        // this.videoPlayBtn = this.MyGui.createImgBtnNoText(
-        //     "playBtn",
-        //     "assets/images/gui/play-button.png",
-        //     "200px",
-        //     "200px",
-        //     200
-        // );
-        // //load Mini Game Button
-        // this.miniGameBtn = this.MyGui.createImgBtnWithText(
-        //     'miniGameBtn',
-        //     'Play Mini Game',
-        //     'snow_button.png',
-        //     -200,
-        //     0,
-        //     () => {
-        //         this.MyGui.removeBtn(this.miniGameBtn);
-        //         this.MyGui.removeBtn(this.videoPlayBtn);
-        //         this.UnBlock.setup();
-        //     }
-        // );
+        //load Start Button
+        this.videoPlayBtn = this.MyGui.createImgBtnNoText(
+            "playBtn",
+            "assets/images/gui/play-button.png",
+            "200px",
+            "200px"
+        );
 
-        // this.MyGui.btnEvent(this.videoPlayBtn, () => {
-        //     //remove the mini game button
-        //     this.MyGui.removeBtn(this.miniGameBtn);
-        //     // Play intro Video to the main char
-        //     this.portalMain();
-        // }, true);
-
-        this.UnBlock;
-
+        this.MyGui.btnEvent(this.videoPlayBtn, () => {
+            // Play intro Video to the main char
+            this.portalMain();
+        }, true);
 
         //start Render Loop
         this.engine.runRenderLoop(() => {
