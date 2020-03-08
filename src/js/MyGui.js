@@ -264,4 +264,25 @@ export default class {
         this.advancedTexture.removeControl(this.scrollViewerBg);
         this.advancedTexture.removeControl(this.arBtn);
     }
+
+    //fadeout the fig in the beginning
+    fadeOutFog(plane) {
+        //loop to slowly fade out the fog plane
+        let i = 1;
+        do {
+            ((i) => {
+                //set time out is used to run the code slower, to create a fadeout effect
+                setTimeout(() => {
+                    //set the alpha for the plane to disapear
+                    plane.material.alpha = 1 - i;
+                    //loop is done, now dispose the fogPlane
+                    if (plane.material.alpha < 0.03){
+                        //dispose the plane to avoid errors
+                        plane.dispose();
+                    }
+                }, 2000 * i)
+            })(i -= 0.02)
+        } while (i > 0);
+    }
+
 }

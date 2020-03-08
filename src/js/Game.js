@@ -1,16 +1,5 @@
 // Import Babylon.js
-//import * as BABYLON from "babylonjs";
-import {
-    Engine,
-    Scene,
-    ArcRotateCamera,
-    Vector3,
-    HemisphericLight,
-    Layer,
-    VideoTexture,
-    Animation,
-    AnimationPropertiesOverride
-} from "babylonjs";
+import * as BABYLON from 'babylonjs';
 //Import Babylon Loaders
 import "babylonjs-loaders";
 //Import Video Class
@@ -21,6 +10,8 @@ import Asset from "./Asset";
 import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
+//import babylonpartials
+import 'babylonjs-procedural-textures';
 
 export default class {
     constructor() {
@@ -28,32 +19,35 @@ export default class {
         //select canvas
         this.canvas = document.getElementById("renderCanvas");
         // Generate the BABYLON 3D engine
-        this.engine = new Engine(this.canvas, true);
+        this.engine = new BABYLON.Engine(this.canvas, true);
         // Create the scene space
-        this.scene = new Scene(this.engine);
+        this.scene = new BABYLON.Scene(this.engine);
         // Activate ArcCam + Camera Controlls
-        this.camera = new ArcRotateCamera(
+        this.camera = new BABYLON.ArcRotateCamera(
             "cam",
             -Math.PI / 2,
             Math.PI / 2,
             10,
-            Vector3.Zero(),
+            BABYLON.Vector3.Zero(),
             this.scene
         );
-        this.camera.setTarget(Vector3.Zero());
+        this.camera.setTarget(BABYLON.Vector3.Zero());
+
+        //activate camera control
+        //this.camera.attachControl(this.canvas, true);
 
         // Add lights to the scene
-        this.light1 = new HemisphericLight(
+        this.light1 = new BABYLON.HemisphericLight(
             "light1",
-            new Vector3(1, 1, 0),
+            new BABYLON.Vector3(1, 1, 0),
             this.scene
         );
 
         //Create a Background video
-        this.bgPlane = new Layer("back", null, this.scene);
-        this.bgPlane.texture = new VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
+        this.bgPlane = new BABYLON.Layer("back", null, this.scene);
+        this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
             false,
-            VideoTexture.TRILINEAR_SAMPLINGMODE,
+            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
             {
                 autoUpdateTexture: true,
                 poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
@@ -61,9 +55,25 @@ export default class {
         this.bgPlane.isBackground = true;
         this.bgPlane.texture.level = 0;
 
-
         //set loop of Background video to False;
         this.bgPlane.texture.video.loop = false;
+
+        //show babylonjs inspector
+        //this.scene.debugLayer.show();
+
+        //set fog color
+        const color = new BABYLON.Color3(0.9, 0.9, 0.85);
+
+        //create a plane for the fog
+        this.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.scene); // default plane
+        //create material for plaen
+        this.materialforplane = new BABYLON.StandardMaterial("texture1", this.scene);
+        //set color of plane to fog color
+        this.materialforplane.emissiveColor = color;
+        //set plane material to previously set material
+        this.fogPlane.material = this.materialforplane;
+        //set the itensity to 100%, after play button is clicked slowly set to 0
+        this.materialforplane.alpha = 1;
 
         // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
         Animation.AllowMatricesInterpolation = true;
@@ -75,7 +85,7 @@ export default class {
         this.assetPath = "assets/chars/";
 
         // Enable animation blending for all animations
-        this.scene.animationPropertiesOverride = new AnimationPropertiesOverride();
+        this.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
         this.scene.animationPropertiesOverride.enableBlending = true;
         this.scene.animationPropertiesOverride.blendingSpeed = 0.02;
         this.scene.animationPropertiesOverride.loopMode = 1;
@@ -99,6 +109,7 @@ export default class {
         });
     }
 
+    //Load the Stories.json for further functions
     loadJSON(callback) {
         let xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
@@ -123,20 +134,11 @@ export default class {
         window.addEventListener("resize", () => {
             this.engine.resize();
         });
-
         //Every Thing is setup, now start
-        this.setupVideo();
+        this.setup();
     }
 
-    setupVideo() {
-
-        //load bg Video
-        this.bgVideo = this.Video.load(
-            "Cam_Portal_Main"
-        );
-        //Attach Video to Background
-        this.Video.attach(this.bgVideo);
-
+    setup() {
         //load Start Button
         this.videoPlayBtn = this.MyGui.createImgBtnNoText(
             "playBtn",
@@ -147,7 +149,8 @@ export default class {
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
             // Play intro Video to the main char
-            this.portalMain();
+            //this.portalMain();
+
         }, true);
 
         //start Render Loop
@@ -449,12 +452,17 @@ export default class {
     //FromTo Videos
     ////////////
     portalMain() {
+        //call function to fade out the fog
+        this.MyGui.fadeOutFog(this.fogPlane);
+
+
         this.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
                 this.mainLoop(promiseAwait, Asset)
             },
             "Stromboli",
             true, 2, 2, 2,
             true, 1.3, -1.4, -1);
+
     }
 
     toPortal() {
