@@ -1,4 +1,13 @@
-import {AdvancedDynamicTexture, StackPanel, Control, Button, ScrollViewer, Image, TextBlock, TextWrapping } from "babylonjs-gui";
+import {
+    AdvancedDynamicTexture,
+    StackPanel,
+    Control,
+    Button,
+    ScrollViewer,
+    Image,
+    TextBlock,
+    TextWrapping
+} from "babylonjs-gui";
 import * as BABYLON from "babylonjs";
 
 export default class {
@@ -95,7 +104,7 @@ export default class {
         return tmpBtn;
     }
 
-    createImgBtnWithText(name, text, src,left = 0, top = 0, callback) {
+    createImgBtnWithText(name, text, src, left = 0, top = 0, callback) {
         let button = Button.CreateImageWithCenterTextButton(name, text, this.buttonPath + src);
         button.width = 0.2;
         button.height = "40px";
@@ -120,11 +129,11 @@ export default class {
         });
     }
 
-    removeBtn(btn){
+    removeBtn(btn) {
         this.advancedTexture.removeControl(btn);
     }
 
-    createTextBox(assetName) {
+    createTextBox(assetName, position = 'left') {
         //init ScrollViewer
         this.sv = new ScrollViewer();
         this.sv.hoverCursor = this.curserSettings;
@@ -132,28 +141,18 @@ export default class {
         this.sv.color = "white";
         this.sv.width = 0.25;
         this.sv.height = 0.4;
-        this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
-        this.sv.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-        this.sv.top = "50px";
-        this.sv.left = "50px";
         this.sv.zIndex = 10;
-
+        this.sv.top = "50px";
         this.sv.barColor = "white";
-        this.advancedTexture.addControl(this.sv);
-
-        //todo
-        //qr code in der Textbox anzeigen mit einem link der einen neuen tab öffnet
+        this.sv.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
 
         //Set Background
         this.scrollViewerBg = new Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.jpg");
         this.scrollViewerBg.width = 0.25;
         this.scrollViewerBg.height = 0.4;
-        this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.scrollViewerBg.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.scrollViewerBg.top = "50px";
-        this.scrollViewerBg.left = "50px";
         this.scrollViewerBg.alpha = 0.5;
-        this.advancedTexture.addControl(this.scrollViewerBg);
 
         //Init Textblock where text is added
         this.tb = new TextBlock();
@@ -163,12 +162,28 @@ export default class {
         this.tb.paddingTop = "20px";
         this.tb.paddingLeft = "30px";
         this.tb.paddingRight = "20px";
-        this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.color = "white";
         this.tb.fontSize = "8%";
+
+        //because chars are positioned on different sides the textbox has to be able to move from left to right
+        if (position == 'left') {
+            const left = 50;
+            this.scrollViewerBg.left = left;
+            this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+            this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+            this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+            this.sv.left = left;
+        } else if (position == 'right') {
+            const right = -250;
+            this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            this.scrollViewerBg.left = right;
+            this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            this.sv.left = right;
+        }
 
 
         let obj = this.game.stories_json['charakter'];
@@ -178,6 +193,8 @@ export default class {
                 this.tb.text = obj[i].story + "\n";
             }
         }
+        this.advancedTexture.addControl(this.sv);
+        this.advancedTexture.addControl(this.scrollViewerBg);
         this.sv.addControl(this.tb);
     }
 
@@ -267,13 +284,13 @@ export default class {
         rightBtnName,
         rightFunction,
         btnSrc,
-        storyName
+        storyName,
+        boxPosition
     ) {
         if (storyName != null) {
-            this.createTextBox(storyName);
+            this.createTextBox(storyName, boxPosition);
             this.arButton(storyName);
         }
-
 
 
         this.createNavigationButtons(leftBtnName,
@@ -327,7 +344,7 @@ export default class {
                     //set the alpha for the plane to disapear
                     plane.material.alpha = 1 - i;
                     //loop is done, now dispose the fogPlane
-                    if (plane.material.alpha < 0.03){
+                    if (plane.material.alpha < 0.03) {
                         //dispose the plane to avoid errors
                         //plane.dispose();
                     }
@@ -336,7 +353,7 @@ export default class {
         } while (i > 0);
     }
 
-    fadeOutGuiElement(element){
+    fadeOutGuiElement(element) {
         let i = 1;
         do {
             ((i) => {
@@ -345,7 +362,7 @@ export default class {
                     //set the alpha to hide element
                     element.alpha = 1 - i;
                     //loop is done, remove control from advanced Texture
-                    if (element.alpha < 0.03){
+                    if (element.alpha < 0.03) {
                         //dispose the plane to avoid errors
                         this.advancedTexture.removeControl(element);
                     }
@@ -354,7 +371,7 @@ export default class {
         } while (i > 0);
     }
 
-    addIntroText(text){
+    addIntroText(text) {
         this.text = new TextBlock();
         this.text.fontFamily = "AYearWithoutRain";
         this.text.textWrapping = true;

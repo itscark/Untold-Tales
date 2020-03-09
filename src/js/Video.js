@@ -64,6 +64,7 @@ class Video {
         rightFunction,
         promiseAwait,
         storyName,
+        boxPosition,
         btnSrc) {
         //Functions to preload Videos for the next Chars
         this.game.leftVideo = this.load(
@@ -106,7 +107,8 @@ class Video {
                     }
                 },
                 btnSrc,
-                storyName)
+                storyName,
+                boxPosition)
 
         }, 100)
     }

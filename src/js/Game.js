@@ -146,7 +146,7 @@ export default class {
     ////////////
     //Loop Videos
     ////////////
-    babaYagaLoop(promiseAwait, Asset) {
+    babaYagaLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "BabaYaga_Eier",
             "BabaYaga_Portal",
@@ -160,10 +160,11 @@ export default class {
                 this.babaYagaMain()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    basiliskLoop(promiseAwait, Asset) {
+    basiliskLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Basilisk_Wolpertinger",
             "Basilisk_Portal",
@@ -177,10 +178,11 @@ export default class {
                 this.basiliskYeti()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    baumLoop(promiseAwait, Asset) {
+    baumLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Baum_BabaYaga",
             "Baum_Portal",
@@ -194,10 +196,11 @@ export default class {
                 this.baumBasilisk()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    eierLoop(promiseAwait, Asset) {
+    eierLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Eier_Nessie",
             "Eier_Portal",
@@ -210,10 +213,11 @@ export default class {
             () => {
                 this.eierWolpertinger()
             }, promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    joboldLoop(promiseAwait, Asset) {
+    joboldLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Jobold_Baum",
             "Jobold_Portal",
@@ -227,10 +231,11 @@ export default class {
                 this.joboldYeti()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    mainLoop(promiseAwait, Asset) {
+    mainLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Main_Basilisk",
             "Main_Portal",
@@ -244,10 +249,11 @@ export default class {
                 this.mainEier()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    nessieLoop(promiseAwait, Asset) {
+    nessieLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Nessie_Jobold",
             "Nessie_Portal",
@@ -261,10 +267,11 @@ export default class {
                 this.nessieMain()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    wolpertingerLoop(promiseAwait, Asset) {
+    wolpertingerLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Wolpertinger_BabaYaga",
             "Wolpertinger_Portal",
@@ -278,10 +285,11 @@ export default class {
                 this.wolpertingerBaum()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
-    yetiLoop(promiseAwait, Asset) {
+    yetiLoop(promiseAwait, Asset, boxPosition) {
         this.Video.loadLoop(
             "Yeti_Baum",
             "Yeti_Portal",
@@ -295,7 +303,8 @@ export default class {
                 this.yetiNessie()
             },
             promiseAwait,
-            Asset);
+            Asset,
+            boxPosition);
     }
 
     ////////////
@@ -310,7 +319,7 @@ export default class {
         this.MyGui.fadeOutGuiElement(this.introText);
 
         this.Video.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
-                this.mainLoop(promiseAwait, Asset)
+                this.mainLoop(promiseAwait, Asset, 'left')
             },
             "Stromboli",
             true, 2, 2, 2,
