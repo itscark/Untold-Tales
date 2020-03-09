@@ -33,6 +33,9 @@ export default class {
         //activate camera control
         //this.camera.attachControl(this.canvas, true);
 
+        //show babylonjs inspector
+        //this.scene.debugLayer.show();
+
         // Add lights to the scene
         this.light1 = new BABYLON.HemisphericLight(
             "light1",
@@ -40,59 +43,11 @@ export default class {
             this.scene
         );
 
-        //Create a Background video
-        this.bgPlane = new BABYLON.Layer("back", null, this.scene);
-        this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
-            false,
-            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
-            {
-                autoUpdateTexture: true,
-                poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
-            });
-        this.bgPlane.isBackground = true;
-        this.bgPlane.texture.level = 1;
-
-        //set loop of Background video to False;
-        this.bgPlane.texture.video.loop = false;
-
-        //show babylonjs inspector
-        //this.scene.debugLayer.show();
-
-        //set fog color
-        const color = new BABYLON.Color3(0.9, 0.9, 0.85);
-
-        //create a plane for the fog
-        this.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.scene); // default plane
-        //create material for plaen
-        this.materialforplane = new BABYLON.StandardMaterial("texture1", this.scene);
-        //set color of plane to fog color
-        this.materialforplane.emissiveColor = color;
-        //set plane material to previously set material
-        this.fogPlane.material = this.materialforplane;
-        //set the itensity to 100%, after play button is clicked slowly set to 0
-        this.materialforplane.alpha = 1;
-
-        // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
-        Animation.AllowMatricesInterpolation = true;
-
+        //set the right settings for the custom cursor
         this.cursorSettings = " url('./assets/cursor/viseur.png') 12 12, auto ";
-
-        //set action Manager
-        this.fogPlane.actionManager = new BABYLON.ActionManager(this.scene);
-        //set the cursor
-        this.scene.hoverCursor = this.cursorSettings;
-
-        // Create Scene
-        this.createScene();
 
         //set global Asset paths, incase folder structure my be changed in the future
         this.assetPath = "assets/chars/";
-
-        // Enable animation blending for all animations
-        this.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
-        this.scene.animationPropertiesOverride.enableBlending = true;
-        this.scene.animationPropertiesOverride.blendingSpeed = 0.02;
-        this.scene.animationPropertiesOverride.loopMode = 1;
 
         // Init Variables
         this.introVideo = null;
@@ -105,12 +60,19 @@ export default class {
         this.loopVideo = null;
         this.assetPromise = null;
         this.stories_json = null;
+        this.bgPlane = null;
+        this.fogPlane = null;
+        //add the intro text
+        this.introText = null;
 
         //load Stories for the Chars
         this.loadJSON((response) => {
             // Parse JSON string into object
             this.stories_json = JSON.parse(response);
         });
+
+        // Create Scene
+        this.createScene();
     }
 
     //Load the Stories.json for further functions
@@ -134,9 +96,6 @@ export default class {
         this.Asset = new Asset(this);
         this.Video = new Video(this);
 
-        //set curser
-        this.fogPlane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (ev) =>{ }));
-
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
             this.engine.resize();
@@ -155,9 +114,6 @@ export default class {
             0,
             160
         );
-
-        //add the intro text
-        this.introText = this.MyGui.addIntroText("“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”");
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
             // Play intro Video to the main char
@@ -178,7 +134,6 @@ export default class {
             return "caught";
         }
     }
-
 
     ////////////
     // naming convention for Charakter Functions

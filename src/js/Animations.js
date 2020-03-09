@@ -1,8 +1,19 @@
+import * as BABYLON from "babylonjs";
+
 class Animations {
     constructor(game) {
         this.game = game;
         this.engine = game.engine;
         this.canvas = game.canvas;
+
+        // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
+        Animation.AllowMatricesInterpolation = true;
+
+        // Enable animation blending for all animations
+        this.game.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
+        this.game.scene.animationPropertiesOverride.enableBlending = true;
+        this.game.scene.animationPropertiesOverride.blendingSpeed = 0.02;
+        this.game.scene.animationPropertiesOverride.loopMode = 1;
     }
 
     load(asset) {

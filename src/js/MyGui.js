@@ -22,6 +22,45 @@ export default class {
             Control.VERTICAL_ALIGNMENT_CENTER;
         this.animationBtn = null;
 
+        //Create a Background video
+        this.game.bgPlane = new BABYLON.Layer("back", null, this.scene);
+        this.game.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
+            false,
+            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
+            {
+                autoUpdateTexture: true,
+                poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
+            });
+        //set plane to background
+        this.game.bgPlane.isBackground = true;
+        this.game.bgPlane.texture.level = 1;
+
+        //set loop of Background video to False;
+        this.game.bgPlane.texture.video.loop = false;
+
+        //create a plane for the fog
+        this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.game.scene); // default plane
+        //create material for plaen
+        this.materialforplane = new BABYLON.StandardMaterial("texture1", this.game.scene);
+        //set fog color
+        const color = new BABYLON.Color3(0.9, 0.9, 0.85);
+        //set color of plane to fog color
+        this.materialforplane.emissiveColor = color;
+        //set plane material to previously set material
+        this.game.fogPlane.material = this.materialforplane;
+        //set the itensity to 100%, after play button is clicked slowly set to 0
+        this.materialforplane.alpha = 1;
+
+        //set action Manager
+        this.game.fogPlane.actionManager = new BABYLON.ActionManager(this.game.scene);
+        //set the cursor
+        this.game.scene.hoverCursor = this.game.cursorSettings;
+        //set curser
+        this.game.fogPlane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (ev) => {
+        }));
+
+        this.game.introText = this.addIntroText("“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”");
+
         //Init Variables
         this.buttonPath = "assets/images/buttons/";
         this.curserSettings = game.cursorSettings;
