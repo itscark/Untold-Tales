@@ -10,12 +10,9 @@ import Asset from "./Asset";
 import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
-//import babylonpartials
-import 'babylonjs-procedural-textures';
 
 export default class {
     constructor() {
-        // Get Canvas
         //select canvas
         this.canvas = document.getElementById("renderCanvas");
         // Generate the BABYLON 3D engine
@@ -53,7 +50,7 @@ export default class {
                 poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
             });
         this.bgPlane.isBackground = true;
-        this.bgPlane.texture.level = 0;
+        this.bgPlane.texture.level = 1;
 
         //set loop of Background video to False;
         this.bgPlane.texture.video.loop = false;
@@ -77,6 +74,13 @@ export default class {
 
         // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
         Animation.AllowMatricesInterpolation = true;
+
+        this.cursorSettings = " url('./assets/cursor/viseur.png') 12 12, auto ";
+
+        //set action Manager
+        this.fogPlane.actionManager = new BABYLON.ActionManager(this.scene);
+        //set the cursor
+        this.scene.hoverCursor = this.cursorSettings;
 
         // Create Scene
         this.createScene();
@@ -129,6 +133,9 @@ export default class {
         this.Animations = new Animations(this);
         this.Asset = new Asset(this);
         this.Video = new Video(this);
+
+        //set curser
+        this.fogPlane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (ev) =>{ }));
 
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {

@@ -9,6 +9,7 @@
     "babylonjs-loaders": "^4.1.0",
     "babylonjs-procedural-textures": "^4.1.0",
     "express": "^4.17.1",
+    "fontfaceobserver": "^2.1.0",
     "pepjs": "^0.5.2",
     "sass": "^1.26.1",
     "sass-loader": "^8.0.2"

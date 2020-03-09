@@ -1,7 +1,5 @@
-import * as BABYLON from "babylonjs";
 import {AdvancedDynamicTexture, StackPanel, Control, Button, ScrollViewer, Image, TextBlock, TextWrapping } from "babylonjs-gui";
-
-import '../../public/css/fonts.css';
+import * as BABYLON from "babylonjs";
 
 export default class {
     constructor(game) {
@@ -26,10 +24,12 @@ export default class {
 
         //Init Variables
         this.buttonPath = "assets/images/buttons/";
+        this.curserSettings = game.cursorSettings;
     }
 
     createButton(btn, asset, assetIndex) {
         this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "snow_button.png");
+        this.animationBtn.hoverCursor = this.curserSettings;
         this.animationBtn.paddingTop = "10px";
         this.animationBtn.width = "100px";
         this.animationBtn.height = "56px";
@@ -45,6 +45,7 @@ export default class {
 
     createImgBtnNoText(name, location, width, height, left = 0, top = 0) {
         let tmpBtn = Button.CreateImageOnlyButton(name, location);
+        tmpBtn.hoverCursor = this.curserSettings;
         tmpBtn.width = width;
         tmpBtn.height = height;
         tmpBtn.left = left;
@@ -87,6 +88,7 @@ export default class {
     createTextBox(assetName) {
         //init ScrollViewer
         this.sv = new ScrollViewer();
+        this.sv.hoverCursor = this.curserSettings;
         this.sv.thickness = 0;
         this.sv.color = "white";
         this.sv.width = 0.25;
@@ -153,6 +155,10 @@ export default class {
         this.centerBtn = Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
         //this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
         this.rightBtn = Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
+
+        this.leftBtn.hoverCursor = this.curserSettings;
+        this.centerBtn.hoverCursor = this.curserSettings;
+        this.rightBtn.hoverCursor = this.curserSettings;
 
         ////////////
         //set Style of Controle UI
@@ -241,6 +247,7 @@ export default class {
 
     arButton(storyName) {
         this.arBtn = Button.CreateSimpleButton("arBtn", "See me in AR");
+        this.arBtn.hoverCursor = this.curserSettings;
         this.arBtn.width = "150px";
         this.arBtn.height = "56px";
         this.arBtn.color = "white";
@@ -283,7 +290,7 @@ export default class {
                     //loop is done, now dispose the fogPlane
                     if (plane.material.alpha < 0.03){
                         //dispose the plane to avoid errors
-                        plane.dispose();
+                        //plane.dispose();
                     }
                 }, 2000 * i)
             })(i -= 0.02)
@@ -310,11 +317,11 @@ export default class {
 
     addIntroText(text){
         this.text = new TextBlock();
+        this.text.fontFamily = "AYearWithoutRain";
         this.text.textWrapping = true;
         this.text.lineSpacing = 10;
         this.text.width = 0.5;
         this.text.color = "black";
-        this.text.fontFamily = "AYearWithoutRain";
         this.text.fontSize = 18;
         this.text.text = text;
         this.advancedTexture.addControl(this.text);

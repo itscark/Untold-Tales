@@ -18,7 +18,7 @@ mix
     .sass("src/scss/app.scss", "public/css/app.css").options({
     processCssUrls: false
 })
-.sourceMaps();
+    .sourceMaps();
 
 // Full API
 // mix.js(src, output);
