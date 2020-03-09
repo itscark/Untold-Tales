@@ -44,7 +44,7 @@ window.onload = function () {
     function insertHTML(char) {
         body.insertAdjacentHTML('afterbegin', '<a-scene embedded\n' +
             '         arjs="debugUIEnabled: false; sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960"\n' +
-            '         vr-mode-ui="enabled: false"\n' +
+            '         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"\n' +
             '         artoolkit="sourceType: webcam;"\n' +
             '         outline\n' +
             '         antialias="true">\n' +
