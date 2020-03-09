@@ -143,15 +143,19 @@ export default class {
         this.videoPlayBtn = this.MyGui.createImgBtnNoText(
             "playBtn",
             "assets/images/gui/play-button.png",
-            "200px",
-            "200px"
+            "100px",
+            "100px",
+            0,
+            160
         );
+
+        //add the intro text
+        this.introText = this.MyGui.addIntroText("“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”");
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
             // Play intro Video to the main char
-            //this.portalMain();
-
-        }, true);
+            this.portalMain();
+        });
 
         //start Render Loop
         this.engine.runRenderLoop(() => {
@@ -454,7 +458,10 @@ export default class {
     portalMain() {
         //call function to fade out the fog
         this.MyGui.fadeOutFog(this.fogPlane);
-
+        //fade out play button
+        this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
+        //fade out intro text
+        this.MyGui.fadeOutGuiElement(this.introText);
 
         this.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
                 this.mainLoop(promiseAwait, Asset)

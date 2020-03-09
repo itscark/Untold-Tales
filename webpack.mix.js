@@ -10,14 +10,15 @@ let mix = require("laravel-mix");
  | file for your application, as well as bundling up your JS files.
  |
  */
-
 mix
     .js("src/js/app.js", "public/js/app.js")
     .js("src/js/arjs/arjs.js", "public/js/arjs/arjs.js")
     .js("src/js/qrcode/qr.js", 'public/js/qrcode/qr.js')
     .copy('src/js/qrcode/qrcode.min.js', 'public/js/qrcode')
-    .sass("src/scss/app.scss", "public/css/app.css")
-    .sourceMaps();
+    .sass("src/scss/app.scss", "public/css/app.css").options({
+    processCssUrls: false
+})
+.sourceMaps();
 
 // Full API
 // mix.js(src, output);

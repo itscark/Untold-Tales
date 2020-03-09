@@ -1,5 +1,7 @@
 import * as BABYLON from "babylonjs";
-import {AdvancedDynamicTexture, StackPanel, Control, Button, ScrollViewer, Image, TextBlock, TextWrapping} from "babylonjs-gui";
+import {AdvancedDynamicTexture, StackPanel, Control, Button, ScrollViewer, Image, TextBlock, TextWrapping } from "babylonjs-gui";
+
+import '../../public/css/fonts.css';
 
 export default class {
     constructor(game) {
@@ -41,10 +43,13 @@ export default class {
         });
     }
 
-    createImgBtnNoText(name, location, width, height) {
+    createImgBtnNoText(name, location, width, height, left = 0, top = 0) {
         let tmpBtn = Button.CreateImageOnlyButton(name, location);
         tmpBtn.width = width;
         tmpBtn.height = height;
+        tmpBtn.left = left;
+        tmpBtn.top = top;
+        tmpBtn.zIndex = 10;
         tmpBtn.color = "transparent";
         this.advancedTexture.addControl(tmpBtn);
         return tmpBtn;
@@ -283,6 +288,38 @@ export default class {
                 }, 2000 * i)
             })(i -= 0.02)
         } while (i > 0);
+    }
+
+    fadeOutGuiElement(element){
+        let i = 1;
+        do {
+            ((i) => {
+                //set time out is used to run the code slower, to create a fadeout effect
+                setTimeout(() => {
+                    //set the alpha to hide element
+                    element.alpha = 1 - i;
+                    //loop is done, remove control from advanced Texture
+                    if (element.alpha < 0.03){
+                        //dispose the plane to avoid errors
+                        this.advancedTexture.removeControl(element);
+                    }
+                }, 300 * i)
+            })(i -= 0.02)
+        } while (i > 0);
+    }
+
+    addIntroText(text){
+        this.text = new TextBlock();
+        this.text.textWrapping = true;
+        this.text.lineSpacing = 10;
+        this.text.width = 0.5;
+        this.text.color = "black";
+        this.text.fontFamily = "AYearWithoutRain";
+        this.text.fontSize = 18;
+        this.text.text = text;
+        this.advancedTexture.addControl(this.text);
+        console.log(this.text);
+        return this.text;
     }
 
 }
