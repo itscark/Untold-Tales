@@ -1,2 +1,5 @@
 import Game from "./Game";
-window.game = new Game();
+
+window.onload = function () {
+    window.game = new Game();
+}

@@ -373,7 +373,7 @@ export default class {
 
     addIntroText(text) {
         this.text = new TextBlock();
-        this.text.fontFamily = "AYearWithoutRain";
+        this.text.font = "aisha-latin";
         this.text.textWrapping = true;
         this.text.lineSpacing = 10;
         this.text.width = 0.5;

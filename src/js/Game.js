@@ -64,6 +64,7 @@ export default class {
         this.fogPlane = null;
         //add the intro text
         this.introText = null;
+        this.introText.fontFamily = 'monospace';
 
         //load Stories for the Chars
         this.loadJSON((response) => {
