@@ -34,7 +34,7 @@ export default class {
         //this.camera.attachControl(this.canvas, true);
 
         //show babylonjs inspector
-        //this.scene.debugLayer.show();
+        // this.scene.debugLayer.show();
 
         // Add lights to the scene
         this.light1 = new BABYLON.HemisphericLight(
@@ -42,9 +42,6 @@ export default class {
             new BABYLON.Vector3(1, 1, 0),
             this.scene
         );
-
-        //set the right settings for the custom cursor
-        this.cursorSettings = " url('./assets/cursor/viseur.png') 12 12, auto ";
 
         //set global Asset paths, incase folder structure my be changed in the future
         this.assetPath = "assets/chars/";
@@ -64,7 +61,6 @@ export default class {
         this.fogPlane = null;
         //add the intro text
         this.introText = null;
-        this.introText.fontFamily = 'monospace';
 
         //load Stories for the Chars
         this.loadJSON((response) => {
@@ -109,12 +105,14 @@ export default class {
         //load Start Button
         this.videoPlayBtn = this.MyGui.createImgBtnNoText(
             "playBtn",
-            "assets/images/gui/play-button.png",
+            "assets/gui/buttons/play-button.png",
             "100px",
             "100px",
             0,
             160
         );
+
+        this.videoPlayBtn.hoverCursor = this.MyGui.cursorSettings;
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
             // Play intro Video to the main char
@@ -152,17 +150,18 @@ export default class {
             "BabaYaga_Eier",
             "BabaYaga_Portal",
             "BabaYaga_Main",
-            "Eier",
+            "Eggs",
             () => {
                 this.babaYagaEier()
             },
-            "Main",
+            "Chupacabra",
             () => {
                 this.babaYagaMain()
             },
             promiseAwait,
             Asset,
-            boxPosition);
+            boxPosition,
+        );
     }
 
     basiliskLoop(promiseAwait, Asset, boxPosition) {
@@ -210,7 +209,7 @@ export default class {
             () => {
                 this.eierNessie()
             },
-            "Woplertinger",
+            "Wolpertinger",
             () => {
                 this.eierWolpertinger()
             }, promiseAwait,
@@ -223,7 +222,7 @@ export default class {
             "Jobold_Baum",
             "Jobold_Portal",
             "Jobold_Yeti",
-            "Baum",
+            "Tree",
             () => {
                 this.joboldBaum()
             },
@@ -245,7 +244,7 @@ export default class {
             () => {
                 this.mainBasilisk()
             },
-            "Eier",
+            "Eggs",
             () => {
                 this.mainEier()
             },
@@ -259,11 +258,11 @@ export default class {
             "Nessie_Jobold",
             "Nessie_Portal",
             "Nessie_Main",
-            "Jobold",
+            "Joblin",
             () => {
                 this.nessieJobold()
             },
-            "Main",
+            "Chupacabra",
             () => {
                 this.nessieMain()
             },
@@ -281,7 +280,7 @@ export default class {
             () => {
                 this.wolpertingerBabaYaga()
             },
-            "Baum",
+            "Tree",
             () => {
                 this.wolpertingerBaum()
             },
@@ -295,7 +294,7 @@ export default class {
             "Yeti_Baum",
             "Yeti_Portal",
             "Yeti_Nessie",
-            "Baum",
+            "Tree",
             () => {
                 this.yetiBaum()
             },
@@ -322,9 +321,9 @@ export default class {
         this.Video.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
                 this.mainLoop(promiseAwait, Asset, 'left')
             },
-            "Stromboli",
-            true, 2, 2, 2,
-            true, 1.3, -1.4, -1);
+            "Wolpertinger",
+            true, 46, 46,46,
+            true, -0.2, -1.2, -1);
 
     }
 
@@ -353,8 +352,11 @@ export default class {
 
     basiliskWolpertinger() {
         this.Video.fromTo(this.leftVideo, "Wolpertinger", (promiseAwait, Asset) => {
-            this.wolpertingerLoop(promiseAwait, Asset)
-        })
+                this.wolpertingerLoop(promiseAwait, Asset, 'left')
+            },
+            "Wolpertinger",
+            true, 46, 46,46,
+            true, -0.2, -1.2, -1);
     }
 
     basiliskYeti() {
@@ -383,8 +385,11 @@ export default class {
 
     eierWolpertinger() {
         this.Video.fromTo(this.rightVideo, "Wolpertinger", (promiseAwait, Asset) => {
-            this.wolpertingerLoop(promiseAwait, Asset)
-        })
+                this.wolpertingerLoop(promiseAwait, Asset, 'left')
+            },
+            "Wolpertinger",
+            true, 46, 46,46,
+            true, -0.2, -1.2, -1);
     }
 
     joboldBaum() {

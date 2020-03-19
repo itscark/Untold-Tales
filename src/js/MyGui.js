@@ -48,7 +48,7 @@ export default class {
         this.game.bgPlane.texture.video.loop = false;
 
         //create a plane for the fog
-        this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.game.scene); // default plane
+        this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.game.scene);
         //create material for plaen
         this.materialforplane = new BABYLON.StandardMaterial("texture1", this.game.scene);
         //set fog color
@@ -60,27 +60,18 @@ export default class {
         //set the itensity to 100%, after play button is clicked slowly set to 0
         this.materialforplane.alpha = 1;
 
-        //set action Manager
-        this.game.fogPlane.actionManager = new BABYLON.ActionManager(this.game.scene);
-        //set the cursor
-        this.game.scene.hoverCursor = this.game.cursorSettings;
-        //set curser
-        this.game.fogPlane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (ev) => {
-        }));
-
         this.game.introText = this.addIntroText("“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”");
 
         //Init Variables
-        this.buttonPath = "assets/images/buttons/";
-        this.curserSettings = game.cursorSettings;
+        this.buttonPath = "assets/gui/buttons/";
     }
 
     createButton(btn, asset, assetIndex) {
-        this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "snow_button.png");
+        this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "Button_Animation.png");
         this.animationBtn.hoverCursor = this.curserSettings;
-        this.animationBtn.paddingTop = "10px";
-        this.animationBtn.width = "100px";
-        this.animationBtn.height = "56px";
+        this.animationBtn.paddingTop = "20px";
+        this.animationBtn.width = "150px";
+        this.animationBtn.height = "86px";
         this.animationBtn.color = "white";
         this.animationBtn.thickness = 0;
         this.animationGui.addControl(this.animationBtn);
@@ -139,20 +130,19 @@ export default class {
         this.sv.hoverCursor = this.curserSettings;
         this.sv.thickness = 0;
         this.sv.color = "white";
-        this.sv.width = 0.25;
-        this.sv.height = 0.4;
+        this.sv.width = 0.23;
+        this.sv.height = 0.35;
         this.sv.zIndex = 10;
-        this.sv.top = "50px";
+        this.sv.top = "11%";
         this.sv.barColor = "white";
         this.sv.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
 
         //Set Background
-        this.scrollViewerBg = new Image('ScrollViewerBg', "assets/images/gui/ScrollViewer_bg.jpg");
-        this.scrollViewerBg.width = 0.25;
-        this.scrollViewerBg.height = 0.4;
+        this.scrollViewerBg = new Image('ScrollViewerBg', "assets/gui/Textbox_Papyrus.png");
+        this.scrollViewerBg.width = 0.31;
+        this.scrollViewerBg.height = 0.5;
         this.scrollViewerBg.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-        this.scrollViewerBg.top = "50px";
-        this.scrollViewerBg.alpha = 0.5;
+        this.scrollViewerBg.top = "3%";
 
         //Init Textblock where text is added
         this.tb = new TextBlock();
@@ -170,12 +160,11 @@ export default class {
 
         //because chars are positioned on different sides the textbox has to be able to move from left to right
         if (position == 'left') {
-            const left = 50;
-            this.scrollViewerBg.left = left;
+            this.scrollViewerBg.left = "5%";
             this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
             this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
             this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
-            this.sv.left = left;
+            this.sv.left = "8.4%";
         } else if (position == 'right') {
             const right = -250;
             this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -198,19 +187,20 @@ export default class {
         this.sv.addControl(this.tb);
     }
 
-    createNavigationButtons(leftBtnName,
+    createNavigationButtons(leftBtn,
                             leftFunction,
                             centerFunction,
-                            rightBtnName,
-                            rightFunction,
-                            btnSrc = "snow_button.png") {
+                            rightBtn,
+                            rightFunction) {
         //Init Buttons
-        //this.leftBtn = GUI.Button.CreateSimpleButton("but1", leftBtnName);
-        this.leftBtn = Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
+        //this.leftBtn = Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
+        this.leftBtn = Button.CreateImageOnlyButton("left", this.buttonPath + "Button_" + leftBtn + ".png");
         //this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
-        this.centerBtn = Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
+        //this.centerBtn = Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
+        this.centerBtn = Button.CreateImageOnlyButton("center", this.buttonPath + "Button_Portal_Exit.png");
         //this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
-        this.rightBtn = Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
+        //this.rightBtn = Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
+        this.rightBtn = Button.CreateImageOnlyButton("right", this.buttonPath + "Button_" + rightBtn + ".png");
 
         this.leftBtn.hoverCursor = this.curserSettings;
         this.centerBtn.hoverCursor = this.curserSettings;
@@ -220,8 +210,8 @@ export default class {
         //set Style of Controle UI
         ////////////
         //Left Button Styles
-        this.leftBtn.width = "100px";
-        this.leftBtn.height = "46px";
+        this.leftBtn.width = "150px";
+        this.leftBtn.height = "78px";
         this.leftBtn.color = "white";
         this.leftBtn.thickness = 0;
         this.leftBtn.left = "30px";
@@ -230,8 +220,8 @@ export default class {
         this.leftBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
-        this.centerBtn.width = "100px";
-        this.centerBtn.height = "46px";
+        this.centerBtn.width = "150px";
+        this.centerBtn.height = "78px";
         this.centerBtn.color = "white";
         this.centerBtn.thickness = 0;
         this.centerBtn.left = "30px";
@@ -240,8 +230,8 @@ export default class {
         this.centerBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
-        this.rightBtn.width = "100px";
-        this.rightBtn.height = "46px";
+        this.rightBtn.width = "150px";
+        this.rightBtn.height = "78px";
         this.rightBtn.color = "white";
         this.rightBtn.thickness = 0;
         this.rightBtn.left = "-30px";
@@ -278,12 +268,11 @@ export default class {
 
     //Function to add control buttons
     addControlUI(
-        leftBtnName,
+        leftBtn,
         leftFunction,
         centerFunction,
-        rightBtnName,
+        rightBtn,
         rightFunction,
-        btnSrc,
         storyName,
         boxPosition
     ) {
@@ -293,12 +282,11 @@ export default class {
         }
 
 
-        this.createNavigationButtons(leftBtnName,
+        this.createNavigationButtons(leftBtn,
             leftFunction,
             centerFunction,
-            rightBtnName,
-            rightFunction,
-            btnSrc)
+            rightBtn,
+            rightFunction)
     }
 
     arButton(storyName) {
@@ -373,7 +361,7 @@ export default class {
 
     addIntroText(text) {
         this.text = new TextBlock();
-        this.text.font = "aisha-latin";
+        this.text.font = "cursive";
         this.text.textWrapping = true;
         this.text.lineSpacing = 10;
         this.text.width = 0.5;
@@ -381,7 +369,6 @@ export default class {
         this.text.fontSize = 18;
         this.text.text = text;
         this.advancedTexture.addControl(this.text);
-        console.log(this.text);
         return this.text;
     }
 

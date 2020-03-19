@@ -64,8 +64,7 @@ class Video {
         rightFunction,
         promiseAwait,
         storyName,
-        boxPosition,
-        btnSrc) {
+        boxPosition) {
         //Functions to preload Videos for the next Chars
         this.game.leftVideo = this.load(
             "Cam_" + leftVideo);
@@ -106,7 +105,6 @@ class Video {
                         console.log('no asset to hide')
                     }
                 },
-                btnSrc,
                 storyName,
                 boxPosition)
 
