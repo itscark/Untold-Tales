@@ -6,8 +6,8 @@ class Animations {
         this.engine = game.engine;
         this.canvas = game.canvas;
 
-        // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
-        Animation.AllowMatricesInterpolation = true;
+        // // This is really important to tell Babylon.js to use decomposeLerp and matrix interpolation
+        // Animation.AllowMatricesInterpolation = true;
 
         // Enable animation blending for all animations
         this.game.scene.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();

@@ -59,8 +59,6 @@ export default class {
         this.stories_json = null;
         this.bgPlane = null;
         this.fogPlane = null;
-        //add the intro text
-        this.introText = null;
 
         //load Stories for the Chars
         this.loadJSON((response) => {
@@ -93,6 +91,9 @@ export default class {
         this.Asset = new Asset(this);
         this.Video = new Video(this);
 
+        //add the intro text
+        this.introText = this.MyGui.addIntroText();
+
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
             this.engine.resize();
@@ -112,11 +113,22 @@ export default class {
             160
         );
 
+
+
         this.videoPlayBtn.hoverCursor = this.MyGui.cursorSettings;
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
+
+            //select the html5 audio tag
+            let audio = document.getElementById("audio");
+            //set loop
+            audio.loop = true;
+            //start playing
+            audio.play();
+
             // Play intro Video to the main char
             this.portalMain();
+
         });
 
         //start Render Loop

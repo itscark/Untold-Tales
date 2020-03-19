@@ -20,11 +20,10 @@ export default class {
         this.Video = game.Video;
         //load GUI
         this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("gui");
-
         //load Animatin GUI
         this.animationGui = new StackPanel();
         this.animationGui.width = "220px";
-        this.animationGui.fontSize = "14px";
+        this.animationGui.fontSize = "20px";
         this.animationGui.horizontalAlignment =
             Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.animationGui.verticalAlignment =
@@ -60,8 +59,6 @@ export default class {
         //set the itensity to 100%, after play button is clicked slowly set to 0
         this.materialforplane.alpha = 1;
 
-        this.game.introText = this.addIntroText("“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”");
-
         //Init Variables
         this.buttonPath = "assets/gui/buttons/";
     }
@@ -74,6 +71,8 @@ export default class {
         this.animationBtn.height = "86px";
         this.animationBtn.color = "white";
         this.animationBtn.thickness = 0;
+        this.animationBtn.fontFamily = "AYearWithoutRain, sans-serif";
+        this.animationBtn.fontSize = 25;
         this.animationGui.addControl(this.animationBtn);
         this.animationBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
@@ -152,11 +151,12 @@ export default class {
         this.tb.paddingTop = "20px";
         this.tb.paddingLeft = "30px";
         this.tb.paddingRight = "20px";
+        this.tb.fontFamily = "aisha-latin";
         this.tb.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.color = "white";
-        this.tb.fontSize = "8%";
+        this.tb.fontSize = "13%";
 
         //because chars are positioned on different sides the textbox has to be able to move from left to right
         if (position == 'left') {
@@ -359,15 +359,15 @@ export default class {
         } while (i > 0);
     }
 
-    addIntroText(text) {
+    addIntroText() {
         this.text = new TextBlock();
-        this.text.font = "cursive";
+        this.text.fontFamily = "AYearWithoutRain";
         this.text.textWrapping = true;
         this.text.lineSpacing = 10;
         this.text.width = 0.5;
         this.text.color = "black";
         this.text.fontSize = 18;
-        this.text.text = text;
+        this.text.text = "“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”";
         this.advancedTexture.addControl(this.text);
         return this.text;
     }
