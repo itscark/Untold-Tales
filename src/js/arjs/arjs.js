@@ -63,8 +63,8 @@ window.onload = function () {
             '        <a-entity\n' +
             '                id="directionaltarget"\n' +
             '                rotation="-90 90 -90"\n' +
-            '                scale="1 1 1"\n' +
-            '                animation-mixer="clip: Idle"\n' +
+            '                scale="20 20 20"\n' +
+            '                animation-mixer="clip: Neutral"\n' +
             '                position="0 0 1"\n' +
             '                gltf-model="#asset"\n' +
             '        ></a-entity>\n' +
