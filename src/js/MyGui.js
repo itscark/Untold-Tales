@@ -22,12 +22,10 @@ export default class {
         this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("gui");
         //load Animatin GUI
         this.animationGui = new StackPanel();
-        this.animationGui.width = "220px";
-        this.animationGui.fontSize = "20px";
-        this.animationGui.horizontalAlignment =
-            Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        this.animationGui.verticalAlignment =
-            Control.VERTICAL_ALIGNMENT_CENTER;
+        // this.animationGui.ignoreLayoutWarnings = true;
+        this.animationGui.width = 0.2;
+        this.animationGui.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.animationGui.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
         this.animationBtn = null;
 
         //Create a Background video
@@ -66,17 +64,25 @@ export default class {
     createButton(btn, asset, assetIndex) {
         this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "Button_Animation.png");
         this.animationBtn.hoverCursor = this.curserSettings;
+
+        //select canvas
+        let canvasSize = document.getElementById('renderCanvas');
+        //set height and width variable
+        let buttonWidth = parseFloat(canvasSize.width) * 0.11;
+        let buttonHeight = parseFloat(canvasSize.height) * 0.11;
+
+
         this.animationBtn.paddingTop = "20px";
-        this.animationBtn.width = "150px";
-        this.animationBtn.height = "86px";
+        this.animationBtn.widthInPixels = buttonWidth;
+        this.animationBtn.heightInPixels = buttonHeight;
         this.animationBtn.color = "white";
         this.animationBtn.thickness = 0;
         this.animationBtn.fontFamily = "AYearWithoutRain, sans-serif";
-        this.animationBtn.fontSize = 25;
+        this.animationBtn.fontSize = buttonHeight / 3.5;
         this.animationGui.addControl(this.animationBtn);
         this.animationBtn.onPointerUpObservable.add(() => {
             // //Load control funtion of the Asset Class
-            //this.Animations can not be assigned in the Constructore because of redering procedre
+            //this.Animations can not be assigned in the Constructore because of rendering procedre
             this.game.Animations.control(asset, assetIndex);
         });
     }
@@ -210,8 +216,8 @@ export default class {
         //set Style of Controle UI
         ////////////
         //Left Button Styles
-        this.leftBtn.width = "150px";
-        this.leftBtn.height = "78px";
+        this.leftBtn.width = 0.11;
+        this.leftBtn.height = 0.11;
         this.leftBtn.color = "white";
         this.leftBtn.thickness = 0;
         this.leftBtn.left = "30px";
@@ -220,8 +226,8 @@ export default class {
         this.leftBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
-        this.centerBtn.width = "150px";
-        this.centerBtn.height = "78px";
+        this.centerBtn.width = 0.11;
+        this.centerBtn.height = 0.11;
         this.centerBtn.color = "white";
         this.centerBtn.thickness = 0;
         this.centerBtn.left = "30px";
@@ -230,8 +236,8 @@ export default class {
         this.centerBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
-        this.rightBtn.width = "150px";
-        this.rightBtn.height = "78px";
+        this.rightBtn.width = 0.11;
+        this.rightBtn.height = 0.11;
         this.rightBtn.color = "white";
         this.rightBtn.thickness = 0;
         this.rightBtn.left = "-30px";
@@ -353,6 +359,24 @@ export default class {
                     if (element.alpha < 0.03) {
                         //dispose the plane to avoid errors
                         this.advancedTexture.removeControl(element);
+                    }
+                }, 300 * i)
+            })(i -= 0.02)
+        } while (i > 0);
+    }
+
+    faceOutDomElement(element){
+        let i = 1;
+        do {
+            ((i) => {
+                //set time out is used to run the code slower, to create a fadeout effect
+                setTimeout(() => {
+                    //set the alpha to hide element
+                    element.style.opacity = 1 - i;
+                    //loop is done, remove control from advanced Texture
+                    if (element.style.opacity < 0.03) {
+                        //dispose the plane to avoid errors
+                        element.style.display = "none";
                     }
                 }, 300 * i)
             })(i -= 0.02)

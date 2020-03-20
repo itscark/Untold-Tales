@@ -92,7 +92,7 @@ export default class {
         this.Video = new Video(this);
 
         //add the intro text
-        this.introText = this.MyGui.addIntroText();
+        this.introText = document.getElementById('intro_text')
 
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
@@ -124,7 +124,7 @@ export default class {
             //set loop
             audio.loop = true;
             //start playing
-            audio.play();
+           audio.play();
 
             // Play intro Video to the main char
             this.portalMain();
@@ -328,7 +328,7 @@ export default class {
         //fade out play button
         this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
         //fade out intro text
-        this.MyGui.fadeOutGuiElement(this.introText);
+        this.MyGui.faceOutDomElement(this.introText);
 
         this.Video.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
                 this.mainLoop(promiseAwait, Asset, 'left')
