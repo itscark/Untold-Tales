@@ -41,8 +41,36 @@ window.onload = function () {
         insertHTML(setChar);
     }
 
+    //select parent elements
+    const buttonWrapper = document.getElementById('button_wrapper');
+    const directionaltarget = document.getElementById('directionaltarget');
+
+    //this function is needed to danymicaly load the chars
     function insertHTML(char) {
-        body.insertAdjacentHTML('afterbegin', '<a-scene embedded\n' +
+
+        //load the gltf FIle
+        //jquery is used because its easy async load of the gltf file
+        $.getJSON('../assets/chars/'+ char +'/'+ char + '.gltf', function(json) {
+            //loop all animations
+            json.animations.forEach( (element) => {
+                //create button elements
+                let li = document.createElement('button');
+                li.setAttribute('class', 'animationBtn');
+                //append them to the dom element
+                li.appendChild(document.createTextNode(element.name));
+                //add devent listener to change the animation of the asset
+                li.addEventListener("click", function () {
+                    //animation-mixer defines the animation that is played
+                    directionaltarget.setAttribute('animation-mixer', 'clip: ' + element.name);
+                });
+                //append all buttons to DOM
+                buttonWrapper.appendChild(li);
+            })
+
+        });
+
+
+        body.insertAdjacentHTML('beforeend', '<a-scene embedded\n' +
             '         arjs="debugUIEnabled: false; sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960"\n' +
             '         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"\n' +
             '         artoolkit="sourceType: webcam;"\n' +
@@ -73,4 +101,4 @@ window.onload = function () {
             '    <a-entity camera></a-entity>\n' +
             '</a-scene>\n')
     }
-}
+};
