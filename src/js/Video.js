@@ -128,7 +128,6 @@ class Video {
             console.log("no gui displayed")
         }
 
-        this.htmlVideo.playbackRate = 5;
         this.start(video);
 
         //This sections is to preload the next Videos
