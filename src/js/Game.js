@@ -334,9 +334,8 @@ export default class {
                 this.mainLoop(promiseAwait, Asset, 'left')
             },
             "Wolpertinger",
-            true, 46, 46,46,
+            true, 46,
             true, -0.2, -1.2, -1);
-
     }
 
     toPortal() {
@@ -367,14 +366,17 @@ export default class {
                 this.wolpertingerLoop(promiseAwait, Asset, 'left')
             },
             "Wolpertinger",
-            true, 46, 46,46,
+            true, 46,
             true, -0.2, -1.2, -1);
     }
 
     basiliskYeti() {
         this.Video.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
-            this.yetiLoop(promiseAwait, Asset)
-        })
+                this.yetiLoop(promiseAwait, Asset, 'left')
+            },
+            "Yeti",
+            true, 0.6,
+            true, 0.5, -2.4, -1);
     }
 
     baumBabaYaga() {
@@ -391,8 +393,12 @@ export default class {
 
     eierNessie() {
         this.Video.fromTo(this.leftVideo, "Nessie", (promiseAwait, Asset) => {
-            this.nessieLoop(promiseAwait, Asset)
-        })
+                this.nessieLoop(promiseAwait, Asset, 'left')
+            },
+            "Nessie",
+            true, 0.4,
+            true, 0.5, -2.4, -1,
+            true, BABYLON.Axis.Y, Math.PI / 3.5);
     }
 
     eierWolpertinger() {
@@ -400,7 +406,7 @@ export default class {
                 this.wolpertingerLoop(promiseAwait, Asset, 'left')
             },
             "Wolpertinger",
-            true, 46, 46,46,
+            true, 46,
             true, -0.2, -1.2, -1);
     }
 
@@ -412,8 +418,11 @@ export default class {
 
     joboldYeti() {
         this.Video.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
-            this.yetiLoop(promiseAwait, Asset)
-        })
+                this.yetiLoop(promiseAwait, Asset, 'left')
+            },
+            "Yeti",
+            true, 0.6,
+            true, 0.5, -2.4, -1);
     }
 
     mainBasilisk() {
@@ -421,7 +430,7 @@ export default class {
                 this.basiliskLoop(promiseAwait, Asset)
             },
             "Stromboli",
-            true, 2, 2, 2,
+            true, 2,
             true, 1.3, -1.4, -1)
     }
 
@@ -445,13 +454,13 @@ export default class {
 
     wolpertingerBabaYaga() {
         this.Video.fromTo(this.leftVideo, "BabaYaga", (promiseAwait, Asset) => {
-            this.joboldLoop(promiseAwait, Asset)
+            this.babaYagaLoop(promiseAwait, Asset)
         })
     }
 
     wolpertingerBaum() {
         this.Video.fromTo(this.rightVideo, "Baum", (promiseAwait, Asset) => {
-            this.mainLoop(promiseAwait, Asset)
+            this.baumLoop(promiseAwait, Asset)
         })
     }
 
@@ -463,7 +472,11 @@ export default class {
 
     yetiNessie() {
         this.Video.fromTo(this.rightVideo, "Nessie", (promiseAwait, Asset) => {
-            this.nessieLoop(promiseAwait, Asset)
-        })
+                this.nessieLoop(promiseAwait, Asset, 'left')
+            },
+            "Nessie",
+            true, 0.4,
+            true, 0.5, -2.4, -1,
+            true, BABYLON.Axis.Y, Math.PI / 3.5);
     }
 }

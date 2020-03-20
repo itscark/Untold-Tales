@@ -113,9 +113,9 @@ class Video {
 
     //load and play the fromTo Vidoes
     fromTo(video, loopCam, loopFunction,
-           assetDir,
+           asset,
            setScale = false,
-           xScale, yScale, zScale,
+           scale,
            setPosition = false,
            xPosition, yPosition, zPosition,
            setRotation = false,
@@ -127,6 +127,8 @@ class Video {
         } catch (e) {
             console.log("no gui displayed")
         }
+
+        this.htmlVideo.playbackRate = 5;
         this.start(video);
 
         //This sections is to preload the next Videos
@@ -142,10 +144,10 @@ class Video {
             try {
                 //Load Asset
                 //to Access the loaded Mesh etc. a async await had to be implemented
-                promiseAwait = await this.game.configureAsset(assetDir, assetDir + ".gltf");
+                promiseAwait = await this.game.configureAsset(asset, asset + ".gltf");
 
                 if (setScale) {
-                    this.Asset.scale(promiseAwait.meshes[0], xScale, yScale, zScale)
+                    this.Asset.scale(promiseAwait.meshes[0], scale, scale, scale)
                 }
                 if (setPosition) {
                     this.Asset.position(promiseAwait.meshes[0], xPosition, yPosition, zPosition);
@@ -164,7 +166,7 @@ class Video {
             this.attach(this.game.loopVideo);
             this.loop(this.game.loopVideo);
 
-            loopFunction(promiseAwait, assetDir);
+            loopFunction(promiseAwait, asset);
         };
     }
 
