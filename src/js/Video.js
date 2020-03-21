@@ -81,7 +81,7 @@ class Video {
                     leftFunction();
                     //When Button is clicked Asset Visibility has to be set to Hide
                     try {
-                        this.Asset.hide(promiseAwait.meshes[0])
+                        this.Asset.hide(promiseAwait)
                     } catch (e) {
                         console.log('no asset to hide')
                     }
@@ -90,7 +90,7 @@ class Video {
                     this.game.toPortal();
                     //When Button is clicked Asset Visibility has to be set to Hide
                     try {
-                        this.Asset.hide(promiseAwait.meshes[0])
+                        this.Asset.hide(promiseAwait)
                     } catch (e) {
                         console.log('no asset to hide')
                     }
@@ -100,7 +100,7 @@ class Video {
                     rightFunction();
                     //When Button is clicked Asset Visibility has to be set to Hide
                     try {
-                        this.Asset.hide(promiseAwait.meshes[0])
+                        this.Asset.hide(promiseAwait)
                     } catch (e) {
                         console.log('no asset to hide')
                     }
@@ -136,36 +136,41 @@ class Video {
             this.game.loopVideo = this.load("Cam_" + loopCam + "_Loop");
         }, 1000);
 
-        this.htmlVideo.onended = async () => {
-            let promiseAwait = null;
+        let loadedAsset = null;
+
+        this.htmlVideo.onplay = async () => {
 
             //check if a asset is loaded
             try {
                 //Load Asset
                 //to Access the loaded Mesh etc. a async await had to be implemented
-                promiseAwait = await this.game.configureAsset(asset, asset + ".gltf");
+                loadedAsset = await this.Asset.configureAsset(asset, asset + ".gltf");
+                this.Asset.hide(loadedAsset);
+
 
                 if (setScale) {
-                    this.Asset.scale(promiseAwait.meshes[0], scale, scale, scale)
+                    this.Asset.scale(loadedAsset, scale, scale, scale)
                 }
                 if (setPosition) {
-                    this.Asset.position(promiseAwait.meshes[0], xPosition, yPosition, zPosition);
+                    this.Asset.position(loadedAsset, xPosition, yPosition, zPosition);
                 }
                 if (setRotation) {
-                    this.Asset.rotate(promiseAwait.meshes[0], axis, rotation);
+                    this.Asset.rotate(loadedAsset, axis, rotation);
                 }
-
-                this.Animations.load(promiseAwait);
 
             } catch (e) {
                 console.log('no asset loaded')
             }
 
-            this.start(this.game.loopVideo);
-            this.attach(this.game.loopVideo);
-            this.loop(this.game.loopVideo);
+            this.htmlVideo.onended = ()=>{
+                this.Asset.show(loadedAsset);
+                this.Animations.load(loadedAsset);
+                this.start(this.game.loopVideo);
+                this.attach(this.game.loopVideo);
+                this.loop(this.game.loopVideo);
 
-            loopFunction(promiseAwait, asset);
+                loopFunction(loadedAsset, asset);
+            }
         };
     }
 

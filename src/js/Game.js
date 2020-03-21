@@ -137,15 +137,6 @@ export default class {
         });
     }
 
-    //async load Asset while video is playing
-    async configureAsset(assetDir, assetFile) {
-        try {
-            return await this.Asset.loadAsync(assetDir, assetFile);
-        } catch (e) {
-            return "caught";
-        }
-    }
-
     ////////////
     // naming convention for Charakter Functions
     // e.g. mainBasilisk()
