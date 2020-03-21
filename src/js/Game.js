@@ -34,7 +34,7 @@ export default class {
         //this.camera.attachControl(this.canvas, true);
 
         //show babylonjs inspector
-        // this.scene.debugLayer.show();
+        //this.scene.debugLayer.show();
 
         // Add lights to the scene
         this.light1 = new BABYLON.HemisphericLight(
@@ -113,8 +113,6 @@ export default class {
             160
         );
 
-
-
         this.videoPlayBtn.hoverCursor = this.MyGui.cursorSettings;
 
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
@@ -124,7 +122,7 @@ export default class {
             //set loop
             audio.loop = true;
             //start playing
-           audio.play();
+            audio.play();
 
             // Play intro Video to the main char
             this.portalMain();
@@ -324,9 +322,10 @@ export default class {
         this.Video.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
                 this.mainLoop(promiseAwait, Asset, 'left')
             },
-            "Wolpertinger",
-            true, 46,
-            true, -0.2, -1.2, -1);
+            "Chupacabra",
+            true, 3,
+            true, 3, -2, 2,
+            true, BABYLON.Axis.Y, 31.5 / Math.PI);
     }
 
     toPortal() {
@@ -348,8 +347,12 @@ export default class {
 
     babaYagaMain() {
         this.Video.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
-            this.mainLoop(promiseAwait, Asset)
-        })
+                this.mainLoop(promiseAwait, Asset)
+            },
+            "Chupacabra",
+            true, 3,
+            true, 3, -2, 2,
+            true, BABYLON.Axis.Y, 31.5 / Math.PI);
     }
 
     basiliskWolpertinger() {
@@ -420,7 +423,7 @@ export default class {
         this.Video.fromTo(this.leftVideo, "Basilisk", (promiseAwait, Asset) => {
                 this.basiliskLoop(promiseAwait, Asset)
             },
-            "Stromboli",
+            "Wolpertinger",
             true, 2,
             true, 1.3, -1.4, -1)
     }
@@ -439,8 +442,12 @@ export default class {
 
     nessieMain() {
         this.Video.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
-            this.mainLoop(promiseAwait, Asset)
-        })
+                this.mainLoop(promiseAwait, Asset)
+            },
+            "Chupacabra",
+            true, 3,
+            true, 3, -2, 2,
+            true, BABYLON.Axis.Y, 31.5 / Math.PI)
     }
 
     wolpertingerBabaYaga() {

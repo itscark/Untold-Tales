@@ -138,6 +138,7 @@ class Video {
 
         let loadedAsset = null;
 
+
         this.htmlVideo.onplay = async () => {
 
             //check if a asset is loaded
@@ -163,8 +164,12 @@ class Video {
             }
 
             this.htmlVideo.onended = ()=>{
-                this.Asset.show(loadedAsset);
-                this.Animations.load(loadedAsset);
+                try {
+                    this.Asset.show(loadedAsset);
+                    this.Animations.load(loadedAsset);
+                } catch (e){
+                    console.log('no asset Loaded')
+                }
                 this.start(this.game.loopVideo);
                 this.attach(this.game.loopVideo);
                 this.loop(this.game.loopVideo);
