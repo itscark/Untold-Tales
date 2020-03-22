@@ -28,22 +28,6 @@ export default class {
         this.animationGui.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
         this.animationBtn = null;
 
-        //Create a Background video
-        this.game.bgPlane = new BABYLON.Layer("back", null, this.scene);
-        this.game.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
-            false,
-            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
-            {
-                autoUpdateTexture: true,
-                poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
-            });
-        //set plane to background
-        this.game.bgPlane.isBackground = true;
-        this.game.bgPlane.texture.level = 1;
-
-        //set loop of Background video to False;
-        this.game.bgPlane.texture.video.loop = false;
-
         //create a plane for the fog
         this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.game.scene);
         //create material for plaen

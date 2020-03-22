@@ -11,8 +11,23 @@ import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
 
-export default class {
+import {fromToCharsData} from "./fromToCharsData";
+
+class Game {
     constructor() {
+        // Init Variables
+        this.introVideo = null;
+        this.playBtn = null;
+        this.videoAsset = null;
+        this.gameTask = null;
+        this.leftVideo = null;
+        this.rightVideo = null;
+        this.centerVideo = null;
+        this.loopVideo = null;
+        this.assetPromise = null;
+        this.stories_json = null;
+        this.fogPlane = null;
+
         //select canvas
         this.canvas = document.getElementById("renderCanvas");
         // Generate the BABYLON 3D engine
@@ -31,7 +46,7 @@ export default class {
         this.camera.setTarget(BABYLON.Vector3.Zero());
 
         //activate camera control
-        //this.camera.attachControl(this.canvas, true);
+        this.camera.attachControl(this.canvas, true);
 
         //show babylonjs inspector
         //this.scene.debugLayer.show();
@@ -46,25 +61,156 @@ export default class {
         //set global Asset paths, incase folder structure my be changed in the future
         this.assetPath = "assets/chars/";
 
-        // Init Variables
-        this.introVideo = null;
-        this.playBtn = null;
-        this.videoAsset = null;
-        this.gameTask = null;
-        this.leftVideo = null;
-        this.rightVideo = null;
-        this.centerVideo = null;
-        this.loopVideo = null;
-        this.assetPromise = null;
-        this.stories_json = null;
-        this.bgPlane = null;
-        this.fogPlane = null;
 
         //load Stories for the Chars
         this.loadJSON((response) => {
             // Parse JSON string into object
             this.stories_json = JSON.parse(response);
         });
+
+
+        //Create a Background video
+        this.bgPlane = new BABYLON.Layer("back", null, this.scene);
+        this.bgPlane.texture = new BABYLON.VideoTexture("video", "assets/videos/Cam_Portal_Main.mp4", this.scene, false,
+            false,
+            BABYLON.VideoTexture.TRILINEAR_SAMPLINGMODE,
+            {
+                autoUpdateTexture: true,
+                poster: "assets/images/poster/Cam_Portal_Main_Poster.jpg"
+            });
+        //set plane to background
+        this.bgPlane.isBackground = true;
+        this.bgPlane.texture.level = 1;
+
+        //set loop of Background video to False;
+        this.bgPlane.texture.video.loop = false;
+
+        //Load Classes
+        this.MyGui = new MyGui(this);
+        this.Animations = new Animations(this);
+        this.Asset = new Asset(this);
+        this.Video = new Video(this);
+
+        this.loopChars = {
+            BabaYaga: {
+                leftVideo: 'BabaYaga_Eier',
+                centerVideo: 'BabaYaga_Portal',
+                rightVideo: 'BabaYaga_Main',
+                leftBtnName: 'Eggs',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.babyYagaEier)
+                },
+                rightBtnName: 'Chupacabra',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.babaYagaMain)
+                },
+            },
+            Basilisk: {
+                leftVideo: 'Basilisk_Wolpertinger',
+                centerVideo: 'Basilisk_Portal',
+                rightVideo: 'Basilisk_Yeti',
+                leftBtnName: 'Wolpertinger',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.basiliskWolpertinger)
+                },
+                rightBtnName: 'Yeti',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.basiliskYeti)
+                },
+            },
+            Baum: {
+                leftVideo: 'Baum_BabaYaga',
+                centerVideo: 'Baum_Portal',
+                rightVideo: 'Baum_Basilisk',
+                leftBtnName: 'BabaYaga',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.baumBabaYaga)
+                },
+                rightBtnName: 'Basilisk',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.baumBasilisk)
+                },
+            },
+            Eier: {
+                leftVideo: 'Eier_Nessie',
+                centerVideo: 'Eier_Portal',
+                rightVideo: 'Eier_Wolpertinger',
+                leftBtnName: 'Nessie',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.eierNessie)
+                },
+                rightBtnName: 'Wolpertinger',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.eierWolpertinger)
+                },
+            },
+            Jobold: {
+                leftVideo: 'Jobold_Baum',
+                centerVideo: 'Jobold_Portal',
+                rightVideo: 'Jobold_Yeti',
+                leftBtnName: 'Tree',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.joboldBaum)
+                },
+                rightBtnName: 'Yeti',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.joboldYeti)
+                },
+            },
+            Main: {
+                leftVideo: 'Main_Basilisk',
+                centerVideo: 'Main_Portal',
+                rightVideo: 'Main_Eier',
+                leftBtnName: 'Basilisk',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.mainBasilisk)
+                },
+                rightBtnName: 'Eggs',
+                rightFunction:  () => {
+                    this.generalFromTo(fromToCharsData.mainEier)
+                },
+            },
+            Nessie: {
+                leftVideo: 'Nessie_Jobold',
+                centerVideo: 'Nessie_Portal',
+                rightVideo: 'Nessie_Main',
+                leftBtnName: 'Joblin',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.nessieJobold)
+                },
+                rightBtnName: 'Chupacabra',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.nessieMain)
+                },
+            },
+            Wolpertinger: {
+                leftVideo: 'Wolpertinger_BabaYaga',
+                centerVideo: 'Wolpertinger_Portal',
+                rightVideo: 'Wolpertinger_Baum',
+                leftBtnName: 'BabaYaga',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.wolpertingerBabaYaga)
+                },
+                rightBtnName: 'Tree',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.wolpertingerBaum)
+                },
+            },
+            Yeti: {
+                leftVideo: 'Yeti_Baum',
+                centerVideo: 'Yeti_Portal',
+                rightVideo: 'Yeti_Nessie',
+                leftBtnName: 'Tree',
+                leftFunction: () => {
+                    this.generalFromTo(fromToCharsData.yetiBaum)
+                },
+                rightBtnName: 'Nessie',
+                rightFunction: () => {
+                    this.generalFromTo(fromToCharsData.yetiNessie)
+                },
+            }
+        };
+
 
         // Create Scene
         this.createScene();
@@ -85,14 +231,8 @@ export default class {
     }
 
     createScene() {
-        //Load Classes
-        this.MyGui = new MyGui(this);
-        this.Animations = new Animations(this);
-        this.Asset = new Asset(this);
-        this.Video = new Video(this);
-
         //add the intro text
-        this.introText = document.getElementById('intro_text')
+        this.introText = document.getElementById('intro_text');
 
         // On Window Resize => Resize Game
         window.addEventListener("resize", () => {
@@ -124,9 +264,15 @@ export default class {
             //start playing
             audio.play();
 
-            // Play intro Video to the main char
-            this.portalMain();
+            //call function to fade out the fog
+            this.MyGui.fadeOutFog(this.fogPlane);
+            //fade out play button
+            this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
+            //fade out intro text
+            this.MyGui.faceOutDomElement(this.introText);
 
+            // Play intro Video to the main char
+            this.generalFromTo(fromToCharsData.portalMain);
         });
 
         //start Render Loop
@@ -135,346 +281,71 @@ export default class {
         });
     }
 
-    ////////////
-    // naming convention for Charakter Functions
-    // e.g. mainBasilisk()
-    // this is the section from the Main Char to the Basilisk Char
-    // e.g. mainLoop()
-    // this will load the Loop function and all necessary assets
-    ////////////
 
-    ////////////
-    //Loop Videos
-    ////////////
-    babaYagaLoop(promiseAwait, Asset, boxPosition) {
+    // generalFromTo({video, loopCam, asset, loopFunction, setScale, scale, setPosition, xPosition, yPosition, zPosition, setRotation, axis, rotation, boxPosition = 'left'}) {
+    //
+    //     //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToCharsData object a string is definded left, right, center and depending on that string the right Video will be played
+    //     let playVideo = null;
+    //     if (video === 'bgPlane') {
+    //         playVideo = this.bgPlane.texture;
+    //     } else if (video === 'left') {
+    //         playVideo = this.leftVideo;
+    //     } else if (video === 'right') {
+    //         playVideo = this.rightVideo;
+    //     } else if (video === 'center') {
+    //         playVideo = this.centerVideo
+    //     } else {
+    //         playVideo = video;
+    //     }
+    //
+    //     this.Video.fromTo(playVideo, loopCam, (promiseAwait, assetStory) => {
+    //             this.loopFunction(promiseAwait, assetStory, boxPosition, loopCam)
+    //         },
+    //         asset,
+    //         setScale, scale,
+    //         setPosition, xPosition, yPosition, zPosition,
+    //         setRotation, axis, rotation);
+    // }
+
+    generalFromTo({video, loopFunction, assetConfig}) {
+
+        //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToCharsData object a string is definded left, right, center and depending on that string the right Video will be played
+        let playVideo = null;
+        if (video === 'bgPlane') {
+            playVideo = this.bgPlane.texture;
+        } else if (video === 'left') {
+            playVideo = this.leftVideo;
+        } else if (video === 'right') {
+            playVideo = this.rightVideo;
+        } else if (video === 'center') {
+            playVideo = this.centerVideo
+        } else {
+            playVideo = video;
+        }
+
+        this.Video.fromTo(playVideo, assetConfig.loopCam, (promiseAwait, assetStory) => {
+                this.loopFunction(promiseAwait, assetStory, assetConfig.boxPosition, assetConfig.loopCam)
+            },
+            assetConfig.asset,
+            assetConfig.setScale, assetConfig.scale,
+            assetConfig.setPosition, assetConfig.xPosition, assetConfig.yPosition, assetConfig.zPosition,
+            assetConfig.setRotation, assetConfig.axis, assetConfig.rotation);
+    }
+
+    loopFunction(promiseAwait, assetStory, boxPosition, charKey) {
         this.Video.loadLoop(
-            "BabaYaga_Eier",
-            "BabaYaga_Portal",
-            "BabaYaga_Main",
-            "Eggs",
-            () => {
-                this.babaYagaEier()
-            },
-            "Chupacabra",
-            () => {
-                this.babaYagaMain()
-            },
+            this.loopChars[charKey].leftVideo,
+            this.loopChars[charKey].centerVideo,
+            this.loopChars[charKey].rightVideo,
+            this.loopChars[charKey].leftBtnName,
+            this.loopChars[charKey].leftFunction,
+            this.loopChars[charKey].rightBtnName,
+            this.loopChars[charKey].rightFunction,
             promiseAwait,
-            Asset,
+            assetStory,
             boxPosition,
         );
     }
-
-    basiliskLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Basilisk_Wolpertinger",
-            "Basilisk_Portal",
-            "Basilisk_Yeti",
-            "Wolpertinger",
-            () => {
-                this.basiliskWolpertinger()
-            },
-            "Yeti",
-            () => {
-                this.basiliskYeti()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    baumLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Baum_BabaYaga",
-            "Baum_Portal",
-            "Baum_Basilisk",
-            "BabaYaga",
-            () => {
-                this.baumBabaYaga()
-            },
-            "Basilisk",
-            () => {
-                this.baumBasilisk()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    eierLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Eier_Nessie",
-            "Eier_Portal",
-            "Eier_Wolpertinger",
-            "Nessie",
-            () => {
-                this.eierNessie()
-            },
-            "Wolpertinger",
-            () => {
-                this.eierWolpertinger()
-            }, promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    joboldLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Jobold_Baum",
-            "Jobold_Portal",
-            "Jobold_Yeti",
-            "Tree",
-            () => {
-                this.joboldBaum()
-            },
-            "Yeti",
-            () => {
-                this.joboldYeti()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    mainLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Main_Basilisk",
-            "Main_Portal",
-            "Main_Eier",
-            "Basilisk",
-            () => {
-                this.mainBasilisk()
-            },
-            "Eggs",
-            () => {
-                this.mainEier()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    nessieLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Nessie_Jobold",
-            "Nessie_Portal",
-            "Nessie_Main",
-            "Joblin",
-            () => {
-                this.nessieJobold()
-            },
-            "Chupacabra",
-            () => {
-                this.nessieMain()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    wolpertingerLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Wolpertinger_BabaYaga",
-            "Wolpertinger_Portal",
-            "Wolpertinger_Baum",
-            "BabaYaga",
-            () => {
-                this.wolpertingerBabaYaga()
-            },
-            "Tree",
-            () => {
-                this.wolpertingerBaum()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    yetiLoop(promiseAwait, Asset, boxPosition) {
-        this.Video.loadLoop(
-            "Yeti_Baum",
-            "Yeti_Portal",
-            "Yeti_Nessie",
-            "Tree",
-            () => {
-                this.yetiBaum()
-            },
-            "Nessie",
-            () => {
-                this.yetiNessie()
-            },
-            promiseAwait,
-            Asset,
-            boxPosition);
-    }
-
-    ////////////
-    //FromTo Videos
-    ////////////
-    portalMain() {
-        //call function to fade out the fog
-        this.MyGui.fadeOutFog(this.fogPlane);
-        //fade out play button
-        this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
-        //fade out intro text
-        this.MyGui.faceOutDomElement(this.introText);
-
-        this.Video.fromTo(this.bgPlane.texture, "Main", (promiseAwait, Asset) => {
-                this.mainLoop(promiseAwait, Asset, 'left')
-            },
-            "Chupacabra",
-            true, 3,
-            true, 3, -2, 2,
-            true, BABYLON.Axis.Y, 31.5 / Math.PI);
-    }
-
-    toPortal() {
-        this.Video.attach(this.centerVideo);
-        this.MyGui.removeControlUI();
-        this.Video.start(this.centerVideo);
-
-        //exit to portal will reload the page after wards
-        this.Video.htmlVideo.onended = () => {
-            location.reload();
-        }
-    }
-
-    babaYagaEier() {
-        this.Video.fromTo(this.leftVideo, "Eier", (promiseAwait, Asset) => {
-            this.eierLoop(promiseAwait, Asset)
-        })
-    }
-
-    babaYagaMain() {
-        this.Video.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
-                this.mainLoop(promiseAwait, Asset)
-            },
-            "Chupacabra",
-            true, 3,
-            true, 3, -2, 2,
-            true, BABYLON.Axis.Y, 31.5 / Math.PI);
-    }
-
-    basiliskWolpertinger() {
-        this.Video.fromTo(this.leftVideo, "Wolpertinger", (promiseAwait, Asset) => {
-                this.wolpertingerLoop(promiseAwait, Asset, 'left')
-            },
-            "Wolpertinger",
-            true, 46,
-            true, -0.2, -1.2, -1);
-    }
-
-    basiliskYeti() {
-        this.Video.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
-                this.yetiLoop(promiseAwait, Asset, 'left')
-            },
-            "Yeti",
-            true, 0.6,
-            true, 0.5, -2.4, -1);
-    }
-
-    baumBabaYaga() {
-        this.Video.fromTo(this.leftVideo, "BabaYaga", (promiseAwait, Asset) => {
-            this.babaYagaLoop(promiseAwait, Asset)
-        })
-    }
-
-    baumBasilisk() {
-        this.Video.fromTo(this.rightVideo, "Basilisk", (promiseAwait, Asset) => {
-            this.basiliskLoop(promiseAwait, Asset)
-        })
-    }
-
-    eierNessie() {
-        this.Video.fromTo(this.leftVideo, "Nessie", (promiseAwait, Asset) => {
-                this.nessieLoop(promiseAwait, Asset, 'left')
-            },
-            "Nessie",
-            true, 0.4,
-            true, 0.5, -2.4, -1,
-            true, BABYLON.Axis.Y, Math.PI / 3.5);
-    }
-
-    eierWolpertinger() {
-        this.Video.fromTo(this.rightVideo, "Wolpertinger", (promiseAwait, Asset) => {
-                this.wolpertingerLoop(promiseAwait, Asset, 'left')
-            },
-            "Wolpertinger",
-            true, 46,
-            true, -0.2, -1.2, -1);
-    }
-
-    joboldBaum() {
-        this.Video.fromTo(this.leftVideo, "Baum", (promiseAwait, Asset) => {
-            this.baumLoop(promiseAwait, Asset)
-        })
-    }
-
-    joboldYeti() {
-        this.Video.fromTo(this.rightVideo, "Yeti", (promiseAwait, Asset) => {
-                this.yetiLoop(promiseAwait, Asset, 'left')
-            },
-            "Yeti",
-            true, 0.6,
-            true, 0.5, -2.4, -1);
-    }
-
-    mainBasilisk() {
-        this.Video.fromTo(this.leftVideo, "Basilisk", (promiseAwait, Asset) => {
-                this.basiliskLoop(promiseAwait, Asset)
-            },
-            "Wolpertinger",
-            true, 2,
-            true, 1.3, -1.4, -1)
-    }
-
-    mainEier() {
-        this.Video.fromTo(this.rightVideo, "Eier", (promiseAwait, Asset) => {
-            this.eierLoop(promiseAwait, Asset)
-        })
-    }
-
-    nessieJobold() {
-        this.Video.fromTo(this.leftVideo, "Jobold", (promiseAwait, Asset) => {
-            this.joboldLoop(promiseAwait, Asset)
-        })
-    }
-
-    nessieMain() {
-        this.Video.fromTo(this.rightVideo, "Main", (promiseAwait, Asset) => {
-                this.mainLoop(promiseAwait, Asset)
-            },
-            "Chupacabra",
-            true, 3,
-            true, 3, -2, 2,
-            true, BABYLON.Axis.Y, 31.5 / Math.PI)
-    }
-
-    wolpertingerBabaYaga() {
-        this.Video.fromTo(this.leftVideo, "BabaYaga", (promiseAwait, Asset) => {
-            this.babaYagaLoop(promiseAwait, Asset)
-        })
-    }
-
-    wolpertingerBaum() {
-        this.Video.fromTo(this.rightVideo, "Baum", (promiseAwait, Asset) => {
-            this.baumLoop(promiseAwait, Asset)
-        })
-    }
-
-    yetiBaum() {
-        this.Video.fromTo(this.leftVideo, "Baum", (promiseAwait, Asset) => {
-            this.baumLoop(promiseAwait, Asset)
-        })
-    }
-
-    yetiNessie() {
-        this.Video.fromTo(this.rightVideo, "Nessie", (promiseAwait, Asset) => {
-                this.nessieLoop(promiseAwait, Asset, 'left')
-            },
-            "Nessie",
-            true, 0.4,
-            true, 0.5, -2.4, -1,
-            true, BABYLON.Axis.Y, Math.PI / 3.5);
-    }
 }
+
+export default Game;

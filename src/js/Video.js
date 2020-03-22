@@ -23,14 +23,14 @@ class Video {
     load(video) {
         return new VideoTexture(
             "video",
-            this.videoPath + video + this.videoEnding,
+            this.videoPath + "Cam_" + video + this.videoEnding,
             this.scene,
             false,
             false,
             VideoTexture.TRILINEAR_SAMPLINGMODE,
             {
                 autoUpdateTexture: true,
-                poster: this.posterPath + video + this.posterEnding
+                poster: this.posterPath + "Cam_" + video + this.posterEnding
             }
         );
     }
@@ -67,13 +67,12 @@ class Video {
         boxPosition) {
         //Functions to preload Videos for the next Chars
         this.game.leftVideo = this.load(
-            "Cam_" + leftVideo);
+            leftVideo);
         this.game.centerVideo = this.load(
-            "Cam_" + centerVideo);
+            centerVideo);
         this.game.rightVideo = this.load(
-            "Cam_" + rightVideo);
+            rightVideo);
         //add UI to GUI
-
         setTimeout(() => {
             this.MyGui.addControlUI(
                 leftBtnName,
@@ -87,7 +86,7 @@ class Video {
                     }
                 },
                 () => {
-                    this.game.toPortal();
+                    this.toPortal();
                     //When Button is clicked Asset Visibility has to be set to Hide
                     try {
                         this.Asset.hide(promiseAwait)
@@ -109,6 +108,18 @@ class Video {
                 boxPosition)
 
         }, 100)
+    }
+
+    //Back To Portal Video
+    toPortal() {
+        this.attach(this.game.centerVideo);
+        this.MyGui.removeControlUI();
+        this.start(this.game.centerVideo);
+
+        //exit to portal will reload the page after wards
+        this.htmlVideo.onended = () => {
+            location.reload();
+        }
     }
 
     //load and play the fromTo Vidoes
@@ -133,11 +144,10 @@ class Video {
         //This sections is to preload the next Videos
         //setTime out is used to garantie no lagging whe the video is playing
         setTimeout(() => {
-            this.game.loopVideo = this.load("Cam_" + loopCam + "_Loop");
+            this.game.loopVideo = this.load(loopCam + "_Loop");
         }, 1000);
 
         let loadedAsset = null;
-
 
         this.htmlVideo.onplay = async () => {
 
@@ -147,7 +157,6 @@ class Video {
                 //to Access the loaded Mesh etc. a async await had to be implemented
                 loadedAsset = await this.Asset.configureAsset(asset, asset + ".gltf");
                 this.Asset.hide(loadedAsset);
-
 
                 if (setScale) {
                     this.Asset.scale(loadedAsset, scale, scale, scale)
@@ -163,13 +172,11 @@ class Video {
                 console.log('no asset loaded')
             }
 
-            this.htmlVideo.onended = ()=>{
-                try {
-                    this.Asset.show(loadedAsset);
-                    this.Animations.load(loadedAsset);
-                } catch (e){
-                    console.log('no asset Loaded')
-                }
+            this.htmlVideo.onended = () => {
+
+                this.Asset.show(loadedAsset);
+                this.Animations.load(loadedAsset);
+
                 this.start(this.game.loopVideo);
                 this.attach(this.game.loopVideo);
                 this.loop(this.game.loopVideo);

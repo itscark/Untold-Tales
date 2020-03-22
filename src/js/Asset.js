@@ -13,11 +13,19 @@ class Asset {
     }
 
     hide(asset) {
+        try {
         asset.meshes[0].setEnabled(false);
+        } catch (e) {
+            console.log("nothing to hide")
+        }
     }
 
     show(asset) {
-        asset.meshes[0].setEnabled(true);
+        try {
+            asset.meshes[0].setEnabled(true);
+        } catch (e) {
+            console.log('nothing to show')
+        }
     }
 
     loadAsync(assetDir, assetFile) {

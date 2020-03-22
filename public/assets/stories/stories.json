@@ -1,15 +1,11 @@
 {
   "charakter": [
     {
-      "name": "Stromboli",
-      "story": "Some mean people spread rumors that I eat goats, so everyone calls me Chupacabra now. I obviously don’t eat goats! I even grew up in a herd of them, I love the things! Not in a food sense, though. I’m travelling the world now to learn more about myself."
-    },
-    {
       "name": "Chupacabra",
       "story": "Some mean people spread rumors that I eat goats, so everyone calls me Chupacabra now. I obviously don’t eat goats! I even grew up in a herd of them, I love the things! Not in a food sense, though."
     },
     {
-      "name": "Jobolde",
+      "name": "Jobold",
       "story": "Clack clack goes the Joblin. That’s the only sound they ever seem to make, and we’re not entirely sure if it even means anything at all. If we could figure out their language, we could finally make them attend some anger management classes in hopes of making them stop beating up everyone who happens to cross paths with them. It really is rather irritating."
     },
     {
@@ -17,7 +13,7 @@
       "story": "Baba Yaga’s house enjoys long walks through the forest and beautiful wood workings. It is a great opponent for races through the forest, since it greatly prefers running around to sitting still for even just a second, deathly afraid of the memories of the atrocities committed deep within its bowels catching up to it.  Not that you have to worry about that for now. Baba Yaga is currently spending some time in her summer home at the beach. Even occasionally man-eating forest witches need some time off every now and again, after all."
     },
     {
-      "name": "Eggs",
+      "name": "Eier",
       "story": "Whose kids are these? They’ve been popping up all around lately, with no apparent parent in sight. Maybe someone should pick them up before someone else soft boils them for breakfast."
     },
     {
@@ -37,7 +33,7 @@
       "story": "Hey, you! What are you doing in our woods! Aren’t you afraid you’ll be ambushed by the Wolpertingers, the mightiest warriors to ever roam this earth? The whole world fears our battle cry! TALÜ TALÜ!"
     },
     {
-      "name": "Tree",
+      "name": "Baum",
       "story": "There is an undeniable soothing calmness surrounding this tree that no one seems to be able to explain. Some say that it holds great magical power beyond our comprehension. Others say it just has very pretty leaves. Whatever the case is, everyone who ever spent an afternoon under a tree like this one agrees that its presence left them feeling rejuvenated."
     }
   ]
