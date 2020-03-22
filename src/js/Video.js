@@ -21,7 +21,7 @@ class Video {
     }
 
     load(video) {
-        return new VideoTexture(
+        let tmpVideo = new VideoTexture(
             "video",
             this.videoPath + "Cam_" + video + this.videoEnding,
             this.scene,
@@ -33,6 +33,9 @@ class Video {
                 poster: this.posterPath + "Cam_" + video + this.posterEnding
             }
         );
+        //mute loaded Video;
+        tmpVideo.video.muted = true;
+        return tmpVideo
     }
 
     attach(texture) {
@@ -72,6 +75,7 @@ class Video {
             centerVideo);
         this.game.rightVideo = this.load(
             rightVideo);
+
         //add UI to GUI
         setTimeout(() => {
             this.MyGui.addControlUI(
@@ -133,6 +137,12 @@ class Video {
            axis, rotation
     ) {
         this.attach(video);
+
+        //mute the loop Video
+        if (this.game.loopVideo !== null){
+            this.game.loopVideo.video.muted = true;
+        }
+
         try {
             this.MyGui.removeControlUI();
         } catch (e) {
@@ -140,6 +150,8 @@ class Video {
         }
 
         this.start(video);
+        //unmute the next video that will be played
+        video.video.muted = false;
 
         //This sections is to preload the next Videos
         //setTime out is used to garantie no lagging whe the video is playing
@@ -173,14 +185,13 @@ class Video {
             }
 
             this.htmlVideo.onended = () => {
-
+                //unmute the loop video
+                this.game.loopVideo.video.muted = false;
                 this.Asset.show(loadedAsset);
                 this.Animations.load(loadedAsset);
-
                 this.start(this.game.loopVideo);
                 this.attach(this.game.loopVideo);
                 this.loop(this.game.loopVideo);
-
                 loopFunction(loadedAsset, asset);
             }
         };

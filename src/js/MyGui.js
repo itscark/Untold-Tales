@@ -118,13 +118,12 @@ export default class {
         this.sv = new ScrollViewer();
         this.sv.hoverCursor = this.curserSettings;
         this.sv.thickness = 0;
-        // this.sv.color = "purple";
-        // this.sv.barColor = "white";
+        this.sv.color = "#00041b";
+        this.sv.barColor = "#00041b";
         this.sv.width = 0.23;
         this.sv.height = 0.35;
         this.sv.zIndex = 10;
         this.sv.top = "11%";
-        this.sv.barColor = "white";
         this.sv.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
 
         //Set Background

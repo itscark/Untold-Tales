@@ -46,7 +46,7 @@ class Game {
         this.camera.setTarget(BABYLON.Vector3.Zero());
 
         //activate camera control
-        this.camera.attachControl(this.canvas, true);
+        //this.camera.attachControl(this.canvas, true);
 
         //show babylonjs inspector
         //this.scene.debugLayer.show();
