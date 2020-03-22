@@ -166,7 +166,7 @@ class Game {
                     this.generalFromTo(fromToCharsData.mainBasilisk)
                 },
                 rightBtnName: 'Eggs',
-                rightFunction:  () => {
+                rightFunction: () => {
                     this.generalFromTo(fromToCharsData.mainEier)
                 },
             },
@@ -255,57 +255,39 @@ class Game {
 
         this.videoPlayBtn.hoverCursor = this.MyGui.cursorSettings;
 
+        let counter = 0;
+
         this.MyGui.btnEvent(this.videoPlayBtn, () => {
+            //to avoud flickering when user click the playbutton twice.
+            if (counter === 0) {
+                counter = 1;
+                //select the html5 audio tag
+                let audio = document.getElementById("audio");
+                //set loop
+                audio.loop = true;
+                audio.volume = 0.5;
+                //start playing
+                audio.play();
 
-            //select the html5 audio tag
-            let audio = document.getElementById("audio");
-            //set loop
-            audio.loop = true;
-            //start playing
-            audio.play();
 
-            //call function to fade out the fog
-            this.MyGui.fadeOutFog(this.fogPlane);
-            //fade out play button
-            this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
-            //fade out intro text
-            this.MyGui.faceOutDomElement(this.introText);
+                //call function to fade out the fog
+                this.MyGui.fadeOutFog(this.fogPlane);
+                //fade out play button
+                this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
+                //fade out intro text
+                this.MyGui.faceOutDomElement(this.introText);
 
-            // Play intro Video to the main char
-            this.generalFromTo(fromToCharsData.portalMain);
+                // Play intro Video to the main char
+                this.generalFromTo(fromToCharsData.portalMain);
+            }
         });
+
 
         //start Render Loop
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
     }
-
-
-    // generalFromTo({video, loopCam, asset, loopFunction, setScale, scale, setPosition, xPosition, yPosition, zPosition, setRotation, axis, rotation, boxPosition = 'left'}) {
-    //
-    //     //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToCharsData object a string is definded left, right, center and depending on that string the right Video will be played
-    //     let playVideo = null;
-    //     if (video === 'bgPlane') {
-    //         playVideo = this.bgPlane.texture;
-    //     } else if (video === 'left') {
-    //         playVideo = this.leftVideo;
-    //     } else if (video === 'right') {
-    //         playVideo = this.rightVideo;
-    //     } else if (video === 'center') {
-    //         playVideo = this.centerVideo
-    //     } else {
-    //         playVideo = video;
-    //     }
-    //
-    //     this.Video.fromTo(playVideo, loopCam, (promiseAwait, assetStory) => {
-    //             this.loopFunction(promiseAwait, assetStory, boxPosition, loopCam)
-    //         },
-    //         asset,
-    //         setScale, scale,
-    //         setPosition, xPosition, yPosition, zPosition,
-    //         setRotation, axis, rotation);
-    // }
 
     generalFromTo({video, loopFunction, assetConfig}) {
 

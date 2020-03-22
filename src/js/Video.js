@@ -90,6 +90,7 @@ class Video {
                     }
                 },
                 () => {
+                    console.log('pressed');
                     this.toPortal();
                     //When Button is clicked Asset Visibility has to be set to Hide
                     try {
@@ -116,9 +117,12 @@ class Video {
 
     //Back To Portal Video
     toPortal() {
+
         this.attach(this.game.centerVideo);
         this.MyGui.removeControlUI();
         this.start(this.game.centerVideo);
+        this.game.centerVideo.video.muted = false;
+        this.game.loopVideo.video.muted = true;
 
         //exit to portal will reload the page after wards
         this.htmlVideo.onended = () => {
@@ -138,10 +142,7 @@ class Video {
     ) {
         this.attach(video);
 
-        //mute the loop Video
-        if (this.game.loopVideo !== null){
-            this.game.loopVideo.video.muted = true;
-        }
+        //this.htmlVideo.playbackRate = 5;
 
         try {
             this.MyGui.removeControlUI();
@@ -152,6 +153,11 @@ class Video {
         this.start(video);
         //unmute the next video that will be played
         video.video.muted = false;
+
+        //mute the loop Video
+        if (this.game.loopVideo !== null){
+            this.game.loopVideo.video.muted = true;
+        }
 
         //This sections is to preload the next Videos
         //setTime out is used to garantie no lagging whe the video is playing

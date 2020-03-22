@@ -23,9 +23,10 @@ export default class {
         //load Animatin GUI
         this.animationGui = new StackPanel();
         // this.animationGui.ignoreLayoutWarnings = true;
-        this.animationGui.width = 0.2;
+        this.animationGui.width = 0.11;
         this.animationGui.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.animationGui.verticalAlignment = Control.VERTICAL_ALIGNMENT_CENTER;
+        this.animationGui.left = -30;
         this.animationBtn = null;
 
         //create a plane for the fog
@@ -169,7 +170,9 @@ export default class {
         for (let i = 0; i < obj.length; i++) {
             if (obj[i].name == assetName) {
                 //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
-                this.tb.text = obj[i].story + "\n";
+                this.tb.text =
+                    obj[i].name + "!"+ "\n" +
+                    obj[i].story + "\n";
             }
         }
         this.advancedTexture.addControl(this.sv);
@@ -280,11 +283,11 @@ export default class {
     }
 
     arButton(storyName) {
-        this.arBtn = Button.CreateSimpleButton("arBtn", "See me in AR");
-        this.arBtn.hoverCursor = this.curserSettings;
-        this.arBtn.width = "150px";
-        this.arBtn.height = "56px";
-        this.arBtn.color = "white";
+        this.arBtn = Button.CreateImageOnlyButton('Ar Button', this.buttonPath + 'Button_AR.png');
+        this.arBtn.width = 0.11;
+        this.arBtn.height = 0.11;
+        this.arBtn.zIndex = 10;
+        this.arBtn.color = "transparent";
         this.arBtn.left = "-30px";
         this.arBtn.top = "30px";
         this.arBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -366,18 +369,4 @@ export default class {
             })(i -= 0.02)
         } while (i > 0);
     }
-
-    addIntroText() {
-        this.text = new TextBlock();
-        this.text.fontFamily = "AYearWithoutRain";
-        this.text.textWrapping = true;
-        this.text.lineSpacing = 10;
-        this.text.width = 0.5;
-        this.text.color = "black";
-        this.text.fontSize = 18;
-        this.text.text = "“Untold Tales” is the story of a Chupacabra that sets out to rescue its family, but ends up finding a lot more than that. On this website you get to meet some of the colorful characters that await you in “Untold Tales”";
-        this.advancedTexture.addControl(this.text);
-        return this.text;
-    }
-
 }
