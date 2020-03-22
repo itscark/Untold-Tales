@@ -243,21 +243,11 @@ class Game {
     }
 
     setup() {
-        //load Start Button
-        this.videoPlayBtn = this.MyGui.createImgBtnNoText(
-            "playBtn",
-            "assets/gui/buttons/play-button.png",
-            "100px",
-            "100px",
-            0,
-            160
-        );
-
-        this.videoPlayBtn.hoverCursor = this.MyGui.cursorSettings;
-
         let counter = 0;
 
-        this.MyGui.btnEvent(this.videoPlayBtn, () => {
+        this.playBtn = document.getElementById('play_button');
+
+        this.playBtn.addEventListener('click', ()=>{
             //to avoud flickering when user click the playbutton twice.
             if (counter === 0) {
                 counter = 1;
@@ -269,13 +259,7 @@ class Game {
                 //start playing
                 audio.play();
 
-
-                //call function to fade out the fog
-                this.MyGui.fadeOutFog(this.fogPlane);
-                //fade out play button
-                this.MyGui.fadeOutGuiElement(this.videoPlayBtn);
-                //fade out intro text
-                this.MyGui.faceOutDomElement(this.introText);
+                this.MyGui.fadeOutWelcomeScreen();
 
                 // Play intro Video to the main char
                 this.generalFromTo(fromToCharsData.portalMain);

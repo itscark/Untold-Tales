@@ -82,7 +82,7 @@ window.onload = function () {
             '                src="../assets/chars/' + char + '/' + char + '.gltf"\n' +
             '        ></a-asset-item>\n' +
             '    </a-assets>\n' +
-            '    <a-marker type="pattern" url="../assets/images/arjs/pattern/sae.patt">\n' +
+            '    <a-marker type="pattern" url="../assets/images/arjs/pattern/pattern-arjs.patt">\n' +
             '        <a-entity light="type: point;\n' +
             '        color: #fff;\n' +
             '        distance: 50;\n' +

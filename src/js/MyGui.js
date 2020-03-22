@@ -356,7 +356,7 @@ export default class {
         } while (i > 0);
     }
 
-    faceOutDomElement(element) {
+    fadeOutDomElement(element) {
         let i = 1;
         do {
             ((i) => {
@@ -372,5 +372,15 @@ export default class {
                 }, 300 * i)
             })(i -= 0.02)
         } while (i > 0);
+    }
+
+    fadeOutWelcomeScreen(){
+        //call function to fade out the fog
+        this.fadeOutFog(this.game.fogPlane);
+        //fade out intro text
+        this.fadeOutDomElement(this.game.introText);
+        this.fadeOutDomElement(document.getElementById('logo'));
+        this.fadeOutDomElement(document.getElementById('play_button'));
+
     }
 }
