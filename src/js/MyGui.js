@@ -53,9 +53,6 @@ export default class {
 
         //create basic elements
         this.createTextBox();
-        this.createARButton();
-
-
     }
 
     createButton(btn, asset, assetIndex) {
@@ -284,7 +281,7 @@ export default class {
             rightFunction)
     }
 
-    createARButton() {
+    setARButton(storyName) {
         this.arBtn = Button.CreateImageOnlyButton('Ar Button', this.buttonPath + 'Button_AR.png');
         this.arBtn.width = 0.11;
         this.arBtn.height = 0.11;
@@ -294,9 +291,6 @@ export default class {
         this.arBtn.top = "30px";
         this.arBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.arBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-    }
-
-    setARButton(storyName) {
         this.arBtn.onPointerUpObservable.add(() => {
             let pathname = window.location.pathname.replace('index.html', '');
             window.open(pathname + "sites/qrcode.html?char=" + storyName, '_blank')
