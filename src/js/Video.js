@@ -75,6 +75,7 @@ class Video {
             centerVideo);
         this.game.rightVideo = this.load(
             rightVideo);
+        
 
         //add UI to GUI
         setTimeout(() => {
