@@ -59,7 +59,7 @@ export default class {
         this.animationBtn.paddingTop = "20px";
         this.animationBtn.widthInPixels = buttonWidth;
         this.animationBtn.heightInPixels = buttonHeight;
-        this.animationBtn.color = "white";
+        this.animationBtn.color = "#00041b";
         this.animationBtn.thickness = 0;
         this.animationBtn.fontFamily = "AYearWithoutRain, sans-serif";
         this.animationBtn.fontSize = buttonHeight / 3.5;
@@ -118,7 +118,8 @@ export default class {
         this.sv = new ScrollViewer();
         this.sv.hoverCursor = this.curserSettings;
         this.sv.thickness = 0;
-        this.sv.color = "white";
+        // this.sv.color = "purple";
+        // this.sv.barColor = "white";
         this.sv.width = 0.23;
         this.sv.height = 0.35;
         this.sv.zIndex = 10;
@@ -141,12 +142,12 @@ export default class {
         this.tb.paddingTop = "20px";
         this.tb.paddingLeft = "30px";
         this.tb.paddingRight = "20px";
-        this.tb.fontFamily = "aisha-latin";
+        this.tb.fontFamily = "aisha-latin, sans-serif";
         this.tb.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-        this.tb.color = "white";
         this.tb.fontSize = "13%";
+        this.tb.color = "#00041b";
 
         //because chars are positioned on different sides the textbox has to be able to move from left to right
         if (position == 'left') {
