@@ -142,6 +142,7 @@ class Video {
     ) {
         this.attach(video);
 
+        //play Video Faster
         //this.htmlVideo.playbackRate = 5;
 
         try {

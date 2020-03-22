@@ -12,6 +12,8 @@ import MyGui from "./MyGui";
 import Animations from "./Animations";
 
 import {fromToCharsData} from "./fromToCharsData";
+import {loopChars} from "./loopChars";
+
 
 class Game {
     constructor() {
@@ -91,126 +93,8 @@ class Game {
         this.Asset = new Asset(this);
         this.Video = new Video(this);
 
-        this.loopChars = {
-            BabaYaga: {
-                leftVideo: 'BabaYaga_Eier',
-                centerVideo: 'BabaYaga_Portal',
-                rightVideo: 'BabaYaga_Main',
-                leftBtnName: 'Eggs',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.babyYagaEier)
-                },
-                rightBtnName: 'Chupacabra',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.babaYagaMain)
-                },
-            },
-            Basilisk: {
-                leftVideo: 'Basilisk_Wolpertinger',
-                centerVideo: 'Basilisk_Portal',
-                rightVideo: 'Basilisk_Yeti',
-                leftBtnName: 'Wolpertinger',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.basiliskWolpertinger)
-                },
-                rightBtnName: 'Yeti',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.basiliskYeti)
-                },
-            },
-            Baum: {
-                leftVideo: 'Baum_BabaYaga',
-                centerVideo: 'Baum_Portal',
-                rightVideo: 'Baum_Basilisk',
-                leftBtnName: 'BabaYaga',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.baumBabaYaga)
-                },
-                rightBtnName: 'Basilisk',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.baumBasilisk)
-                },
-            },
-            Eier: {
-                leftVideo: 'Eier_Nessie',
-                centerVideo: 'Eier_Portal',
-                rightVideo: 'Eier_Wolpertinger',
-                leftBtnName: 'Nessie',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.eierNessie)
-                },
-                rightBtnName: 'Wolpertinger',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.eierWolpertinger)
-                },
-            },
-            Jobold: {
-                leftVideo: 'Jobold_Baum',
-                centerVideo: 'Jobold_Portal',
-                rightVideo: 'Jobold_Yeti',
-                leftBtnName: 'Tree',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.joboldBaum)
-                },
-                rightBtnName: 'Yeti',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.joboldYeti)
-                },
-            },
-            Main: {
-                leftVideo: 'Main_Basilisk',
-                centerVideo: 'Main_Portal',
-                rightVideo: 'Main_Eier',
-                leftBtnName: 'Basilisk',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.mainBasilisk)
-                },
-                rightBtnName: 'Eggs',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.mainEier)
-                },
-            },
-            Nessie: {
-                leftVideo: 'Nessie_Jobold',
-                centerVideo: 'Nessie_Portal',
-                rightVideo: 'Nessie_Main',
-                leftBtnName: 'Joblin',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.nessieJobold)
-                },
-                rightBtnName: 'Chupacabra',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.nessieMain)
-                },
-            },
-            Wolpertinger: {
-                leftVideo: 'Wolpertinger_BabaYaga',
-                centerVideo: 'Wolpertinger_Portal',
-                rightVideo: 'Wolpertinger_Baum',
-                leftBtnName: 'BabaYaga',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.wolpertingerBabaYaga)
-                },
-                rightBtnName: 'Tree',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.wolpertingerBaum)
-                },
-            },
-            Yeti: {
-                leftVideo: 'Yeti_Baum',
-                centerVideo: 'Yeti_Portal',
-                rightVideo: 'Yeti_Nessie',
-                leftBtnName: 'Tree',
-                leftFunction: () => {
-                    this.generalFromTo(fromToCharsData.yetiBaum)
-                },
-                rightBtnName: 'Nessie',
-                rightFunction: () => {
-                    this.generalFromTo(fromToCharsData.yetiNessie)
-                },
-            }
-        };
 
+        this._loopChars = loopChars(this);
 
         // Create Scene
         this.createScene();
@@ -262,7 +146,7 @@ class Game {
                 this.MyGui.fadeOutWelcomeScreen();
 
                 // Play intro Video to the main char
-                this.generalFromTo(fromToCharsData.portalMain);
+                loopChars(this.generalFromTo(fromToCharsData.portalMain));
             }
         });
 
@@ -276,6 +160,7 @@ class Game {
     generalFromTo({video, loopFunction, assetConfig}) {
 
         //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToCharsData object a string is definded left, right, center and depending on that string the right Video will be played
+
         let playVideo = null;
         if (video === 'bgPlane') {
             playVideo = this.bgPlane.texture;
@@ -300,13 +185,13 @@ class Game {
 
     loopFunction(promiseAwait, assetStory, boxPosition, charKey) {
         this.Video.loadLoop(
-            this.loopChars[charKey].leftVideo,
-            this.loopChars[charKey].centerVideo,
-            this.loopChars[charKey].rightVideo,
-            this.loopChars[charKey].leftBtnName,
-            this.loopChars[charKey].leftFunction,
-            this.loopChars[charKey].rightBtnName,
-            this.loopChars[charKey].rightFunction,
+            this._loopChars[charKey].leftVideo,
+            this._loopChars[charKey].centerVideo,
+            this._loopChars[charKey].rightVideo,
+            this._loopChars[charKey].leftBtnName,
+            this._loopChars[charKey].leftFunction,
+            this._loopChars[charKey].rightBtnName,
+            this._loopChars[charKey].rightFunction,
             promiseAwait,
             assetStory,
             boxPosition,
