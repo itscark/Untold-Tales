@@ -18,6 +18,13 @@ export default class {
         this.playBtn = game.playBtn;
         this.Asset = game.Asset;
         this.Video = game.Video;
+
+        this.buttonPath = "assets/gui/buttons/";
+
+        this.createGUI();
+    }
+
+    createGUI(){
         //load GUI
         this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("gui");
         //load Animatin GUI
@@ -43,7 +50,12 @@ export default class {
         this.materialforplane.alpha = 1;
 
         //Init Variables
-        this.buttonPath = "assets/gui/buttons/";
+
+        //create basic elements
+        this.createTextBox();
+        this.createARButton();
+
+
     }
 
     createButton(btn, asset, assetIndex) {
@@ -74,7 +86,6 @@ export default class {
 
     createImgBtnNoText(name, location, width, height, left = 0, top = 0) {
         let tmpBtn = Button.CreateImageOnlyButton(name, location);
-        tmpBtn.hoverCursor = this.curserSettings;
         tmpBtn.width = width;
         tmpBtn.height = height;
         tmpBtn.left = left;
@@ -114,10 +125,9 @@ export default class {
         this.advancedTexture.removeControl(btn);
     }
 
-    createTextBox(assetName, position = 'left') {
+    createTextBox() {
         //init ScrollViewer
         this.sv = new ScrollViewer();
-        this.sv.hoverCursor = this.curserSettings;
         this.sv.thickness = 0;
         this.sv.color = "#00041b";
         this.sv.barColor = "#00041b";
@@ -149,6 +159,9 @@ export default class {
         this.tb.fontSize = "13%";
         this.tb.color = "#00041b";
 
+    }
+
+    setTextBox(assetName, position) {
         //because chars are positioned on different sides the textbox has to be able to move from left to right
         if (position == 'left') {
             this.scrollViewerBg.left = "5%";
@@ -164,14 +177,12 @@ export default class {
             this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
             this.sv.left = right;
         }
-
-
         let obj = this.game.stories_json['charakter'];
         for (let i = 0; i < obj.length; i++) {
             if (obj[i].name == assetName) {
                 //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
                 this.tb.text =
-                    obj[i].name + "!"+ "\n" +
+                    obj[i].name + "!" + "\n" +
                     obj[i].story + "\n";
             }
         }
@@ -186,18 +197,9 @@ export default class {
                             rightBtn,
                             rightFunction) {
         //Init Buttons
-        //this.leftBtn = Button.CreateImageWithCenterTextButton("but1", leftBtnName, this.buttonPath + btnSrc);
         this.leftBtn = Button.CreateImageOnlyButton("left", this.buttonPath + "Button_" + leftBtn + ".png");
-        //this.centerBtn = GUI.Button.CreateSimpleButton("but2", "Portal");
-        //this.centerBtn = Button.CreateImageWithCenterTextButton("but2", "Portal", this.buttonPath + btnSrc);
         this.centerBtn = Button.CreateImageOnlyButton("center", this.buttonPath + "Button_Portal_Exit.png");
-        //this.rightBtn = GUI.Button.CreateSimpleButton("but3", rightBtnName);
-        //this.rightBtn = Button.CreateImageWithCenterTextButton("but3", rightBtnName, this.buttonPath + btnSrc);
         this.rightBtn = Button.CreateImageOnlyButton("right", this.buttonPath + "Button_" + rightBtn + ".png");
-
-        this.leftBtn.hoverCursor = this.curserSettings;
-        this.centerBtn.hoverCursor = this.curserSettings;
-        this.rightBtn.hoverCursor = this.curserSettings;
 
         ////////////
         //set Style of Controle UI
@@ -270,8 +272,8 @@ export default class {
         boxPosition
     ) {
         if (storyName != null) {
-            this.createTextBox(storyName, boxPosition);
-            this.arButton(storyName);
+            this.setTextBox(storyName, boxPosition);
+            this.setARButton(storyName);
         }
 
 
@@ -282,7 +284,7 @@ export default class {
             rightFunction)
     }
 
-    arButton(storyName) {
+    createARButton() {
         this.arBtn = Button.CreateImageOnlyButton('Ar Button', this.buttonPath + 'Button_AR.png');
         this.arBtn.width = 0.11;
         this.arBtn.height = 0.11;
@@ -292,12 +294,14 @@ export default class {
         this.arBtn.top = "30px";
         this.arBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
         this.arBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    }
+
+    setARButton(storyName) {
         this.arBtn.onPointerUpObservable.add(() => {
             let pathname = window.location.pathname.replace('index.html', '');
             window.open(pathname + "sites/qrcode.html?char=" + storyName, '_blank')
         });
         this.advancedTexture.addControl(this.arBtn);
-
     }
 
     //Function to remove all Buttons of the Control GUI
@@ -352,7 +356,7 @@ export default class {
         } while (i > 0);
     }
 
-    faceOutDomElement(element){
+    faceOutDomElement(element) {
         let i = 1;
         do {
             ((i) => {
