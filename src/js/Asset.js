@@ -49,8 +49,16 @@ class Asset {
     }
 
     rotate(task, axis, rotation) {
+        let setAxis = null
+        if (axis === 'Y'){
+            setAxis = BABYLON.Axis.Y
+        } else if (axis === 'X'){
+            setAxis = BABYLON.Axis.X
+        }else if (axis === 'Z') {
+            setAxis = BABYLON.Axis.Z
+        }
         //example: mesh.rotate(BABYLON.Axis.Y, Math.PI);
-        task.meshes[0].rotate(axis, rotation);
+        task.meshes[0].rotate(setAxis, rotation);
     }
 
     scale(task, xScale, yScale, zScale) {

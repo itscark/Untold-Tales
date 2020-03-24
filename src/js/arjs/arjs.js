@@ -1,58 +1,37 @@
-window.onload = function () {
+import {charsConfig} from "../charsConfig";
 
-    const defaultChar = "Chupacabra";
+window.onload = function () {
 
     const body = document.getElementById('body');
 
     let url = new URL(window.location.href);
     let getChar = url.searchParams.get('char');
 
-    let stories_json;
+    let setChar = null;
 
-    function loadJSON(callback) {
-        let xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', '../assets/stories/stories.json', false);
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState == 4 && xobj.status == "200") {
-                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-                callback(xobj.responseText);
-            }
-        };
-        xobj.send(null);
-    }
-
-    loadJSON((response) => {
-        // Parse JSON string into object
-        stories_json = JSON.parse(response);
-        filterCharResponse(stories_json);
-    });
-
-    function filterCharResponse(json) {
-        let obj = json['charakter'];
-        let setChar = defaultChar;
-        for (let i = 0; i < obj.length; i++) {
-            //check if there is a char in the URl, if not set it to default Char
-            if (obj[i].name == getChar) {
-                setChar = getChar;
-            }
+    //Loop through chars object and check if the char form the url exists, if it does not exist, set it to main char
+    for (let i in charsConfig) {
+        if (charsConfig[i].asset.toLowerCase() === getChar.toLowerCase()) {
+            setChar = charsConfig[i];
+        } else {
+            setChar = charsConfig.main
         }
-        //Append HTML to body with the right Asset
-        insertHTML(setChar);
     }
+
+    insertHTML(setChar);
 
     //select parent elements
     const buttonWrapper = document.getElementById('button_wrapper');
     const directionaltarget = document.getElementById('directionaltarget');
 
     //this function is needed to danymicaly load the chars
-    function insertHTML(char) {
+    function insertHTML(assetData) {
 
         //load the gltf FIle
         //jquery is used because its easy async load of the gltf file
-        $.getJSON('../assets/chars/'+ char +'/'+ char + '.gltf', function(json) {
+        $.getJSON('../assets/chars/' + assetData.asset + '/' + assetData.asset + '.gltf', function (json) {
             //loop all animations
-            json.animations.forEach( (element) => {
+            json.animations.forEach((element) => {
                 //create button elements
                 let li = document.createElement('button');
                 li.setAttribute('class', 'animationBtn');
@@ -66,7 +45,6 @@ window.onload = function () {
                 //append all buttons to DOM
                 buttonWrapper.appendChild(li);
             })
-
         });
 
 
@@ -79,7 +57,7 @@ window.onload = function () {
             '    <a-assets>\n' +
             '        <a-asset-item\n' +
             '                id="asset"\n' +
-            '                src="../assets/chars/' + char + '/' + char + '.gltf"\n' +
+            '                src="../assets/chars/' + assetData.asset + '/' + assetData.asset + '.gltf"\n' +
             '        ></a-asset-item>\n' +
             '    </a-assets>\n' +
             '    <a-marker type="pattern" url="../assets/images/arjs/pattern/pattern-arjs.patt">\n' +
@@ -87,13 +65,13 @@ window.onload = function () {
             '        color: #fff;\n' +
             '        distance: 50;\n' +
             '        intensity: 2.5;"\n' +
-            '                  position="0 5 0 "></a-entity>\n' +
+            '                  position="'+ assetData.ar.lightPosition + '"></a-entity>\n' +
             '        <a-entity\n' +
             '                id="directionaltarget"\n' +
-            '                rotation="-90 90 -90"\n' +
-            '                scale="20 20 20"\n' +
+            '                rotation="'+ assetData.ar.rotation + '"\n' +
+            '                scale="'+ assetData.ar.scale + '"\n' +
             '                animation-mixer="clip: Neutral"\n' +
-            '                position="0 0 1"\n' +
+            '                position="'+ assetData.ar.position + '"\n' +
             '                gltf-model="#asset"\n' +
             '        ></a-entity>\n' +
             '\n' +

@@ -2,38 +2,47 @@
   "charakter": [
     {
       "name": "Chupacabra",
+      "displayName": "Chupacabra",
       "story": "Some mean people spread rumors that I eat goats, so everyone calls me Chupacabra now. I obviously don’t eat goats! I even grew up in a herd of them, I love the things! Not in a food sense, though."
     },
     {
       "name": "Jobold",
+      "displayName": "Jobolds",
       "story": "Clack clack goes the Joblin. That’s the only sound they ever seem to make, and we’re not entirely sure if it even means anything at all. If we could figure out their language, we could finally make them attend some anger management classes in hopes of making them stop beating up everyone who happens to cross paths with them. It really is rather irritating."
     },
     {
       "name": "BabaYaga",
+      "displayName": "Baba Yaga",
       "story": "Baba Yaga’s house enjoys long walks through the forest and beautiful wood workings. It is a great opponent for races through the forest, since it greatly prefers running around to sitting still for even just a second, deathly afraid of the memories of the atrocities committed deep within its bowels catching up to it.  Not that you have to worry about that for now. Baba Yaga is currently spending some time in her summer home at the beach. Even occasionally man-eating forest witches need some time off every now and again, after all."
     },
     {
       "name": "Eier",
+      "displayName": "Eggs on Legs",
       "story": "Whose kids are these? They’ve been popping up all around lately, with no apparent parent in sight. Maybe someone should pick them up before someone else soft boils them for breakfast."
     },
     {
       "name": "Nessie",
+      "displayName": "Nessie",
       "story": "Am here on vacation an’ hopin’ tae get some new books tae add tae ma collection so if ye find anythin’ good show it tae me, eh?. ...Whit? A dinnae who tha’ Nessie lass is e’erywan keeps yappin’ about. Ma name’s Bonnie. Dinnae unnerstan’ why people keep assumin’ tha’ ma name’s just ma home wit an “ie” slapped on it. By tha’ logic the wee rabbits o’er there’d be called “Forestie” ... A dae like tha’ for them, actually."
     },
     {
       "name": "Basilisk",
+      "displayName": "Basilisk",
       "story": "Greetings, brave traveller, it is I, the famed Sir Reginald, Basilisk of the wells of this realm! I would be most humbled to help you on your quest in any way I can! ...The only problem is, I can’t in good conscience leave my underground tunnels, lest some poor soul should accidentally lay as much as a single eye on mine. For you see, brave traveller, I am so poisonous that the very sight of my eyes spells out certain doom for any unfortunate fool that crosses my path! ...or was it venomous? I never remember… Be that as it may, I hereby offer my services as your most trusted advisor, so bring all your inquiries to me!"
     },
     {
       "name": "Yeti",
+      "displayName": "Yeti",
       "story": "Oh, hello, little Yeti. Are you just passing through? Why, I’ve never seen a Yeti quite like you. Please don’t be afraid of us Yetis of the mountains. We might be tall, but we love everything and everyone. From the tiny hot-headed winged Yetis in the forest, over the giant Yeti that talks funny, to the outdated sounding Yeti of the wells. Even the small angry Yetis! We don’t judge anyone. All Yetis are equal."
     },
     {
       "name": "Wolpertinger",
+      "displayName": "Wolpertinger",
       "story": "Hey, you! What are you doing in our woods! Aren’t you afraid you’ll be ambushed by the Wolpertingers, the mightiest warriors to ever roam this earth? The whole world fears our battle cry! TALÜ TALÜ!"
     },
     {
       "name": "Baum",
+      "displayName": "Tree",
       "story": "There is an undeniable soothing calmness surrounding this tree that no one seems to be able to explain. Some say that it holds great magical power beyond our comprehension. Others say it just has very pretty leaves. Whatever the case is, everyone who ever spent an afternoon under a tree like this one agrees that its presence left them feeling rejuvenated."
     }
   ]

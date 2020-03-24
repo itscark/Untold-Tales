@@ -69,7 +69,7 @@ export default class {
         this.animationBtn.paddingTop = "20px";
         this.animationBtn.widthInPixels = buttonWidth;
         this.animationBtn.heightInPixels = buttonHeight;
-        this.animationBtn.color = "#00041b";
+        this.animationBtn.color = "#6b202d";
         this.animationBtn.thickness = 0;
         this.animationBtn.fontFamily = "AYearWithoutRain, sans-serif";
         this.animationBtn.fontSize = buttonHeight / 3.5;
@@ -126,8 +126,8 @@ export default class {
         //init ScrollViewer
         this.sv = new ScrollViewer();
         this.sv.thickness = 0;
-        this.sv.color = "#00041b";
-        this.sv.barColor = "#00041b";
+        this.sv.color = "#6b202d";
+        this.sv.barColor = "#6b202d";
         this.sv.width = 0.23;
         this.sv.height = 0.35;
         this.sv.zIndex = 10;
@@ -154,7 +154,7 @@ export default class {
         this.tb.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.tb.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.tb.fontSize = "13%";
-        this.tb.color = "#00041b";
+        this.tb.color = "#6b202d";
 
     }
 
@@ -167,19 +167,18 @@ export default class {
             this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
             this.sv.left = "8.4%";
         } else if (position == 'right') {
-            const right = -250;
             this.scrollViewerBg.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-            this.scrollViewerBg.left = right;
+            this.scrollViewerBg.left = "-18%";
             this.tb.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
             this.sv.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-            this.sv.left = right;
+            this.sv.left = "-23.1%";
         }
         let obj = this.game.stories_json['charakter'];
         for (let i = 0; i < obj.length; i++) {
             if (obj[i].name == assetName) {
                 //this.tb.paddingBottom is not working, so i added an extra line so get some spacing
                 this.tb.text =
-                    obj[i].name + "!" + "\n" +
+                    obj[i].displayName + "!" + "\n" +
                     obj[i].story + "\n";
             }
         }

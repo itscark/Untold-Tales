@@ -11,8 +11,8 @@ import MyGui from "./MyGui";
 //import Animations
 import Animations from "./Animations";
 
-import {fromToCharsData} from "./fromToCharsData";
-import {loopChars} from "./loopChars";
+import {fromToFunctions} from "./fromToFunctions";
+import {loopFunctions} from "./loopFunctions";
 
 
 class Game {
@@ -94,7 +94,7 @@ class Game {
         this.Video = new Video(this);
 
 
-        this._loopChars = loopChars(this);
+        this._loopChars = loopFunctions(this);
 
         // Create Scene
         this.createScene();
@@ -146,7 +146,7 @@ class Game {
                 this.MyGui.fadeOutWelcomeScreen();
 
                 // Play intro Video to the main char
-                loopChars(this.generalFromTo(fromToCharsData.portalMain));
+                loopFunctions(this.generalFromTo(fromToFunctions.portalMain));
             }
         });
 
@@ -159,7 +159,7 @@ class Game {
 
     generalFromTo({video, loopFunction, assetConfig}) {
 
-        //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToCharsData object a string is definded left, right, center and depending on that string the right Video will be played
+        //because this.leftVideo or this.rightVideo are null by default, they stay null when the objects are loaded. Therefore in the fromToFunctions object a string is definded left, right, center and depending on that string the right Video will be played
 
         let playVideo = null;
         if (video === 'bgPlane') {
