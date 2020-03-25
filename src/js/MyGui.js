@@ -37,7 +37,9 @@ export default class {
         this.animationBtn = null;
 
         //create a plane for the fog
-        this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 50, height: 50}, this.game.scene);
+        this.game.fogPlane = BABYLON.MeshBuilder.CreatePlane("plane", {width: 100, height: 50}, this.game.scene);
+        //set z-index
+        this.game.fogPlane.position.z = 10;
         //create material for plaen
         this.materialforplane = new BABYLON.StandardMaterial("texture1", this.game.scene);
         //set fog color
@@ -324,7 +326,7 @@ export default class {
                     //loop is done, now dispose the fogPlane
                     if (plane.material.alpha < 0.03) {
                         //dispose the plane to avoid errors
-                        //plane.dispose();
+                        plane.dispose();
                     }
                 }, 2000 * i)
             })(i -= 0.02)
