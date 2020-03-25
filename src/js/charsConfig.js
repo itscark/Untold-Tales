@@ -22,21 +22,21 @@ export const charsConfig = {
     basilisk: {
         loopCam: 'Basilisk',
         asset: 'Basilisk',
-        setScale: false,
-        scale: '',
-        setPosition: false,
-        xPosition: '',
-        yPosition: '',
-        zPosition: '',
-        setRotation: false,
-        axis: '',
-        rotation: '',
+        setScale: true,
+        scale: 210,
+        setPosition: true,
+        xPosition: 2.9,
+        yPosition: -3,
+        zPosition: 2,
+        setRotation: true,
+        axis: 'Y',
+        rotation: 32 / Math.PI,
         boxPosition: 'left',
         ar: {
-            lightPosition: '0 0 0',
-            rotation: '0 0 0',
-            scale: '0 0 0',
-            position: '0 0 0',
+            lightPosition: '0 5 0',
+            rotation: '90 90 -90',
+            scale: '60 60 60',
+            position: '0 10 -5',
         }
     },
     baum: {
@@ -114,7 +114,7 @@ export const charsConfig = {
         boxPosition: 'left',
         ar: {
             lightPosition: '0 5 0',
-            rotation: '90 90 -90',
+            rotation: '90 90 -92',
             scale: '1.5 1.5 1.5',
             position: '0 0 1',
         }
@@ -133,10 +133,10 @@ export const charsConfig = {
         rotation: Math.PI / 3.5,
         boxPosition: 'left',
         ar: {
-            lightPosition: '0 0 0',
-            rotation: '0 0 0',
-            scale: '0 0 0',
-            position: '0 0 0',
+            lightPosition: '0 5 0',
+            rotation: '-110 90 -90',
+            scale: '15 15 15',
+            position: '0 0 1',
         }
     },
     wolpertinger: {
@@ -153,10 +153,10 @@ export const charsConfig = {
         rotation: '',
         boxPosition: 'left',
         ar: {
-            lightPosition: '0 0 0',
-            rotation: '0 0 0',
-            scale: '0 0 0',
-            position: '0 0 0',
+            lightPosition: '0 5 0',
+            rotation: '-90 90 -90',
+            scale: '20 20 20',
+            position: '0 0 1',
         }
     },
     yeti: {
@@ -173,10 +173,10 @@ export const charsConfig = {
         rotation: '',
         boxPosition: 'left',
         ar: {
-            lightPosition: '0 0 0',
-            rotation: '0 0 0',
-            scale: '0 0 0',
-            position: '0 0 0',
+            lightPosition: '0 10 -5',
+            rotation: '-90 90 -90',
+            scale: '20 20 20',
+            position: '0 0 1',
         }
     }
 };

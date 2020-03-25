@@ -342,6 +342,7 @@ export default class {
                     //loop is done, remove control from advanced Texture
                     if (element.alpha < 0.03) {
                         //dispose the plane to avoid errors
+                        element.alpha = 0;
                         this.advancedTexture.removeControl(element);
                     }
                 }, 300 * i)

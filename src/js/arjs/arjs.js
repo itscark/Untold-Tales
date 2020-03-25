@@ -7,14 +7,13 @@ window.onload = function () {
     let url = new URL(window.location.href);
     let getChar = url.searchParams.get('char');
 
-    let setChar = null;
+    //set default display char to main char
+    let setChar = charsConfig.main;
 
-    //Loop through chars object and check if the char form the url exists, if it does not exist, set it to main char
+    //Loop through chars object and check if the char form the url exists, if it does not exist, setchar will not be changed
     for (let i in charsConfig) {
         if (charsConfig[i].asset.toLowerCase() === getChar.toLowerCase()) {
             setChar = charsConfig[i];
-        } else {
-            setChar = charsConfig.main
         }
     }
 
@@ -26,6 +25,8 @@ window.onload = function () {
 
     //this function is needed to danymicaly load the chars
     function insertHTML(assetData) {
+
+        console.log('inser: ', assetData)
 
         //load the gltf FIle
         //jquery is used because its easy async load of the gltf file
