@@ -10,13 +10,14 @@ window.onload = function () {
     //set default display char to main char
     let setChar = charsConfig.main;
 
-    //Loop through chars object and check if the char form the url exists, if it does not exist, setchar will not be changed
-    for (let i in charsConfig) {
-        if (charsConfig[i].asset.toLowerCase() === getChar.toLowerCase()) {
-            setChar = charsConfig[i];
+    if (getChar !== null) {
+        //Loop through chars object and check if the char form the url exists, if it does not exist, setchar will not be changed
+        for (let i in charsConfig) {
+            if (charsConfig[i].asset.toLowerCase() === getChar.toLowerCase()) {
+                setChar = charsConfig[i];
+            }
         }
     }
-
     insertHTML(setChar);
 
     //select parent elements
@@ -64,7 +65,7 @@ window.onload = function () {
             '    <a-marker type="pattern" url="../assets/images/arjs/pattern/pattern-arjs.patt">\n' +
             '        <a-entity light="type: point;\n' +
             '        color: #fff;\n' +
-            '        distance: 50;\n' +
+            '        distance: 100;\n' +
             '        intensity: 2.5;"\n' +
             '                  position="'+ assetData.ar.lightPosition + '"></a-entity>\n' +
             '        <a-entity\n' +
