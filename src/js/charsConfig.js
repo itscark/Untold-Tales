@@ -42,8 +42,8 @@ export const charsConfig = {
     baum: {
         loopCam: 'Baum',
         asset: 'Baum',
-        setScale: false,
-        scale: '',
+        setScale: true,
+        scale: '0',
         setPosition: false,
         xPosition: '',
         yPosition: '',
@@ -53,10 +53,10 @@ export const charsConfig = {
         rotation: '',
         boxPosition: 'left',
         ar: {
-            lightPosition: '0 0 0',
-            rotation: '0 0 0',
-            scale: '0 0 0',
-            position: '0 0 0',
+            lightPosition: '0 10 -5',
+            rotation: '90 90 -90',
+            scale: '0.2 0.2 0.2',
+            position: '0 0 1.5',
         }
     },
     eier: {

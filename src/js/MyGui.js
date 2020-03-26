@@ -81,16 +81,6 @@ export default class {
             // //Load control funtion of the Asset Class
             //this.Animations can not be assigned in the Constructore because of rendering procedre
             this.game.Animations.control(asset, assetIndex);
-
-
-            // if (this.counter === 0) {
-            //     this.game.Animations.control(asset, assetIndex);
-            // }
-            // //set time out is used to avoid users from pressing the animation controll button to often
-            // this.counter = 1;
-            // setTimeout(() =>  {
-            //     this.counter = 0
-            // },1000)
         });
     }
 

@@ -28,7 +28,6 @@ class Animations {
         } catch (e) {
             console.log('no animation')
         }
-
     }
 
     control(asset, assetIndex) {
