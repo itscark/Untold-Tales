@@ -38,7 +38,13 @@ class Animations {
             item.stop(true);
         });
         //start pressed animation
-        animationGroups[assetIndex].play(true);
+        animationGroups[assetIndex].play();
+
+        if (!animationGroups[0].isPlaying) {
+            animationGroups[assetIndex].onAnimationEndObservable.add(() => {
+                animationGroups[0].play(true);
+            });
+        }
     }
 
     stop(asset) {

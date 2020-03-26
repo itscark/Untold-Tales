@@ -19,12 +19,14 @@ export default class {
         this.Asset = game.Asset;
         this.Video = game.Video;
 
+        this.counter = 0;
+
         this.buttonPath = "assets/gui/buttons/";
 
         this.createGUI();
     }
 
-    createGUI(){
+    createGUI() {
         //load GUI
         this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("gui");
         //load Animatin GUI
@@ -59,7 +61,6 @@ export default class {
 
     createButton(btn, asset, assetIndex) {
         this.animationBtn = Button.CreateImageWithCenterTextButton(btn, btn, this.buttonPath + "Button_Animation.png");
-        this.animationBtn.hoverCursor = this.curserSettings;
 
         //select canvas
         let canvasSize = document.getElementById('renderCanvas');
@@ -80,6 +81,16 @@ export default class {
             // //Load control funtion of the Asset Class
             //this.Animations can not be assigned in the Constructore because of rendering procedre
             this.game.Animations.control(asset, assetIndex);
+
+
+            // if (this.counter === 0) {
+            //     this.game.Animations.control(asset, assetIndex);
+            // }
+            // //set time out is used to avoid users from pressing the animation controll button to often
+            // this.counter = 1;
+            // setTimeout(() =>  {
+            //     this.counter = 0
+            // },1000)
         });
     }
 
@@ -370,7 +381,7 @@ export default class {
         } while (i > 0);
     }
 
-    fadeOutWelcomeScreen(){
+    fadeOutWelcomeScreen() {
         //call function to fade out the fog
         this.fadeOutFog(this.game.fogPlane);
         //fade out intro text
