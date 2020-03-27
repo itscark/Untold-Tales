@@ -146,7 +146,7 @@ class Video {
         this.attach(video);
 
         //play Video Faster
-        this.htmlVideo.playbackRate = 5;
+        //this.htmlVideo.playbackRate = 5;
 
         try {
             this.MyGui.removeControlUI();
