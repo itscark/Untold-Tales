@@ -26,7 +26,9 @@ class Animations {
                 let tmpAsset = asset.animationGroups[i];
                 let tmpName = tmpAsset["name"];
                 //this.MyGui can not be assigned in the Constructore because of rendering procedre
-                this.game.MyGui.createButton(tmpName, asset, i);
+                if (i !== 0) {
+                    this.game.MyGui.createButton(tmpName, asset, i);
+                }
             }
         } catch (e) {
             console.log('no animation')
