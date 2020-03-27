@@ -1,4 +1,4 @@
-import {charsConfig} from "../charsConfig";
+import {charsConfig} from "../main/charsConfig";
 
 window.onload = function () {
 
@@ -10,6 +10,7 @@ window.onload = function () {
     //set default display char to main char
     let setChar = charsConfig.main;
 
+    //if a users go to the arjs website without the qrcode a default char has to be set
     if (getChar !== null) {
         //Loop through chars object and check if the char form the url exists, if it does not exist, setchar will not be changed
         for (let i in charsConfig) {
@@ -63,10 +64,10 @@ window.onload = function () {
             '        ></a-asset-item>\n' +
             '    </a-assets>\n' +
             '    <a-marker type="pattern" url="../assets/images/arjs/pattern/pattern-arjs.patt">\n' +
-            '        <a-entity light="type: point;\n' +
+            '        <a-entity light="type: ambient;\n' +
             '        color: #fff;\n' +
             '        distance: 100;\n' +
-            '        intensity: 2.5;"\n' +
+            '        intensity: '+ assetData.ar.lightIntensity +';"\n' +
             '                  position="'+ assetData.ar.lightPosition + '"></a-entity>\n' +
             '        <a-entity\n' +
             '                id="directionaltarget"\n' +

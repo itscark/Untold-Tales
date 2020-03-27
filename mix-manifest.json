@@ -1,10 +1,7 @@
 {
     "/public/js/app.js": "/public/js/app.js",
-    "/public/css/app.css": "/public/css/app.css",
-    "/public/js/app.js.map": "/public/js/app.js.map",
     "/public/js/arjs/arjs.js": "/public/js/arjs/arjs.js",
-    "/public/js/arjs/arjs.js.map": "/public/js/arjs/arjs.js.map",
     "/public/js/qrcode/qr.js": "/public/js/qrcode/qr.js",
-    "/public/js/qrcode/qr.js.map": "/public/js/qrcode/qr.js.map",
-    "/public/js/qrcode/qrcode.min.js": "/public/js/qrcode/qrcode.min.js"
+    "/public/js/qrcode/qrcode.min.js": "/public/js/qrcode/qrcode.min.js",
+    "/public/css/app.css": "/public/css/app.css"
 }
