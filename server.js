@@ -3,8 +3,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const hostname = 'localhost';
+const port = 8000;
 
 // save static files like images, scripts and css in `public`...
 app.use(express.static(__dirname + '/public'));
