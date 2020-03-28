@@ -13,12 +13,17 @@ Download the latest version from github
 git clone git@github.com:marcpeternell/Untold-Tales.git
 ```
 
-Use node package manager to install the project locally on our machine.
+install necessary dependencies
 ```bash
 npm install
 ```
 
-Open the index.html file (located in the public directory) with the localhost of your choice and enjoy!
+to view the app run
+```bash
+npm start
+```
+
+Enjoy!
 
 
 

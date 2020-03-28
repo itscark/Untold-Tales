@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 
 const hostname = 'localhost';
-const port = 8000;
+const port = 5000;
 
 // save static files like images, scripts and css in `public`...
 app.use(express.static(__dirname + '/public'));
