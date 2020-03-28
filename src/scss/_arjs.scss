@@ -1,0 +1,30 @@
+#body_arjs {
+  margin: 0px;
+
+
+  #button_wrapper {
+    position: fixed;
+    left: 10px;
+    top: 50px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .animationBtn {
+    background-image: url("../assets/gui/buttons/Button_Animation.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    height: 50px;
+    min-width: 89px;
+    color: white;
+    font-family: "AYearWithoutRain";
+    font-size: 15px;
+    font-weight: bold;
+  }
+}

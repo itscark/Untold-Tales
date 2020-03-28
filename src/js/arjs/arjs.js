@@ -2,7 +2,7 @@ import {charsConfig} from "../main/charsConfig";
 
 window.onload = function () {
 
-    const body = document.getElementById('body');
+    const body = document.getElementById('body_arjs');
 
     let url = new URL(window.location.href);
     //let getChar = url.searchParams.get('char');

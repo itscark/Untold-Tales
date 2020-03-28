@@ -1,0 +1,62 @@
+#body_qrcode {
+
+  *{
+    font-family: sans-serif
+  }
+
+    margin: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    background: url("../assets/images/poster/Cam_Portal_Main_Poster.jpg") no-repeat center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+
+  p{
+    margin: 0;
+  }
+
+  #pattern{
+    width: 70%;
+  }
+
+  @media only screen and (min-width: 320px) {
+    #pattern{
+      width: 70%;
+    }
+  }
+
+
+  @media only screen and (min-width: 400px) {
+    #pattern{
+      width: 50%;
+    }
+  }
+  @media only screen and (min-width: 560px) {
+    #pattern{
+      width: 30%;
+    }
+  }
+  .qrcode-wrapper{
+    background-color: white;
+    width: 120px;
+    height: 120px;
+    padding: 15px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 25px;
+  }
+  #qrcode img {
+    width: 100%;
+    height: 100%;
+  }
+}
