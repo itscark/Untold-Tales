@@ -29,19 +29,20 @@ body {
   }
 }
 
-#logo{
+#logo {
   z-index: 10;
   width: 128px;
   height: 128px;
 }
-@media (min-width: 1145px){
-  #logo{
+
+@media (min-width: 1145px) {
+  #logo {
     width: 256px;
     height: 256px;
   }
 }
 
-#play_button{
+#play_button {
   content: '';
   background-image: url("../assets/gui/buttons/play-button.png");
   background-position: center;
@@ -63,6 +64,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
   p {
     color: white;
     z-index: 10;
@@ -90,7 +92,7 @@ body {
   }
 }
 
-@media screen and (max-width:859px) {
+@media screen and (max-width: 859px) {
   #renderCanvas {
     display: none !important;
   }

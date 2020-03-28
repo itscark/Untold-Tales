@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Untold Tales - AR</title>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/jeromeetienne/AR.js/2.2.2/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <link rel="stylesheet" href="../fonts/font.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+    <style>
+
+        #body {
+            margin: 0px;
+        }
+
+        #button_wrapper {
+            position: fixed;
+            left: 10px;
+            top: 50px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .animationBtn {
+            background-image: url("../assets/gui/buttons/Button_Animation.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            border: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 10px;
+            height: 50px;
+            min-width: 89px;
+            color: white;
+            font-family: "AYearWithoutRain";
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body id="body">
+<div id="button_wrapper">
+</div>
+</body>
+<script src="../js/arjs/arjs.js"></script>
+</html>

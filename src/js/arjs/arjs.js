@@ -5,13 +5,19 @@ window.onload = function () {
     const body = document.getElementById('body');
 
     let url = new URL(window.location.href);
-    let getChar = url.searchParams.get('char');
+    //let getChar = url.searchParams.get('char');
+
+    let getChar = url.pathname.split("/");
+
+    console.log(getChar)
+
+    getChar = getChar[2];
 
     //set default display char to main char
     let setChar = charsConfig.main;
 
     //if a users go to the arjs website without the qrcode a default char has to be set
-    if (getChar !== null) {
+    if (getChar !== '') {
         //Loop through chars object and check if the char form the url exists, if it does not exist, setchar will not be changed
         for (let i in charsConfig) {
             if (charsConfig[i].asset.toLowerCase() === getChar.toLowerCase()) {
