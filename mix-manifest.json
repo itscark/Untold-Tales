@@ -1,7 +1,7 @@
 {
+    "/public/js/404.js": "/public/js/404.js",
     "/public/js/app.js": "/public/js/app.js",
     "/public/css/app.css": "/public/css/app.css",
-    "/public/js/arjs/arjs.js": "/public/js/arjs/arjs.js",
-    "/public/js/qrcode/qr.js": "/public/js/qrcode/qr.js",
-    "/public/js/qrcode/qrcode.min.js": "/public/js/qrcode/qrcode.min.js"
+    "/public/js/arjs.js": "/public/js/arjs.js",
+    "/public/js/qr.js": "/public/js/qr.js"
 }
