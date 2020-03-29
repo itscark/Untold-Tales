@@ -139,7 +139,7 @@ body #intro_text_wrapper {
   position: relative;
 }
 #body_qrcode * {
-  font-family: sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 #body_qrcode p {
   margin: 0;
@@ -543,5 +543,55 @@ body #intro_text_wrapper {
   }
   100% {
     opacity: 0.2;
+  }
+}
+
+#body_qrcode .notification {
+  z-index: 9999999;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 60px;
+  border-radius: 0px 0px 5px 5px;
+  margin: 0 auto;
+  box-shadow: #95a5a6 0px 0px 6px 2px;
+  color: black;
+  line-height: 60px;
+}
+#body_qrcode .notification .title {
+  padding: 0px 15px;
+  line-height: 60px;
+  display: inline-block;
+}
+#body_qrcode .notification .close {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0px 15px;
+  line-height: 60px;
+  display: inline-block;
+  color: white;
+  outline: none;
+}
+#body_qrcode .notification .close:hover {
+  cursor: pointer;
+}
+#body_qrcode .notification.closed {
+  transform: translate(0px, -70px) !important;
+  transition: 0.7s !important;
+}
+#body_qrcode .notification.normal {
+  background: #3498db;
+  display: flex;
+  justify-content: space-between;
+}
+#body_qrcode .normal > p {
+  padding: 0;
+  margin: 0;
+}
+#body_qrcode .notification.normal .title {
+  background: #2980b9;
+}
+@media only screen and (min-width: 850px) {
+  #body_qrcode .notification {
+    width: 60vw;
   }
 }

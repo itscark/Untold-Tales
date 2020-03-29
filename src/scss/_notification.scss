@@ -1,0 +1,60 @@
+#body_qrcode {
+  .notification{
+    z-index: 9999999;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 60px;
+    border-radius: 0px 0px 5px 5px;
+    margin: 0 auto;
+    box-shadow: #95a5a6 0px 0px 6px 2px;
+    color: black;
+    line-height: 60px;
+
+    .title{
+      padding: 0px 15px;
+      line-height: 60px;
+      display: inline-block;
+    }
+
+    .close{
+      background: rgba(255,255,255,0.2);
+      padding: 0px 15px;
+      line-height: 60px;
+      display: inline-block;
+      color: white;
+      outline: none;
+    }
+
+    .close:hover{
+      cursor: pointer;
+    }
+  }
+
+  .notification.closed{
+    transform: translate(0px, -70px) !important;
+    transition: 0.7s !important;
+  }
+
+  .notification.normal{
+    background: #3498db;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .normal > p {
+    padding: 0;
+    margin: 0;
+  }
+
+
+  .notification.normal .title{
+    background: #2980b9;
+  }
+
+  @media only screen and (min-width: 850px) {
+    .notification{
+      width: 60vw;
+    }
+  }
+}

@@ -256,7 +256,7 @@ export default class {
         this.arBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
         this.arBtn.onPointerUpObservable.add(() => {
             let pathname = window.location.pathname.replace('index.html', '');
-            window.open(pathname + "qrcode/" + storyName.toLowerCase(), '_blank')
+            window.open(pathname + "qr/" + storyName.toLowerCase(), '_blank')
         });
         this.advancedTexture.addControl(this.arBtn);
     }

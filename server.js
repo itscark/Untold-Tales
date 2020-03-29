@@ -10,12 +10,12 @@ const port = 5000;
 app.use(express.static(__dirname + '/public'));
 
 // return the qrcode view
-app.get('/qrcode/:char?', function (req, res) {
+app.get('/qr/:char?', function (req, res) {
     res.status(200).sendFile(path.join(__dirname + '/public/views/qrcode.html'));
 });
 
 //return arjs view
-app.get('/arjs/:char?', function (req, res) {
+app.get('/ar/:char?', function (req, res) {
     res.status(200).sendFile(path.join(__dirname + '/public/views/arjs.html'));
 });
 
