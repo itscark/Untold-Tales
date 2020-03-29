@@ -12,7 +12,7 @@ let mix = require("laravel-mix");
  */
 mix
     .js("src/js/app.js", "public/js/app.js")
-    .js("src/js/views/arjs.js", "public/js/arjs.js")
+    .js("src/js/views/ar.js", "public/js/ar.js")
     .js("src/js/views/qr.js", 'public/js/qr.js')
     .js("src/js/views/404.js", 'public/js/404.js')
     .sass("src/scss/app.scss", "public/css/app.css").options({
