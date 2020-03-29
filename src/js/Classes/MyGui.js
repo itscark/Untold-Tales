@@ -23,6 +23,9 @@ export default class {
 
         this.buttonPath = "assets/gui/buttons/";
 
+        this.buttonWidth = 0.11;
+        this.buttonHeigt = 0.12;
+
         this.createGUI();
     }
 
@@ -162,8 +165,8 @@ export default class {
         //set Style of Controle UI
         ////////////
         //Left Button Styles
-        this.leftBtn.width = 0.11;
-        this.leftBtn.height = 0.11;
+        this.leftBtn.width = this.buttonWidth;
+        this.leftBtn.height = this.buttonHeigt;
         this.leftBtn.color = "white";
         this.leftBtn.thickness = 0;
         this.leftBtn.left = "30px";
@@ -172,8 +175,8 @@ export default class {
         this.leftBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Center Button Styles
-        this.centerBtn.width = 0.11;
-        this.centerBtn.height = 0.11;
+        this.centerBtn.width = this.buttonWidth;
+        this.centerBtn.height = this.buttonHeigt;
         this.centerBtn.color = "white";
         this.centerBtn.thickness = 0;
         this.centerBtn.left = "30px";
@@ -182,8 +185,8 @@ export default class {
         this.centerBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
 
         //Right Button Styles
-        this.rightBtn.width = 0.11;
-        this.rightBtn.height = 0.11;
+        this.rightBtn.width = this.buttonWidth;
+        this.rightBtn.height = this.buttonHeigt;
         this.rightBtn.color = "white";
         this.rightBtn.thickness = 0;
         this.rightBtn.left = "-30px";
@@ -243,8 +246,8 @@ export default class {
 
     setARButton(storyName) {
         this.arBtn = Button.CreateImageOnlyButton('Ar Button', this.buttonPath + 'Button_AR.png');
-        this.arBtn.width = 0.11;
-        this.arBtn.height = 0.11;
+        this.arBtn.width = this.buttonWidth;
+        this.arBtn.height = this.buttonHeigt;
         this.arBtn.zIndex = 10;
         this.arBtn.color = "transparent";
         this.arBtn.left = "-30px";
